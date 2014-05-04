@@ -1,10 +1,11 @@
 TEMPLATE = app
 TARGET = diamond-qt
-VERSION = 0.7.2
+VERSION = 0.1.0.2
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
+CONFIG += exceptions
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 lessThan(QT_MAJOR_VERSION, 5): CONFIG += static
 

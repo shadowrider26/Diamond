@@ -277,7 +277,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="dmd_logo">
        <property name="enabled">
         <bool>true</bool>
        </property>
