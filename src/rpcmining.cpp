@@ -527,7 +527,6 @@ Value getblocktemplate(const Array& params, bool fHelp)
         CBlock pblock;
         ssBlock >> pblock;
 
-        return ProcessBlock(NULL, &pblock);
         bool fAccepted = ProcessBlock(NULL, &pblock);
 
         return fAccepted ? Value::null : "rejected";
