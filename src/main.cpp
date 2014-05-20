@@ -953,8 +953,8 @@ int generateMTRandom(unsigned int s, int range)
 }
 
 
-static const int64 nMinSubsidy = 1 * COIN;
-static const int CUTOFF_HEIGHT = 100800;	// Height at the end of 5 weeks
+//static const int64 nMinSubsidy = 1 * COIN;
+//static const int CUTOFF_HEIGHT = 100800;	// Height at the end of 5 weeks
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
@@ -993,7 +993,7 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 
 // miner's coin stake reward based on nBits and coin age spent (coin-days)
 // simple algorithm, not depend on the diff
-const int YEARLY_BLOCKCOUNT = 525600;	// 365 * 1440
+//const int YEARLY_BLOCKCOUNT = 525600;	// 365 * 1440
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
 {
     if(totalCoin >= VALUE_CHANGE || fTestNet)
@@ -1161,8 +1161,8 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
-    if(pindexBest != NULL)
-        printf("pindexBest = %d", pindexBest->nMoneySupply / COIN);
+//    if(pindexBest != NULL)
+//        printf("pindexBest = %d", pindexBest->nMoneySupply / COIN);
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
@@ -2169,12 +2169,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
     if(totalCoin >= VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
-            return error("CheckBlock() : coinbase output not empty for proof-of-stake block");
+            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
     }
     else
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 1 || !vtx[0].vout[0].IsEmpty()))
-            return error("CheckBlock() : coinbase output not empty for proof-of-stake block");
+            return error("CheckBlock() : (OLD) coinbase output not empty for proof-of-stake block");
     }
 
     // Check coinbase timestamp
@@ -4102,11 +4102,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
 				if (txCoinStake.nTime >= max(pindexPrev->GetMedianTimePast()+1, pindexPrev->GetBlockTime() - nMaxClockDrift))
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
-                    pblock->vtx.push_back(txCoinStake);
                     pblock->vtx[0].vout[0].SetEmpty();
                     if(totalCoin >= VALUE_CHANGE)
                         pblock->vtx[0].vout[1].SetEmpty();
                     pblock->vtx[0].nTime = txCoinStake.nTime;
+                    pblock->vtx.push_back(txCoinStake);
                 }
             }
             nLastCoinStakeSearchInterval = nSearchTime - nLastCoinStakeSearchTime;
@@ -4532,7 +4532,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
         int64 nStart = GetTime();
         uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-        unsigned int max_nonce = 0xffff0000;
+//        unsigned int max_nonce = 0xffff0000;
         block_header res_header;
         uint256 result;
 
@@ -4543,7 +4543,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             unsigned int nHashesDone = 0;
 
             uint256 thash;
-            char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
+//            char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
 
             if(totalCoin < VALUE_CHANGE)
             {
