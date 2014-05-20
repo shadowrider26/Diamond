@@ -2,8 +2,15 @@
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-USE_UPNP:=0
-USE_IPV6:=1
+USE_UPNP:=-
+USE_IPV6:=-
+BOOST_INCLUDE_PATH=/usr/local/include
+BDB_INCLUDE_PATH=/usr/local/include/db48
+BOOST_LIB_PATH=/usr/local/lib
+BDB_LIB_PATH=/usr/local/lib/db48
+STATIC=1
+CC=clang
+CXX=clang++
 
 LINK:=$(CXX)
 
@@ -52,7 +59,7 @@ endif
 LIBS+= \
  -Wl,-B$(LMODE2) \
    -l z \
-   -l dl \
+#   -l dl \
    -l pthread
 
 
@@ -94,7 +101,7 @@ DEBUGFLAGS=-g
 
 # CXXFLAGS can be specified on the make command line, so we use xCXXFLAGS that only
 # adds some defaults in front. Unfortunately, CXXFLAGS=... $(CXXFLAGS) does not work.
-xCXXFLAGS=-O0 -msse2 -pthread -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter \
+xCXXFLAGS=-O2 -msse2 -pthread -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter \
     $(DEBUGFLAGS) $(DEFS) $(HARDENING) $(CXXFLAGS)
 
 # LDFLAGS can be specified on the make command line, so we use xLDFLAGS that only
@@ -102,6 +109,8 @@ xCXXFLAGS=-O0 -msse2 -pthread -Wall -Wextra -Wformat -Wformat-security -Wno-unus
 xLDFLAGS=$(LDHARDENING) $(LDFLAGS)
 
 OBJS= \
+    obj/hash.o \
+    obj/groestl.o \
     obj/alert.o \
     obj/version.o \
     obj/checkpoints.o \
@@ -139,7 +148,7 @@ OBJS= \
 all: diamondd
 
 test check: test_diamond FORCE
-	./test_BottleCaps
+	./test_diamond
 
 # auto-generated dependencies:
 -include obj/*.P
@@ -162,6 +171,14 @@ obj/%.o: %.cpp
 	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
+
+obj/%.o: %.c
+	$(CC) -c $(xCXXFLAGS) -fpermissive -MMD -MF $(@:%.o=%.d) -o $@ $<
+	@cp $(@:%.o=%.d) $(@:%.o=%.P); \
+	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
+	rm -f $(@:%.o=%.d)
+
 
 diamondd: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
