@@ -668,8 +668,8 @@ public:
             nVersion,
             vin.size(),
             vout.size(),
-            nLockTime,
-            strTxComment.substr(0,30).c_str()
+            nLockTime
+//            strTxComment.substr(0,30).c_str()
             );
 
         for (unsigned int i = 0; i < vin.size(); i++)
