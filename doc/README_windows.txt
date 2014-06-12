@@ -1,10 +1,10 @@
 
-Copyright (c) 2013-2014 Diamond Developers
+Copyright (c) 2013-2014 Diamond Foundation
 
 
-Diamond 0.3.0 BETA
+Diamond 2.0.2 BETA
 
-Copyright (c) 2013-2014 Diamond Developers
+Copyright (c) 2013-2014 Diamond Foundation
 Copyright (c) 2013 NovaCoin Developers
 Copyright (c) 2011-2012 Bitcoin Developers
 Distributed under the MIT/X11 software license, see the accompanying
