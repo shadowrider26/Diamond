@@ -226,7 +226,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>Внимание: если вы зашифруете бумажник и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ МОНЕТЫ&lt;/b&gt;!</translation>
+        <translation>Внимание: если вы зашифруете бумажник и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШ�? МОНЕТЫ&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -337,7 +337,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Edit the list of stored addresses and labels</source>
-        <translation>Изменить список сохранённых адресов и меток к ним</translation>
+        <translation>�?зменить список сохранённых адресов и меток к ним</translation>
     </message>
     <message>
         <location line="-13"/>
@@ -397,7 +397,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+2"/>
         <source>&amp;Change Passphrase...</source>
-        <translation>&amp;Изменить пароль</translation>
+        <translation>&amp;�?зменить пароль</translation>
     </message>
     <message numerus="yes">
         <location line="+241"/>
@@ -426,7 +426,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+45"/>
         <source>Modify configuration options for BottleCaps</source>
-        <translation>Изменить параметры конфигурации BottleCaps</translation>
+        <translation>�?зменить параметры конфигурации BottleCaps</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -446,7 +446,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+2"/>
         <source>Change the passphrase used for wallet encryption</source>
-        <translation>Изменить пароль шифрования бумажника</translation>
+        <translation>�?зменить пароль шифрования бумажника</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -598,7 +598,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+27"/>
         <source>Sent transaction</source>
-        <translation>Исходящая транзакция</translation>
+        <translation>�?сходящая транзакция</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -679,7 +679,7 @@ Address: %4
     <message>
         <location filename="../forms/editaddressdialog.ui" line="+14"/>
         <source>Edit Address</source>
-        <translation>Изменить адрес</translation>
+        <translation>�?зменить адрес</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -714,12 +714,12 @@ Address: %4
     <message>
         <location line="+3"/>
         <source>Edit receiving address</source>
-        <translation>Изменение адреса для получения</translation>
+        <translation>�?зменение адреса для получения</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Edit sending address</source>
-        <translation>Изменение адреса для отправки</translation>
+        <translation>�?зменение адреса для отправки</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -758,7 +758,7 @@ Address: %4
     <message>
         <location line="+2"/>
         <source>Usage:</source>
-        <translation>Использование:</translation>
+        <translation>�?спользование:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1116,7 +1116,7 @@ Address: %4
     <message>
         <location line="+0"/>
         <source>PNG Images (*.png)</source>
-        <translation>PNG Изображения (*.png)</translation>
+        <translation>PNG �?зображения (*.png)</translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ Address: %4
     <message>
         <location filename="../forms/rpcconsole.ui" line="+46"/>
         <source>Client name</source>
-        <translation>Имя клиента</translation>
+        <translation>�?мя клиента</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1148,12 +1148,12 @@ Address: %4
     <message>
         <location line="-45"/>
         <source>&amp;Information</source>
-        <translation>&amp;Информация</translation>
+        <translation>&amp;�?нформация</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Using OpenSSL version</source>
-        <translation>Используется версия OpenSSL</translation>
+        <translation>�?спользуется версия OpenSSL</translation>
     </message>
     <message>
         <location line="+49"/>
@@ -1258,7 +1258,7 @@ Address: %4
     <message>
         <location line="+1"/>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
-        <translation>Используйте стрелки вверх и вниз для просмотра истории и &lt;b&gt;Ctrl-L&lt;/b&gt; для очистки экрана.</translation>
+        <translation>�?спользуйте стрелки вверх и вниз для просмотра истории и &lt;b&gt;Ctrl-L&lt;/b&gt; для очистки экрана.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1406,8 +1406,8 @@ Address: %4
     </message>
     <message>
         <location line="+18"/>
-        <source>The address to send the payment to  (e.g. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес получателя платежа (например dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>The address to send the payment to  (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation>Адрес получателя платежа (например 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1436,8 +1436,8 @@ Address: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a BottleCaps address (e.g. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Введите BottleCaps-адрес (например dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>Enter a BottleCaps address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation>Введите BottleCaps-адрес (например 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
 </context>
 <context>
@@ -1460,8 +1460,8 @@ Address: %4
     </message>
     <message>
         <location line="+18"/>
-        <source>The address to sign the message with (e.g. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес, которым вы хотите подписать сообщение  (напр. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>The address to sign the message with (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation>Адрес, которым вы хотите подписать сообщение  (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1524,8 +1524,8 @@ Address: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>The address the message was signed with (e.g. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес, которым было подписано сообщение (напр. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>The address the message was signed with (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation>Адрес, которым было подписано сообщение (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+40"/>
@@ -1540,8 +1540,8 @@ Address: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a BottleCaps address (e.g. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Введите адрес BottleCaps (напр. dZo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <source>Enter a BottleCaps address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
+        <translation>Введите адрес BottleCaps (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -1673,7 +1673,7 @@ Address: %4
     <message>
         <location line="+7"/>
         <source>Source</source>
-        <translation>Источник</translation>
+        <translation>�?сточник</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -1768,7 +1768,7 @@ Address: %4
     <message>
         <location line="+4"/>
         <source>Staked coins must wait 520 blocks before they can return to balance and be spent.  When you generated this proof-of-stake block, it was broadcast to the network to be added to the block chain.  If it fails to get into the chain, it will change to \"not accepted\" and not be a valid stake.  This may occasionally happen if another node generates a proof-of-stake block within a few seconds of yours.</source>
-        <translation>Использованные в Proof-of-Stake монеты должны подождать 520 блоков, прежде чем они вернутся на баланс и смогут быть потрачены. Когда вы сгенерировали этот proof-of-stake блок, он был отправлен в сеть для добавления в цепочку блоков. Если данная процедура не удается, статус изменится на \"не подтверждени\" и блок будет недействителен. Это иногда происходит в случае, если другой узел сгенерирует блок на несколько секунд раньше вас.</translation>
+        <translation>�?спользованные в Proof-of-Stake монеты должны подождать 520 блоков, прежде чем они вернутся на баланс и смогут быть потрачены. Когда вы сгенерировали этот proof-of-stake блок, он был отправлен в сеть для добавления в цепочку блоков. Если данная процедура не удается, статус изменится на \"не подтверждени\" и блок будет недействителен. Это иногда происходит в случае, если другой узел сгенерирует блок на несколько секунд раньше вас.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2041,7 +2041,7 @@ Address: %4
     <message>
         <location line="+1"/>
         <source>Edit label</source>
-        <translation>Изменить метку</translation>
+        <translation>�?зменить метку</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2132,7 +2132,7 @@ Address: %4
     <message>
         <location line="+82"/>
         <source>Usage:</source>
-        <translation>Использование:</translation>
+        <translation>�?спользование:</translation>
     </message>
     <message>
         <location line="-25"/>
@@ -2213,7 +2213,7 @@ Address: %4
     <message>
         <location line="-75"/>
         <source>Bind to given address. Use [host]:port notation for IPv6</source>
-        <translation>Привязаться (bind) к указанному адресу. Используйте запись вида [хост]:порт для IPv6</translation>
+        <translation>Привязаться (bind) к указанному адресу. �?спользуйте запись вида [хост]:порт для IPv6</translation>
     </message>
     <message>
         <location line="+77"/>
@@ -2273,12 +2273,12 @@ Address: %4
     <message>
         <location line="+32"/>
         <source>Importing blockchain data file.</source>
-        <translation>Импортируется файл цепи блоков.</translation>
+        <translation>�?мпортируется файл цепи блоков.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Importing bootstrap blockchain data file.</source>
-        <translation>Импортируется bootstrap-файл цепи блоков.</translation>
+        <translation>�?мпортируется bootstrap-файл цепи блоков.</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -2288,7 +2288,7 @@ Address: %4
     <message>
         <location line="+33"/>
         <source>Use the test network</source>
-        <translation>Использовать тестовую сеть</translation>
+        <translation>�?спользовать тестовую сеть</translation>
     </message>
     <message>
         <location line="-93"/>
@@ -2353,12 +2353,12 @@ Address: %4
     <message>
         <location line="+2"/>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
-        <translation>Не удалось начать прослушивание на порту. Используйте -listen=0 если вас это устраивает.</translation>
+        <translation>Не удалось начать прослушивание на порту. �?спользуйте -listen=0 если вас это устраивает.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find peers using DNS lookup (default: 0 unless -connect)</source>
-        <translation>Искать узлы с помощью DNS (по умолчанию: 0)</translation>
+        <translation>�?скать узлы с помощью DNS (по умолчанию: 0)</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -2439,22 +2439,22 @@ Address: %4
     <message>
         <location line="+13"/>
         <source>Use UPnP to map the listening port (default: 0)</source>
-        <translation>Использовать UPnP для проброса порта (по умолчанию: 0)</translation>
+        <translation>�?спользовать UPnP для проброса порта (по умолчанию: 0)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use UPnP to map the listening port (default: 1 when listening)</source>
-        <translation>Использовать UPnP для проброса порта (по умолчанию: 1, если используется прослушивание)</translation>
+        <translation>�?спользовать UPnP для проброса порта (по умолчанию: 1, если используется прослушивание)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use proxy to reach tor hidden services (default: same as -proxy)</source>
-        <translation>Использовать прокси для скрытых сервисов (по умолчанию: тот же, что и в -proxy)</translation>
+        <translation>�?спользовать прокси для скрытых сервисов (по умолчанию: тот же, что и в -proxy)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Username for JSON-RPC connections</source>
-        <translation>Имя для подключений JSON-RPC</translation>
+        <translation>�?мя для подключений JSON-RPC</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2524,12 +2524,12 @@ Address: %4
     <message>
         <location line="+3"/>
         <source>Imports blocks from external blk000?.dat file</source>
-        <translation>Импортировать блоки из внешнего файла blk000?.dat</translation>
+        <translation>�?мпортировать блоки из внешнего файла blk000?.dat</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>Use OpenSSL (https) for JSON-RPC connections</source>
-        <translation>Использовать OpenSSL (https) для подключений JSON-RPC</translation>
+        <translation>�?спользовать OpenSSL (https) для подключений JSON-RPC</translation>
     </message>
     <message>
         <location line="-21"/>

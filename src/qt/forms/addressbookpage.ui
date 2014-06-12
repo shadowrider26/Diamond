@@ -485,7 +485,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QTableView {background-color:rgb(69, 87, 96); color:white;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
      </property>
      <property name="tabKeyNavigation">
       <bool>false</bool>
