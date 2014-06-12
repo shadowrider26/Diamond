@@ -420,7 +420,7 @@ int CMerkleTx::SetMerkleBranch(const CBlock* pblock)
         }
 
         // Update the tx's hashBlock
-        hashBlock = pblock->GetHash();
+        hashBlock = pblock->GetHash(true);
 
         // Locate the transaction
         for (nIndex = 0; nIndex < (int)pblock->vtx.size(); nIndex++)
@@ -4733,22 +4733,34 @@ int64 GetDevCoin(int64 totalCoin) {
         return 0.01 * COIN;
 }
 
-uint256 CBlock::GetHash() const
+uint256 CBlock::GetHash(bool existingBlock) const
 {
-    if((totalCoinDB <= VALUE_CHANGE && totalCoin == -1) || (totalCoin >= 0 && totalCoin < VALUE_CHANGE))
+    // There are two distinct cases when we are called
+	// First case is with with a block already in the blockchain index
+    // Second is for a new block
+
+
+    if (existingBlock)
     {
-        uint256 thash;
-        void * scratchbuff = scrypt_buffer_alloc();
+        //printf("CBlock::GetHash() look up an existing block\n");
+        // TODO: reverse checks when Groestl blocks become more
+		// calculate Scrypt first
+    	uint256 hash_scrypt = GetHashScrypt();
+    	// find the index position(s)
+		CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
+        if (pblockindex_scrypt)
+		    return hash_scrypt;
 
-        scrypt_hash(CVOIDBEGIN(nVersion), sizeof(block_header), UINTBEGIN(thash), scratchbuff);
-
-        scrypt_buffer_free(scratchbuff);
-
-        return thash;
+		// we are here so it must be Groestl
+    	uint256 hash_groestl = GetHashGroestl();
+		CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
+		if (pblockindex_groestl)
+		    return hash_groestl;
     }
-    else if((totalCoinDB > VALUE_CHANGE && totalCoin == -1) || (totalCoin >= VALUE_CHANGE))
-    {
-        return HashGroestl(BEGIN(nVersion), END(nNonce));
-    }
-    return HashGroestl(BEGIN(nVersion), END(nNonce));
+
+    // new block or not found in blockchain
+    if(totalCoin < VALUE_CHANGE)
+		return GetHashScrypt();
+
+    return GetHashGroestl();
 }
