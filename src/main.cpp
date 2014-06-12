@@ -47,8 +47,6 @@ unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
 int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
 int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
 
-int64 coinMax = 0;
-int64 totalCoinDB = 0;
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
 int nCoinbaseMaturity = 30;
@@ -846,7 +844,7 @@ int CTxIndex::GetDepthInMainChain() const
     if (!block.ReadFromDisk(pos.nFile, pos.nBlockPos, false))
         return 0;
     // Find the block in the index
-    map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(block.GetHash());
+    map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(block.GetHash(true));
     if (mi == mapBlockIndex.end())
         return 0;
     CBlockIndex* pindex = (*mi).second;
@@ -874,7 +872,7 @@ bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock)
         {
             CBlock block;
             if (block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
-                hashBlock = block.GetHash();
+                hashBlock = block.GetHash(true);
             return true;
         }
     }
@@ -915,11 +913,7 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions)
     }
     if (!ReadFromDisk(pindex->nFile, pindex->nBlockPos, fReadTransactions))
         return false;
-    totalCoinDB = 1;
-    uint256 hash1 = GetHashScrypt();
-    totalCoinDB = coinMax;
-    uint256 hash2 = GetHashGroestl();
-    if (hash1 != pindex->GetBlockHash() && hash2 != pindex->GetBlockHash())
+    if (GetHashScrypt() != pindex->GetBlockHash() && GetHashGroestl() != pindex->GetBlockHash())
         return error("CBlock::ReadFromDisk() : GetHash() doesn't match index");
     return true;
 }
@@ -1564,7 +1558,7 @@ bool CBlock::DisconnectBlock(CTxDB& txdb, CBlockIndex* pindex)
 bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 {
     // Check it again in case a previous version let a bad block in
-    if (!CheckBlock(!fJustCheck, !fJustCheck))
+    if (!CheckBlock(!fJustCheck, !fJustCheck, GetTotalCoin()))
         return false;
 
     // Do not allow blocks that contain transactions which 'overwrite' older transactions,
@@ -2104,9 +2098,10 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 }
 
 
-bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
+bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
-    totalCoin = GetTotalCoin();
+    // Update the coin mechanics variables post algorithm change
+    // Changing any of these requires a fork
     if(totalCoin >= VALUE_CHANGE && !fTestNet)
     {
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
@@ -2130,10 +2125,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot) const
     if (vtx.empty() || vtx.size() > MAX_BLOCK_SIZE || ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return DoS(100, error("CheckBlock() : size limits failed"));
 
-    totalCoinDB = 1;
-    uint256 hash1 = GetHashScrypt();
-    totalCoinDB = coinMax;
-    uint256 hash2 = GetHashGroestl();
     // Check proof of work matches claimed amount
     if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(hash1, nBits) && !CheckProofOfWork(hash2, nBits))
         return DoS(50, error("CheckBlock() : proof of work failed"));
@@ -2332,7 +2323,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         return error("ProcessBlock() : duplicate proof-of-stake (%s, %d) for block %s", pblock->GetProofOfStake().first.ToString().c_str(), pblock->GetProofOfStake().second, hash.ToString().c_str());
 
     // Preliminary checks
-    if (!pblock->CheckBlock())
+    if (!pblock->CheckBlock(true,true,GetTotalCoin()))
         return error("ProcessBlock() : CheckBlock FAILED");
 
     // ppcoin: verify hash target and signature of coinstake tx
@@ -2518,11 +2509,7 @@ bool CBlock::CheckBlockSignature() const
                 return false;
             if (vchBlockSig.empty())
                 return false;
-            totalCoinDB = 1;
-            uint256 hash1 = GetHashScrypt();
-            totalCoinDB = coinMax;
-            uint256 hash2 = GetHashGroestl();
-            return (key.Verify(hash1, vchBlockSig) || key.Verify(hash2, vchBlockSig));
+            return (key.Verify(GetHashScrypt(), vchBlockSig) || key.Verify(GetHashGroestl(), vchBlockSig));
         }
     }
     else
@@ -2543,11 +2530,7 @@ bool CBlock::CheckBlockSignature() const
                     continue;
                 if (vchBlockSig.empty())
                     continue;
-                totalCoinDB = 1;
-                uint256 hash1 = GetHashScrypt();
-                totalCoinDB = coinMax;
-                uint256 hash2 = GetHashGroestl();
-                if(!key.Verify(hash1, vchBlockSig) && !key.Verify(hash2, vchBlockSig))
+                if(!key.Verify(GetHashScrypt(), vchBlockSig) && !key.Verify(GetHashGroestl(), vchBlockSig))
                     continue;
 
                 return true;
@@ -2775,7 +2758,7 @@ void PrintBlockTree()
             pindex->nHeight,
             pindex->nFile,
             pindex->nBlockPos,
-            block.GetHash().ToString().c_str(),
+            block.GetHash(true).ToString().c_str(),
             block.nBits,
             DateTimeStrFormat("%x %H:%M:%S", block.GetBlockTime()).c_str(),
             FormatMoney(pindex->nMint).c_str(),

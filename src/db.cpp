@@ -859,10 +859,9 @@ bool CTxDB::LoadBlockIndexGuts()
             CDiskBlockIndex diskindex;
             ssValue >> diskindex;
 
-            totalCoinDB = diskindex.nMoneySupply / COIN;
             // Construct block index object
             uint256 blockHash;
-            if(totalCoinDB <= VALUE_CHANGE)
+            if(diskindex.nMoneySupply / COIN <= VALUE_CHANGE)
                 blockHash = diskindex.GetBlockHashScrypt();
             else
                 blockHash =  diskindex.GetBlockHashGroest();

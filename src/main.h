@@ -61,8 +61,6 @@ static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
 
 extern CScript COINBASE_FLAGS;
 
-extern int64 coinMax;
-extern int64 totalCoinDB;
 extern int64 totalCoin;
 extern CCriticalSection cs_main;
 extern std::map<uint256, CBlockIndex*> mapBlockIndex;
@@ -1078,15 +1076,10 @@ public:
             return error("%s() : deserialize or I/O error", __PRETTY_FUNCTION__);
         }
 
-        totalCoinDB = 1;
-        uint256 hash1 = GetHashScrypt();
-        totalCoinDB = coinMax;
-        uint256 hash2 = GetHashGroestl();
         // Check the header
-        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(hash1, nBits) && !CheckProofOfWork(hash2, nBits))
-        {
+        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
             return error("CBlock::ReadFromDisk() : errors in block header");
-        }
+
         return true;
     }
 
