@@ -39,12 +39,10 @@ static const int64 CIRCULATION_MONEY = MAX_MONEY;
 static const double TAX_PERCENTAGE = 0.01;
 static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
-static const int64 VALUE_CHANGE = 369494;
-#define DEV_ADDRESS "dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz"
-#define DEV_ADDRESS_TEST "mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"
-
-inline int64_t PastDrift(int64 nTime)   { return nTime - 15 * 60; } // up to 1 day from the past
-inline int64_t FutureDrift(int64 nTime) { return nTime + 15 * 60; } // up to 1 day from the future
+static const int64 VALUE_CHANGE = 369494; // When to switch to Groestl
+static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
+#define FOUNDATION_ADDRESS "dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz"
+#define FOUNDATION_ADDRESS_TEST "mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -63,8 +61,6 @@ static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
 
 extern CScript COINBASE_FLAGS;
 
-extern int64 coinMax;
-extern int64 totalCoinDB;
 extern int64 totalCoin;
 extern CCriticalSection cs_main;
 extern std::map<uint256, CBlockIndex*> mapBlockIndex;
@@ -102,8 +98,7 @@ class CReserveKey;
 class CTxDB;
 class CTxIndex;
 
-
-int64 GetDevCoin(int64 totalCoin);
+int64 GetContributionAmount(int64 totalCoin);
 void RegisterWallet(CWallet* pwalletIn);
 void UnregisterWallet(CWallet* pwalletIn);
 void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL, bool fUpdate = false, bool fConnect = true);
@@ -550,6 +545,12 @@ public:
         return (vin.size() > 0 && (!vin[0].prevout.IsNull()) && vout.size() >= 2 && vout[0].IsEmpty());
     }
 
+	bool IsCoinBaseOrStake() const
+    {
+        return (IsCoinBase() || IsCoinStake());
+    }
+
+
     /** Check for standard transaction types
         @return True if all outputs (scriptPubKeys) use only standard transaction forms
     */
@@ -662,7 +663,7 @@ public:
     {
         std::string str;
         str += IsCoinBase()? "Coinbase" : (IsCoinStake()? "Coinstake" : "CTransaction");
-        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d)\n",
+        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d), TxComment=%s\n",
             GetHash().ToString().substr(0,10).c_str(),
             nTime,
             nVersion,
@@ -923,7 +924,7 @@ public:
         return (nBits == 0);
     }
 
-    uint256 GetHash() const;
+    uint256 GetHash(bool existingBlock=false) const;
 
     uint256 GetHashScrypt() const
     {
@@ -1080,15 +1081,10 @@ public:
             return error("%s() : deserialize or I/O error", __PRETTY_FUNCTION__);
         }
 
-        totalCoinDB = 1;
-        uint256 hash1 = GetHashScrypt();
-        totalCoinDB = coinMax;
-        uint256 hash2 = GetHashGroestl();
         // Check the header
-        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(hash1, nBits) && !CheckProofOfWork(hash2, nBits))
-        {
+        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
             return error("CBlock::ReadFromDisk() : errors in block header");
-        }
+
         return true;
     }
 
@@ -1120,7 +1116,7 @@ public:
     bool ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions=true);
     bool SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew);
     bool AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos);
-    bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true) const;
+    bool CheckBlock(bool fCheckPOW=true, bool fCheckMerkleRoot=true, int64 totalCoin=0) const;
     bool AcceptBlock();
     bool GetCoinAge(uint64& nCoinAge) const; // ppcoin: calculate total coin age spent in block
     bool SignBlock(const CKeyStore& keystore);

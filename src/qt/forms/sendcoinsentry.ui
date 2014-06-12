@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color:rgb(69, 87, 96);
 QPushButton{background-color:rgba(97, 147, 174, 255);color:white;}
-QToolTip {background-color:#1f333e !important; color:white !important;}</string>
+QToolTip {background-color:#1f333e !important; color:white !important; border-style: none;}</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -58,7 +58,7 @@ QToolTip {background-color:#1f333e !important; color:white !important;}</string>
     <widget class="BitcoinAmountField" name="payAmount">
      <property name="styleSheet">
       <string notr="true">color:white;
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
      </property>
     </widget>
    </item>
@@ -76,7 +76,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
         <string>Enter a label for this address to add it to your address book</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white;}</string>
+        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
       </widget>
      </item>
@@ -106,7 +106,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
         <string>The address to send the payment to  (e.g. dc8hQjs9oy9AHPCSF5aTvkcRVECojV3joC)</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white;}</string>
+        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="maxLength">
         <number>34</number>
@@ -119,7 +119,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
         <string>Choose address from address book</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white;}</string>
+        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string/>
@@ -139,7 +139,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
         <string>Paste address from clipboard</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white;}</string>
+        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string/>
@@ -159,7 +159,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
         <string>Remove this recipient</string>
        </property>
        <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white;}</string>
+        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string/>

@@ -280,9 +280,9 @@ Value getaddressesbyaccount(const Array& params, bool fHelp)
 
 Value sendtoaddress(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() < 2 || params.size() > 4)
+    if (fHelp || params.size() < 2 || params.size() > 5)
         throw runtime_error(
-		"sendtoaddress <Diamondaddress> <amount> [comment] [comment-to]\n"
+		"sendtoaddress <Diamondaddress> <amount> [comment] [comment-to] [tx-comment]\n"
             "<amount> is a real and is rounded to the nearest 0.000001"
             + HelpRequiringPassphrase());
 
@@ -303,10 +303,20 @@ Value sendtoaddress(const Array& params, bool fHelp)
     if (params.size() > 3 && params[3].type() != null_type && !params[3].get_str().empty())
         wtx.mapValue["to"]      = params[3].get_str();
 
+      // Transaction comment
+      std::string txcomment;
+    if (params.size() > 4 && params[4].type() != null_type && !params[4].get_str().empty())
+      {
+        txcomment = params[4].get_str();
+              if (txcomment.length() > MAX_TX_COMMENT_LEN)
+                      txcomment.resize(MAX_TX_COMMENT_LEN);
+      }
+
+
     if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
 
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, txcomment);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -515,12 +525,17 @@ int64 GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nMinD
         if (!wtx.IsFinal())
             continue;
 
-        int64 nGenerated, nReceived, nSent, nFee;
-        wtx.GetAccountAmounts(strAccount, nGenerated, nReceived, nSent, nFee);
+        int64 nGeneratedImmature, nGeneratedMature, nReceived, nSent, nFee;
+        wtx.GetAccountAmounts(strAccount, nGeneratedImmature, nGeneratedMature, nReceived, nSent, nFee);
 
         if (nReceived != 0 && wtx.GetDepthInMainChain() >= nMinDepth)
             nBalance += nReceived;
-        nBalance += nGenerated - nSent - nFee;
+
+		if((wtx.IsCoinBaseOrStake() && wtx.GetDepthInMainChain() >= nMinDepth && wtx.GetBlocksToMaturity() == 0)
+			|| !wtx.IsCoinBaseOrStake())
+		{
+			nBalance += nGeneratedMature - nSent - nFee;
+		}
     }
 
     // Tally internal accounting entries
@@ -574,10 +589,15 @@ Value getbalance(const Array& params, bool fHelp)
                 BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& r, listReceived)
                     nBalance += r.second;
             }
-            BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& r, listSent)
+
+			if((wtx.IsCoinBaseOrStake() && wtx.GetDepthInMainChain() >= nMinDepth && wtx.GetBlocksToMaturity() == 0)
+				|| !wtx.IsCoinBaseOrStake())
+			{
+				BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& r, listSent)
                 nBalance -= r.second;
-            nBalance -= allFee;
-            nBalance += allGeneratedMature;
+				nBalance -= allFee;
+				nBalance += allGeneratedMature;
+			}
         }
         return  ValueFromAmount(nBalance);
     }
@@ -646,9 +666,9 @@ Value movecmd(const Array& params, bool fHelp)
 
 Value sendfrom(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() < 3 || params.size() > 6)
+    if (fHelp || params.size() < 3 || params.size() > 7)
         throw runtime_error(
-		"sendfrom <fromaccount> <toDiamondaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+		"sendfrom <fromaccount> <toDiamondaddress> <amount> [minconf=1] [comment] [comment-to] [tx-comment]\n"
             "<amount> is a real and is rounded to the nearest 0.000001"
             + HelpRequiringPassphrase());
 
@@ -672,6 +692,13 @@ Value sendfrom(const Array& params, bool fHelp)
     if (params.size() > 5 && params[5].type() != null_type && !params[5].get_str().empty())
         wtx.mapValue["to"]      = params[5].get_str();
 
+    std::string txcomment;
+    if (params.size() > 6 && params[6].type() != null_type && !params[6].get_str().empty())
+    {
+        txcomment = params[6].get_str();
+        if (txcomment.length() > MAX_TX_COMMENT_LEN)
+            txcomment.resize(MAX_TX_COMMENT_LEN);
+    }
     EnsureWalletIsUnlocked();
 
     // Check funds
@@ -680,7 +707,7 @@ Value sendfrom(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
     // Send
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, txcomment);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -690,9 +717,9 @@ Value sendfrom(const Array& params, bool fHelp)
 
 Value sendmany(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() < 2 || params.size() > 4)
+    if (fHelp || params.size() < 2 || params.size() > 5)
         throw runtime_error(
-		"sendmany <fromaccount> {address:amount,...} [minconf=1] [comment]\n"
+		"sendmany <fromaccount> {address:amount,...} [minconf=1] [comment] [tx-cmments]\n"
             "amounts are double-precision floating point numbers"
             + HelpRequiringPassphrase());
 
@@ -1139,23 +1166,34 @@ Value listaccounts(const Array& params, bool fHelp)
     for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); ++it)
     {
         const CWalletTx& wtx = (*it).second;
+
+		if(!wtx.IsFinal())
+			continue;
+
         int64 nGeneratedImmature, nGeneratedMature, nFee;
         string strSentAccount;
         list<pair<CTxDestination, int64> > listReceived;
         list<pair<CTxDestination, int64> > listSent;
         wtx.GetAmounts(nGeneratedImmature, nGeneratedMature, listReceived, listSent, nFee, strSentAccount);
-        mapAccountBalances[strSentAccount] -= nFee;
-        BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
-            mapAccountBalances[strSentAccount] -= s.second;
         if (wtx.GetDepthInMainChain() >= nMinDepth)
         {
-            mapAccountBalances[""] += nGeneratedMature;
             BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& r, listReceived)
                 if (pwalletMain->mapAddressBook.count(r.first))
                     mapAccountBalances[pwalletMain->mapAddressBook[r.first]] += r.second;
                 else
                     mapAccountBalances[""] += r.second;
         }
+
+		if((wtx.IsCoinBaseOrStake() && wtx.GetDepthInMainChain() >= nMinDepth && wtx.GetBlocksToMaturity() == 0)
+			|| !wtx.IsCoinBaseOrStake())
+		{
+			mapAccountBalances[strSentAccount] -= nFee;
+			mapAccountBalances[""] += nGeneratedMature;
+
+			BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64)& s, listSent)
+				mapAccountBalances[strSentAccount] -= s.second;
+
+		}
     }
 
     list<CAccountingEntry> acentries;

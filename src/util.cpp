@@ -1120,8 +1120,6 @@ boost::filesystem::path GetConfigFile()
 {
     boost::filesystem::path pathConfigFile(GetArg("-conf", "Diamond.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
-    int i = 0;
-    i++;
     return pathConfigFile;
 }
 

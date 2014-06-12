@@ -56,7 +56,7 @@
              <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Diamond network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">QToolTip {background-color:#1f333e; color:white;}
+             <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}
 QLabel { color: red; background:transparent;}</string>
             </property>
             <property name="text">
@@ -119,7 +119,7 @@ QLabel { color: red; background:transparent;}</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {background:transparent;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
             </property>
             <property name="text">
              <string notr="true">0 DMD</string>
@@ -155,7 +155,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {background:transparent;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
             </property>
             <property name="text">
              <string notr="true">0 DMD</string>
@@ -191,7 +191,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {background:transparent;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
             </property>
             <property name="text">
              <string notr="true">0 DMD</string>
@@ -224,7 +224,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {background:transparent;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
             </property>
             <property name="text">
              <string notr="true">0 DMD</string>
@@ -251,7 +251,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QLabel {background:transparent;}
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
             </property>
             <property name="text">
              <string notr="true">0</string>
@@ -325,7 +325,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
              <string notr="true">background:transparent;</string>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ffffff;&quot;&gt;Recent transactions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;b&gt;Recent transactions&lt;/b&gt;</string>
             </property>
            </widget>
           </item>
@@ -335,7 +335,7 @@ QToolTip {background-color:#1f333e; color:white;}</string>
              <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Diamond network after a connection is established, but this process has not completed yet.</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">QToolTip {background-color:#1f333e; color:white;}
+             <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}
 QLabel { color: red; background:transparent; }</string>
             </property>
             <property name="text">
@@ -365,7 +365,7 @@ QLabel { color: red; background:transparent; }</string>
          <widget class="QListView" name="listTransactions">
           <property name="styleSheet">
            <string notr="true">QListView { background: transparent; }
-QToolTip {background-color:#1f333e; color:white;}</string>
+QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
