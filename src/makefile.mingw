@@ -6,9 +6,9 @@ USE_UPNP:=0
 USE_IPV6:=1
 
 INCLUDEPATHS= \
- -I"C:\boost_1_53_0" \
- -I"C:\db-4.8.30.NC\build_unix" \
- -I"C:\openssl-1.0.1e\include
+ -I"C:\deps\boost_1_55_0" \
+ -I"C:\deps\db-4.8.30.NC\build_unix" \
+ -I"C:\deps\openssl-1.0.1e\include
  
 LIBPATHS= \
  -L"C:\boost_1_53_0\stage/lib" \
