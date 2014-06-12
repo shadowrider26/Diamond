@@ -650,7 +650,6 @@ bool CTxDB::LoadBlockIndex()
 
     // Calculate bnChainTrust
     vector<pair<int, CBlockIndex*> > vSortedByHeight;
-    map<uint256, CBlockIndex*> a = mapBlockIndex;
     vSortedByHeight.reserve(mapBlockIndex.size());
     BOOST_FOREACH(const PAIRTYPE(uint256, CBlockIndex*)& item, mapBlockIndex)
     {

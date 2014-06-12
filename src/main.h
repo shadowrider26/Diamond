@@ -43,9 +43,6 @@ static const int64 VALUE_CHANGE = 369494;
 #define DEV_ADDRESS "dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz"
 #define DEV_ADDRESS_TEST "mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"
 
-inline int64_t PastDrift(int64 nTime)   { return nTime - 15 * 60; } // up to 1 day from the past
-inline int64_t FutureDrift(int64 nTime) { return nTime + 15 * 60; } // up to 1 day from the future
-
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC

@@ -11,7 +11,6 @@
 #include "ui_interface.h"
 #include "kernel.h"
 #include "scrypt_mine.h"
-#include "scrypt.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -43,7 +42,7 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 uint256 nPoWBase = uint256("0x00000000ffff0000000000000000000000000000000000000000000000000000"); // difficulty-1 target
-unsigned int nStakeMinAge = 60 * 60 * 24 * 7;	// minimum age for coin age: 2d
+unsigned int nStakeMinAge = 60 * 60 * 24 * 7;	// minimum age for coin age: 7d
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
 int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
 int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
@@ -953,8 +952,6 @@ int generateMTRandom(unsigned int s, int range)
 }
 
 
-//static const int64 nMinSubsidy = 1 * COIN;
-//static const int CUTOFF_HEIGHT = 100800;	// Height at the end of 5 weeks
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
@@ -993,7 +990,6 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 
 // miner's coin stake reward based on nBits and coin age spent (coin-days)
 // simple algorithm, not depend on the diff
-//const int YEARLY_BLOCKCOUNT = 525600;	// 365 * 1440
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
 {
     if(totalCoin >= VALUE_CHANGE || fTestNet)
@@ -1123,13 +1119,15 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 {
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
-    CBigNum bnTargetLimit = !fProofOfStake ? bnProofOfWorkLimit : bnProofOfStakeLimit;
 
+    // cruft from alorithm switch time
     if(pindexLast->nHeight >= 386221 && pindexLast->nHeight <= 386226)
         return bnProofOfWorkLimit.GetCompact();
 
     if(pindexLast->nHeight >= 386232 && pindexLast->nHeight <= 386233)
         return bnProofOfWorkLimit_1.GetCompact();
+
+    CBigNum bnTargetLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1148,7 +1146,6 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
     int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
-
     int64 nInterval = nTargetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
@@ -1161,18 +1158,18 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
-//    if(pindexBest != NULL)
-//        printf("pindexBest = %d", pindexBest->nMoneySupply / COIN);
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
     // Check range
     if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
         return false;
+//        return error("CheckProofOfWork() : nBits below minimum work");
 
     // Check proof of work matches claimed amount
     if (hash > bnTarget.getuint256())
         return false;
+//        return error("CheckProofOfWork() : hash doesn't match nBits");
 
     return true;
 }
@@ -2046,16 +2043,7 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
     {
         pindexNew->pprev = (*miPrev).second;
         pindexNew->nHeight = pindexNew->pprev->nHeight + 1;
-
-        //test
-        if(pindexNew->pprev->nHeight >= 3)
-        {
-            int i = 1;
-            i++;
-            i++;
-        }
     }
-
 
     // ppcoin: compute chain trust score
     pindexNew->bnChainTrust = (pindexNew->pprev ? pindexNew->pprev->bnChainTrust : 0) + pindexNew->GetBlockTrust();
@@ -2313,8 +2301,6 @@ CBigNum CBlockIndex::GetBlockTrust() const
 	if (bnTarget <= 0)
 		return 0;
 	return (IsProofOfStake()? (CBigNum(1)<<256) / (bnTarget+1) : 1);
-
-
 }
 
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
@@ -2500,7 +2486,6 @@ bool CBlock::SignBlock(const CKeyStore& keystore)
                 return false;
             if (key.GetPubKey() != vchPubKey)
                 return false;
-
 
             return key.Sign(GetHashScrypt(), vchBlockSig);
         }
@@ -4153,7 +4138,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
                     if (!mempool.mapTx.count(txin.prevout.hash))
                     {
                         printf("ERROR: mempool transaction missing input\n");
-                        if (fDebug) assert("mempool transaction missing input" == 0);
+                        // if (fDebug) assert("mempool transaction missing input" == 0);
                         fMissingInputs = true;
                         if (porphan)
                             vOrphan.pop_back();
@@ -4442,8 +4427,6 @@ static int nLimitProcessors = -1;
 
 void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 {
-    void *scratchbuf = scrypt_buffer_alloc();
-
     printf("CPUMiner started for proof-of-%s\n", fProofOfStake? "stake" : "work");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
@@ -4532,7 +4515,6 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
         int64 nStart = GetTime();
         uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-//        unsigned int max_nonce = 0xffff0000;
         block_header res_header;
         uint256 result;
 
@@ -4691,7 +4673,6 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
         }
     }
 
-    scrypt_buffer_free(scratchbuf);
 }
 
 void static ThreadBitcoinMiner(void* parg)

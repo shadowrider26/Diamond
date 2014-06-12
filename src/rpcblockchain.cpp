@@ -48,7 +48,6 @@ int64 GetTotalCoin()
     return pindexBest->nMoneySupply / COIN;
 }
 
-
 Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool fPrintTransactionDetail)
 {
     Object result;
