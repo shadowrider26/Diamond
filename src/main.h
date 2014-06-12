@@ -98,8 +98,7 @@ class CReserveKey;
 class CTxDB;
 class CTxIndex;
 
-
-int64 GetDevCoin(int64 totalCoin);
+int64 GetContributionAmount(int64 totalCoin);
 void RegisterWallet(CWallet* pwalletIn);
 void UnregisterWallet(CWallet* pwalletIn);
 void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL, bool fUpdate = false, bool fConnect = true);
@@ -664,14 +663,14 @@ public:
     {
         std::string str;
         str += IsCoinBase()? "Coinbase" : (IsCoinStake()? "Coinstake" : "CTransaction");
-        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d)\n",
+        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d), TxComment=%s\n",
             GetHash().ToString().substr(0,10).c_str(),
             nTime,
             nVersion,
             vin.size(),
             vout.size(),
-            nLockTime
-//            strTxComment.substr(0,30).c_str()
+            nLockTime,
+            strTxComment.substr(0,30).c_str()
             );
 
         for (unsigned int i = 0; i < vin.size(); i++)

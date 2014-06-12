@@ -1695,18 +1695,18 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
             return false;
     }
     else
-        if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetDevCoin(totalCoin))
+        if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return false;
 
     if(totalCoin >= VALUE_CHANGE && IsProofOfWork())
     {
-        CBitcoinAddress address(!fTestNet ? DEV_ADDRESS : DEV_ADDRESS_TEST);
+        CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
         if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
-            return error("ConnectBlock() : coinbase does not pay to the dev address)");
-        if (vtx[0].vout[1].nValue < GetDevCoin(totalCoin))
-            return error("ConnectBlock() : coinbase does not pay enough to dev addresss");
+            return error("ConnectBlock() : coinbase does not pay to the foundation address)");
+        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin))
+            return error("ConnectBlock() : coinbase does not pay enough to foundation addresss");
     }
 
     // Update block index on disk without changing it in memory.
@@ -4018,7 +4018,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     txNew.vin[0].prevout.SetNull();
     if(totalCoin >= VALUE_CHANGE)
     {
-        CBitcoinAddress address(!fTestNet ? DEV_ADDRESS : DEV_ADDRESS_TEST);
+        CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         txNew.vout.resize(2);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
         txNew.vout[1].scriptPubKey.SetDestination(address.Get());
@@ -4283,7 +4283,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
             if(totalCoin >= VALUE_CHANGE)
-                pblock->vtx[0].vout[1].nValue = GetDevCoin(totalCoin);
+                pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
         }
 
         // Fill in header
@@ -4506,68 +4506,17 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
         {
 
             totalCoin = GetTotalCoin();
-            unsigned int nHashesDone = 0;
-
-            uint256 thash;
-//            char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
 
             if(totalCoin < VALUE_CHANGE)
             {
-                //scrypt_1024_1_1_256_sp(BEGIN(pblock->nVersion), BEGIN(thash), scratchpad);
-
-                if (thash <= hashTarget)
-                {
-                    // Found a solution
-                    SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                    CheckWork(pblock.get(), *pwallet, reservekey);
-                    SetThreadPriority(THREAD_PRIORITY_LOWEST);
-                    break;
-                }
-                pblock->nNonce += 1;
-                nHashesDone += 1;
-                if ((pblock->nNonce & 0xFF) == 0)
-                    break;
-//                unsigned int nNonceFound;
-
-//                nNonceFound = scanhash_scrypt(
-//                            (block_header *)&pblock->nVersion,
-//                            scratchbuf,
-//                            max_nonce,
-//                            nHashesDone,
-//                            UBEGIN(result),
-//                            &res_header
-//                );
-
-//                // Check if something found
-//                if (nNonceFound != (unsigned int) -1 && totalCoin < VALUE_CHANGE)
-//                {
-//                    if (result <= hashTarget && totalCoin < VALUE_CHANGE)
-//                    {
-//                        // Found a solution
-//                        pblock->nNonce = nNonceFound;
-//                        assert(result == pblock->GetHash());
-//                        if (!pblock->SignBlock(*pwalletMain))
-//                        {
-//    //                        strMintWarning = strMintMessage;
-//                            break;
-//                        }
-//                        strMintWarning = "";
-
-//                        SetThreadPriority(THREAD_PRIORITY_NORMAL);
-//                        CheckWork(pblock.get(), *pwalletMain, reservekey);
-//                        SetThreadPriority(THREAD_PRIORITY_LOWEST);
-//                        break;
-//                    }
-//                    else
-//                        break;
-//                }
-//                else
-//                    break;
+                // No more scrypt hashing, take a nap
+                Sleep(1000);
+                break;
             }
             else
             {
-                uint256 hash;
-                hash = pblock->GetHash();
+                // new block, use groestl
+                uint256 hash = pblock->GetHashGroestl();
                 if (hash <= hashTarget)
                 {
                     if (!pblock->SignBlock(*pwalletMain))
@@ -4576,7 +4525,6 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                         break;
                     }
                     strMintWarning = "";
-                    // nHashesDone += pblock->nNonce;
                     SetThreadPriority(THREAD_PRIORITY_NORMAL);
 
                     printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
@@ -4597,10 +4545,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             }
             else
             {
-                if(totalCoin < VALUE_CHANGE)
-                    nHashCounter += nHashesDone;
-                else
-                    nHashCounter += 1;
+                nHashCounter++;
             }
             if (GetTimeMillis() - nHPSTimerStart > 4000)
             {
@@ -4612,12 +4557,13 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                         dHashesPerSec = 1000.0 * nHashCounter / (GetTimeMillis() - nHPSTimerStart);
                         nHPSTimerStart = GetTimeMillis();
                         nHashCounter = 0;
-//                        static int64 nLogTime;
-//                        if (GetTime() - nLogTime > 30 * 60)
-//                        {
-//                            nLogTime = GetTime();
+                        static int64 nLogTime;
+                        // log hash rate every 30 minutes
+                        if (GetTime() - nLogTime > 30 * 60)
+                        {
+                            nLogTime = GetTime();
                             printf("hashmeter %3d CPUs %6.0f khash/s\n", vnThreadsRunning[THREAD_MINER], dHashesPerSec/1000.0);
-//                        }
+                        }
                     }
                 }
             }
@@ -4710,7 +4656,12 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 }
 
 
-int64 GetDevCoin(int64 totalCoin) {
+// Diamond coin mechanics
+// Foundation contribution
+// 0.05 until 1000000 coins generated
+// 0.01 afterwards
+// Changing this requires a fork
+int64 GetContributionAmount(int64 totalCoin) {
     if(totalCoin < 1000000)
         return 0.05 * COIN;
     else
