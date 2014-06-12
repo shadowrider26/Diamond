@@ -981,8 +981,6 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
             nSubsidy = 2 * CENT;
         else if(totalCoin > 1000000)
             nSubsidy = 10 * CENT;
-        else if(totalCoin > 2500000)
-            nSubsidy = 2 * CENT;
     }
     return nSubsidy + nFees;
 }
