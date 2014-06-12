@@ -7,17 +7,17 @@
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
         <source>About BottleCaps</source>
-        <translation>О BottleCaps</translation>
+        <translation>Рћ BottleCaps</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>&lt;b&gt;BottleCaps&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;BottleCaps&lt;/b&gt; версия</translation>
+        <translation>&lt;b&gt;BottleCaps&lt;/b&gt; РІРµСЂСЃРёСЏ</translation>
     </message>
     <message>
         <location line="+41"/>
-        <source>Copyright © 2009-2012 The BottleCaps developers</source>
-        <translation>Все права защищены © 2009-2012 Разработчики BottleCaps</translation>
+        <source>Copyright В© 2009-2012 The BottleCaps developers</source>
+        <translation>Р’СЃРµ РїСЂР°РІР° Р·Р°С‰РёС‰РµРЅС‹ В© 2009-2012 Р Р°Р·СЂР°Р±РѕС‚С‡РёРєРё BottleCaps</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -28,11 +28,11 @@ Distributed under the MIT/X11 software license, see the accompanying file COPYIN
 
 This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
         <translation>
-Это экспериментальная программа.
+Р­С‚Рѕ СЌРєСЃРїРµСЂРёРјРµРЅС‚Р°Р»СЊРЅР°СЏ РїСЂРѕРіСЂР°РјРјР°.
 
-Распространяется на правах лицензии MIT/X11, см. файл license.txt или http://www.opensource.org/licenses/mit-license.php.
+Р Р°СЃРїСЂРѕСЃС‚СЂР°РЅСЏРµС‚СЃСЏ РЅР° РїСЂР°РІР°С… Р»РёС†РµРЅР·РёРё MIT/X11, СЃРј. С„Р°Р№Р» license.txt РёР»Рё http://www.opensource.org/licenses/mit-license.php.
 
-Этот продукт включает ПО, разработанное OpenSSL Project для использования в OpenSSL Toolkit (http://www.openssl.org/) и криптографическое ПО, написанное Eric Young (eay@cryptsoft.com) и ПО для работы с UPnP, написанное Thomas Bernard.</translation>
+Р­С‚РѕС‚ РїСЂРѕРґСѓРєС‚ РІРєР»СЋС‡Р°РµС‚ РџРћ, СЂР°Р·СЂР°Р±РѕС‚Р°РЅРЅРѕРµ OpenSSL Project РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ OpenSSL Toolkit (http://www.openssl.org/) Рё РєСЂРёРїС‚РѕРіСЂР°С„РёС‡РµСЃРєРѕРµ РџРћ, РЅР°РїРёСЃР°РЅРЅРѕРµ Eric Young (eay@cryptsoft.com) Рё РџРћ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ UPnP, РЅР°РїРёСЃР°РЅРЅРѕРµ Thomas Bernard.</translation>
     </message>
 </context>
 <context>
@@ -40,102 +40,102 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../forms/addressbookpage.ui" line="+14"/>
         <source>Address Book</source>
-        <translation>Адресная книга</translation>
+        <translation>РђРґСЂРµСЃРЅР°СЏ РєРЅРёРіР°</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Double-click to edit address or label</source>
-        <translation>Для того, чтобы изменить адрес или метку давжды кликните по изменяемому объекту</translation>
+        <translation>Р”Р»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РёР·РјРµРЅРёС‚СЊ Р°РґСЂРµСЃ РёР»Рё РјРµС‚РєСѓ РґР°РІР¶РґС‹ РєР»РёРєРЅРёС‚Рµ РїРѕ РёР·РјРµРЅСЏРµРјРѕРјСѓ РѕР±СЉРµРєС‚Сѓ</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Create a new address</source>
-        <translation>Создать новый адрес</translation>
+        <translation>РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation>Копировать текущий выделенный адрес в буфер обмена</translation>
+        <translation>РљРѕРїРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰РёР№ РІС‹РґРµР»РµРЅРЅС‹Р№ Р°РґСЂРµСЃ РІ Р±СѓС„РµСЂ РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>&amp;New Address</source>
-        <translation>&amp;Новый адрес</translation>
+        <translation>&amp;РќРѕРІС‹Р№ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="-46"/>
         <source>These are your BottleCaps addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Это Ваши адреса для получения платежей. Вы можете дать разные адреса отправителям, чтобы отслеживать, кто именно вам платит.</translation>
+        <translation>Р­С‚Рѕ Р’Р°С€Рё Р°РґСЂРµСЃР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РїР»Р°С‚РµР¶РµР№. Р’С‹ РјРѕР¶РµС‚Рµ РґР°С‚СЊ СЂР°Р·РЅС‹Рµ Р°РґСЂРµСЃР° РѕС‚РїСЂР°РІРёС‚РµР»СЏРј, С‡С‚РѕР±С‹ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ, РєС‚Рѕ РёРјРµРЅРЅРѕ РІР°Рј РїР»Р°С‚РёС‚.</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>&amp;Copy Address</source>
-        <translation>&amp;Копировать адрес</translation>
+        <translation>&amp;РљРѕРїРёСЂРѕРІР°С‚СЊ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Show &amp;QR Code</source>
-        <translation>Показать &amp;QR код</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ &amp;QR РєРѕРґ</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Sign a message to prove you own a BottleCaps address</source>
-        <translation>Подписать сообщение, чтобы доказать владение адресом BottleCaps</translation>
+        <translation>РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ, С‡С‚РѕР±С‹ РґРѕРєР°Р·Р°С‚СЊ РІР»Р°РґРµРЅРёРµ Р°РґСЂРµСЃРѕРј BottleCaps</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Sign &amp;Message</source>
-        <translation>&amp;Подписать сообщение</translation>
+        <translation>&amp;РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Delete the currently selected address from the list</source>
-        <translation>Удалить выбранный адрес из списка</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РІС‹Р±СЂР°РЅРЅС‹Р№ Р°РґСЂРµСЃ РёР· СЃРїРёСЃРєР°</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Verify a message to ensure it was signed with a specified BottleCaps address</source>
-        <translation>Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом BottleCaps</translation>
+        <translation>РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ, С‡С‚РѕР±С‹ СѓР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ РѕРЅРѕ Р±С‹Р»Рѕ РїРѕРґРїРёСЃР°РЅРѕ СѓРєР°Р·Р°РЅРЅС‹Рј Р°РґСЂРµСЃРѕРј BottleCaps</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Verify Message</source>
-        <translation>&amp;Проверить сообщение</translation>
+        <translation>&amp;РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Удалить</translation>
+        <translation>&amp;РЈРґР°Р»РёС‚СЊ</translation>
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+65"/>
         <source>Copy &amp;Label</source>
-        <translation>Копировать &amp;метку</translation>
+        <translation>РљРѕРїРёСЂРѕРІР°С‚СЊ &amp;РјРµС‚РєСѓ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Правка</translation>
+        <translation>&amp;РџСЂР°РІРєР°</translation>
     </message>
     <message>
         <location line="+250"/>
         <source>Export Address Book Data</source>
-        <translation>Экспортировать адресную книгу</translation>
+        <translation>Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ Р°РґСЂРµСЃРЅСѓСЋ РєРЅРёРіСѓ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation>Текст, разделённый запятыми (*.csv)</translation>
+        <translation>РўРµРєСЃС‚, СЂР°Р·РґРµР»С‘РЅРЅС‹Р№ Р·Р°РїСЏС‚С‹РјРё (*.csv)</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Error exporting</source>
-        <translation>Ошибка экспорта</translation>
+        <translation>РћС€РёР±РєР° СЌРєСЃРїРѕСЂС‚Р°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Could not write to file %1.</source>
-        <translation>Невозможно записать в файл %1.</translation>
+        <translation>РќРµРІРѕР·РјРѕР¶РЅРѕ Р·Р°РїРёСЃР°С‚СЊ РІ С„Р°Р№Р» %1.</translation>
     </message>
 </context>
 <context>
@@ -143,17 +143,17 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../addresstablemodel.cpp" line="+142"/>
         <source>Label</source>
-        <translation>Метка</translation>
+        <translation>РњРµС‚РєР°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation>РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>(no label)</source>
-        <translation>[нет метки]</translation>
+        <translation>[РЅРµС‚ РјРµС‚РєРё]</translation>
     </message>
 </context>
 <context>
@@ -161,99 +161,99 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../forms/askpassphrasedialog.ui" line="+26"/>
         <source>Passphrase Dialog</source>
-        <translation>Диалог ввода пароля</translation>
+        <translation>Р”РёР°Р»РѕРі РІРІРѕРґР° РїР°СЂРѕР»СЏ</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Enter passphrase</source>
-        <translation>Введите пароль</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>New passphrase</source>
-        <translation>Новый пароль</translation>
+        <translation>РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Repeat new passphrase</source>
-        <translation>Повторите новый пароль</translation>
+        <translation>РџРѕРІС‚РѕСЂРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <location filename="../askpassphrasedialog.cpp" line="+33"/>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;10 or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation>Введите новый пароль для бумажника. &lt;br/&gt; Пожалуйста, используйте фразы из &lt;b&gt;10 или более случайных символов,&lt;/b&gt; или &lt;b&gt;восьми и более слов.&lt;/b&gt;</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ РґР»СЏ Р±СѓРјР°Р¶РЅРёРєР°. &lt;br/&gt; РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РёСЃРїРѕР»СЊР·СѓР№С‚Рµ С„СЂР°Р·С‹ РёР· &lt;b&gt;10 РёР»Рё Р±РѕР»РµРµ СЃР»СѓС‡Р°Р№РЅС‹С… СЃРёРјРІРѕР»РѕРІ,&lt;/b&gt; РёР»Рё &lt;b&gt;РІРѕСЃСЊРјРё Рё Р±РѕР»РµРµ СЃР»РѕРІ.&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Encrypt wallet</source>
-        <translation>Зашифровать бумажник</translation>
+        <translation>Р—Р°С€РёС„СЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation>Для выполнения операции требуется пароль вашего бумажника.</translation>
+        <translation>Р”Р»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё С‚СЂРµР±СѓРµС‚СЃСЏ РїР°СЂРѕР»СЊ РІР°С€РµРіРѕ Р±СѓРјР°Р¶РЅРёРєР°.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unlock wallet</source>
-        <translation>Разблокировать бумажник</translation>
+        <translation>Р Р°Р·Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation>Для выполнения операции требуется пароль вашего бумажника.</translation>
+        <translation>Р”Р»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё С‚СЂРµР±СѓРµС‚СЃСЏ РїР°СЂРѕР»СЊ РІР°С€РµРіРѕ Р±СѓРјР°Р¶РЅРёРєР°.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Decrypt wallet</source>
-        <translation>Расшифровать бумажник</translation>
+        <translation>Р Р°СЃС€РёС„СЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Change passphrase</source>
-        <translation>Сменить пароль</translation>
+        <translation>РЎРјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Enter the old and new passphrase to the wallet.</source>
-        <translation>Введите старый и новый пароль для бумажника.</translation>
+        <translation>Р’РІРµРґРёС‚Рµ СЃС‚Р°СЂС‹Р№ Рё РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ РґР»СЏ Р±СѓРјР°Р¶РЅРёРєР°.</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Confirm wallet encryption</source>
-        <translation>Подтвердите шифрование бумажника</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚Рµ С€РёС„СЂРѕРІР°РЅРёРµ Р±СѓРјР°Р¶РЅРёРєР°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>Внимание: если вы зашифруете бумажник и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ МОНЕТЫ&lt;/b&gt;!</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: РµСЃР»Рё РІС‹ Р·Р°С€РёС„СЂСѓРµС‚Рµ Р±СѓРјР°Р¶РЅРёРє Рё РїРѕС‚РµСЂСЏРµС‚Рµ РїР°СЂРѕР»СЊ, РІС‹ &lt;b&gt;РџРћРўР•Р РЇР•РўР• Р’РЎР• Р’РђРЁР РњРћРќР•РўР«&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>Вы уверены, что хотите зашифровать ваш бумажник?</translation>
+        <translation>Р’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ Р·Р°С€РёС„СЂРѕРІР°С‚СЊ РІР°С€ Р±СѓРјР°Р¶РЅРёРє?</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation>ВАЖНО: все предыдущие резервные копии вашего кошелька должны быть заменены новым зашифрованным файлом. В целях безопасности предыдущие резервные копии нешифрованного кошелька станут бесполезны, как только вы начнёте использовать новый шифрованный кошелёк.</translation>
+        <translation>Р’РђР–РќРћ: РІСЃРµ РїСЂРµРґС‹РґСѓС‰РёРµ СЂРµР·РµСЂРІРЅС‹Рµ РєРѕРїРёРё РІР°С€РµРіРѕ РєРѕС€РµР»СЊРєР° РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РјРµРЅРµРЅС‹ РЅРѕРІС‹Рј Р·Р°С€РёС„СЂРѕРІР°РЅРЅС‹Рј С„Р°Р№Р»РѕРј. Р’ С†РµР»СЏС… Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё РїСЂРµРґС‹РґСѓС‰РёРµ СЂРµР·РµСЂРІРЅС‹Рµ РєРѕРїРёРё РЅРµС€РёС„СЂРѕРІР°РЅРЅРѕРіРѕ РєРѕС€РµР»СЊРєР° СЃС‚Р°РЅСѓС‚ Р±РµСЃРїРѕР»РµР·РЅС‹, РєР°Рє С‚РѕР»СЊРєРѕ РІС‹ РЅР°С‡РЅС‘С‚Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РЅРѕРІС‹Р№ С€РёС„СЂРѕРІР°РЅРЅС‹Р№ РєРѕС€РµР»С‘Рє.</translation>
     </message>
     <message>
         <location line="+100"/>
         <location line="+24"/>
         <source>Warning: The Caps Lock key is on!</source>
-        <translation>Внимание: Caps Lock включен!</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: Caps Lock РІРєР»СЋС‡РµРЅ!</translation>
     </message>
     <message>
         <location line="-130"/>
         <location line="+58"/>
         <source>Wallet encrypted</source>
-        <translation>Бумажник зашифрован</translation>
+        <translation>Р‘СѓРјР°Р¶РЅРёРє Р·Р°С€РёС„СЂРѕРІР°РЅ</translation>
     </message>
     <message>
         <location line="-56"/>
         <source>BottleCaps will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>Сейчас программа закроется для завершения процесса шифрования. Помните, что шифрование вашего бумажника не может полностью защитить ваши монеты от кражи с помощью инфицирования вашего компьютера вредоносным ПО.</translation>
+        <translation>РЎРµР№С‡Р°СЃ РїСЂРѕРіСЂР°РјРјР° Р·Р°РєСЂРѕРµС‚СЃСЏ РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РїСЂРѕС†РµСЃСЃР° С€РёС„СЂРѕРІР°РЅРёСЏ. РџРѕРјРЅРёС‚Рµ, С‡С‚Рѕ С€РёС„СЂРѕРІР°РЅРёРµ РІР°С€РµРіРѕ Р±СѓРјР°Р¶РЅРёРєР° РЅРµ РјРѕР¶РµС‚ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°С‰РёС‚РёС‚СЊ РІР°С€Рё РјРѕРЅРµС‚С‹ РѕС‚ РєСЂР°Р¶Рё СЃ РїРѕРјРѕС‰СЊСЋ РёРЅС„РёС†РёСЂРѕРІР°РЅРёСЏ РІР°С€РµРіРѕ РєРѕРјРїСЊСЋС‚РµСЂР° РІСЂРµРґРѕРЅРѕСЃРЅС‹Рј РџРћ.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -261,40 +261,40 @@ This product includes software developed by the OpenSSL Project for use in the O
         <location line="+42"/>
         <location line="+6"/>
         <source>Wallet encryption failed</source>
-        <translation>Не удалось зашифровать бумажник</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°С€РёС„СЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="-54"/>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation>Шифрование бумажника не удалось из-за внутренней ошибки. Ваш бумажник не был зашифрован.</translation>
+        <translation>РЁРёС„СЂРѕРІР°РЅРёРµ Р±СѓРјР°Р¶РЅРёРєР° РЅРµ СѓРґР°Р»РѕСЃСЊ РёР·-Р·Р° РІРЅСѓС‚СЂРµРЅРЅРµР№ РѕС€РёР±РєРё. Р’Р°С€ Р±СѓРјР°Р¶РЅРёРє РЅРµ Р±С‹Р» Р·Р°С€РёС„СЂРѕРІР°РЅ.</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+48"/>
         <source>The supplied passphrases do not match.</source>
-        <translation>Введённые пароли не совпадают.</translation>
+        <translation>Р’РІРµРґС‘РЅРЅС‹Рµ РїР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚.</translation>
     </message>
     <message>
         <location line="-37"/>
         <source>Wallet unlock failed</source>
-        <translation>Разблокировка бумажника не удалась</translation>
+        <translation>Р Р°Р·Р±Р»РѕРєРёСЂРѕРІРєР° Р±СѓРјР°Р¶РЅРёРєР° РЅРµ СѓРґР°Р»Р°СЃСЊ</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+11"/>
         <location line="+19"/>
         <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation>Указанный пароль не подходит.</translation>
+        <translation>РЈРєР°Р·Р°РЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµ РїРѕРґС…РѕРґРёС‚.</translation>
     </message>
     <message>
         <location line="-20"/>
         <source>Wallet decryption failed</source>
-        <translation>Расшифрование бумажника не удалось</translation>
+        <translation>Р Р°СЃС€РёС„СЂРѕРІР°РЅРёРµ Р±СѓРјР°Р¶РЅРёРєР° РЅРµ СѓРґР°Р»РѕСЃСЊ</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Wallet passphrase was successfully changed.</source>
-        <translation>Пароль бумажника успешно изменён.</translation>
+        <translation>РџР°СЂРѕР»СЊ Р±СѓРјР°Р¶РЅРёРєР° СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅС‘РЅ.</translation>
     </message>
 </context>
 <context>
@@ -302,166 +302,166 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location filename="../bitcoingui.cpp" line="+257"/>
         <source>Sign &amp;message...</source>
-        <translation>&amp;Подписать сообщение</translation>
+        <translation>&amp;РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+237"/>
         <source>Synchronizing with network...</source>
-        <translation>Синхронизация с сетью...</translation>
+        <translation>РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ СЃ СЃРµС‚СЊСЋ...</translation>
     </message>
     <message>
         <location line="-299"/>
         <source>&amp;Overview</source>
-        <translation>О&amp;бзор</translation>
+        <translation>Рћ&amp;Р±Р·РѕСЂ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show general overview of wallet</source>
-        <translation>Показать общий обзор действий с бумажником</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РѕР±С‰РёР№ РѕР±Р·РѕСЂ РґРµР№СЃС‚РІРёР№ СЃ Р±СѓРјР°Р¶РЅРёРєРѕРј</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>&amp;Transactions</source>
-        <translation>&amp;Транзакции</translation>
+        <translation>&amp;РўСЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Browse transaction history</source>
-        <translation>Показать историю транзакций</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ С‚СЂР°РЅР·Р°РєС†РёР№</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Address Book</source>
-        <translation>&amp;Адресная книга</translation>
+        <translation>&amp;РђРґСЂРµСЃРЅР°СЏ РєРЅРёРіР°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edit the list of stored addresses and labels</source>
-        <translation>Изменить список сохранённых адресов и меток к ним</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ СЃРїРёСЃРѕРє СЃРѕС…СЂР°РЅС‘РЅРЅС‹С… Р°РґСЂРµСЃРѕРІ Рё РјРµС‚РѕРє Рє РЅРёРј</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>&amp;Receive coins</source>
-        <translation>&amp;Получение монет</translation>
+        <translation>&amp;РџРѕР»СѓС‡РµРЅРёРµ РјРѕРЅРµС‚</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show the list of addresses for receiving payments</source>
-        <translation>Показать список адресов для получения платежей</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ СЃРїРёСЃРѕРє Р°РґСЂРµСЃРѕРІ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РїР»Р°С‚РµР¶РµР№</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>&amp;Send coins</source>
-        <translation>Отп&amp;равка монет</translation>
+        <translation>РћС‚Рї&amp;СЂР°РІРєР° РјРѕРЅРµС‚</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>E&amp;xit</source>
-        <translation>В&amp;ыход</translation>
+        <translation>Р’&amp;С‹С…РѕРґ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Quit application</source>
-        <translation>Закрыть приложение</translation>
+        <translation>Р—Р°РєСЂС‹С‚СЊ РїСЂРёР»РѕР¶РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Show information about BottleCaps</source>
-        <translation>Показать информацию о BottleCaps&apos;е</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ BottleCaps&apos;Рµ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>About &amp;Qt</source>
-        <translation>О &amp;Qt</translation>
+        <translation>Рћ &amp;Qt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show information about Qt</source>
-        <translation>Показать информацию о Qt</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Qt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Options...</source>
-        <translation>Оп&amp;ции...</translation>
+        <translation>РћРї&amp;С†РёРё...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Encrypt Wallet...</source>
-        <translation>&amp;Зашифровать бумажник</translation>
+        <translation>&amp;Р—Р°С€РёС„СЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Backup Wallet...</source>
-        <translation>&amp;Сделать резервную копию бумажника</translation>
+        <translation>&amp;РЎРґРµР»Р°С‚СЊ СЂРµР·РµСЂРІРЅСѓСЋ РєРѕРїРёСЋ Р±СѓРјР°Р¶РЅРёРєР°</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Change Passphrase...</source>
-        <translation>&amp;Изменить пароль</translation>
+        <translation>&amp;РР·РјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ</translation>
     </message>
     <message numerus="yes">
         <location line="+241"/>
         <source>~%n block(s) remaining</source>
         <translation>
-            <numerusform>остался ~%n блок</numerusform>
-            <numerusform>осталось ~%n блоков</numerusform>
-            <numerusform>осталось ~%n блоков</numerusform>
+            <numerusform>РѕСЃС‚Р°Р»СЃСЏ ~%n Р±Р»РѕРє</numerusform>
+            <numerusform>РѕСЃС‚Р°Р»РѕСЃСЊ ~%n Р±Р»РѕРєРѕРІ</numerusform>
+            <numerusform>РѕСЃС‚Р°Р»РѕСЃСЊ ~%n Р±Р»РѕРєРѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Downloaded %1 of %2 blocks of transaction history (%3% done).</source>
-        <translation>Загружено %1 из %2 блоков истории операций (%3% завершено).</translation>
+        <translation>Р—Р°РіСЂСѓР¶РµРЅРѕ %1 РёР· %2 Р±Р»РѕРєРѕРІ РёСЃС‚РѕСЂРёРё РѕРїРµСЂР°С†РёР№ (%3% Р·Р°РІРµСЂС€РµРЅРѕ).</translation>
     </message>
     <message>
         <location line="-242"/>
         <source>&amp;Export...</source>
-        <translation>&amp;Экспорт...</translation>
+        <translation>&amp;Р­РєСЃРїРѕСЂС‚...</translation>
     </message>
     <message>
         <location line="-58"/>
         <source>Send coins to a BottleCaps address</source>
-        <translation>Отправить монеты на указанный адрес BottleCaps</translation>
+        <translation>РћС‚РїСЂР°РІРёС‚СЊ РјРѕРЅРµС‚С‹ РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ Р°РґСЂРµСЃ BottleCaps</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Modify configuration options for BottleCaps</source>
-        <translation>Изменить параметры конфигурации BottleCaps</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіСѓСЂР°С†РёРё BottleCaps</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Export the data in the current tab to a file</source>
-        <translation>Экспортировать данные из вкладки в файл</translation>
+        <translation>Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РґР°РЅРЅС‹Рµ РёР· РІРєР»Р°РґРєРё РІ С„Р°Р№Р»</translation>
     </message>
     <message>
         <location line="-10"/>
         <source>Encrypt or decrypt wallet</source>
-        <translation>Зашифровать или расшифровать бумажник</translation>
+        <translation>Р—Р°С€РёС„СЂРѕРІР°С‚СЊ РёР»Рё СЂР°СЃС€РёС„СЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Backup wallet to another location</source>
-        <translation>Сделать резервную копию бумажника в другом месте</translation>
+        <translation>РЎРґРµР»Р°С‚СЊ СЂРµР·РµСЂРІРЅСѓСЋ РєРѕРїРёСЋ Р±СѓРјР°Р¶РЅРёРєР° РІ РґСЂСѓРіРѕРј РјРµСЃС‚Рµ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Change the passphrase used for wallet encryption</source>
-        <translation>Изменить пароль шифрования бумажника</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ С€РёС„СЂРѕРІР°РЅРёСЏ Р±СѓРјР°Р¶РЅРёРєР°</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&amp;Debug window</source>
-        <translation>&amp;Окно отладки</translation>
+        <translation>&amp;РћРєРЅРѕ РѕС‚Р»Р°РґРєРё</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open debugging and diagnostic console</source>
-        <translation>Открыть консоль отладки и диагностики</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РєРѕРЅСЃРѕР»СЊ РѕС‚Р»Р°РґРєРё Рё РґРёР°РіРЅРѕСЃС‚РёРєРё</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>&amp;Verify message...</source>
-        <translation>&amp;Проверить сообщение...</translation>
+        <translation>&amp;РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ...</translation>
     </message>
     <message>
         <location line="-186"/>
@@ -471,139 +471,139 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <source>Wallet</source>
-        <translation>Бумажник</translation>
+        <translation>Р‘СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+168"/>
         <source>&amp;About BottleCaps</source>
-        <translation>&amp;О BottleCaps</translation>
+        <translation>&amp;Рћ BottleCaps</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&amp;Show / Hide</source>
-        <translation>&amp;Показать / Скрыть</translation>
+        <translation>&amp;РџРѕРєР°Р·Р°С‚СЊ / РЎРєСЂС‹С‚СЊ</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>&amp;Р¤Р°Р№Р»</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Settings</source>
-        <translation>&amp;Настройки</translation>
+        <translation>&amp;РќР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&amp;Help</source>
-        <translation>&amp;Помощь</translation>
+        <translation>&amp;РџРѕРјРѕС‰СЊ</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Tabs toolbar</source>
-        <translation>Панель вкладок</translation>
+        <translation>РџР°РЅРµР»СЊ РІРєР»Р°РґРѕРє</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Actions toolbar</source>
-        <translation>Панель действий</translation>
+        <translation>РџР°РЅРµР»СЊ РґРµР№СЃС‚РІРёР№</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+9"/>
         <source>[testnet]</source>
-        <translation>[тестовая сеть]</translation>
+        <translation>[С‚РµСЃС‚РѕРІР°СЏ СЃРµС‚СЊ]</translation>
     </message>
     <message>
         <location line="+0"/>
         <location line="+60"/>
         <source>BottleCaps client</source>
-        <translation>BottleCaps клиент</translation>
+        <translation>BottleCaps РєР»РёРµРЅС‚</translation>
     </message>
     <message numerus="yes">
         <location line="+69"/>
         <source>%n active connection(s) to BottleCaps network</source>
         <translation>
-            <numerusform>%n активное соединение с сетью</numerusform>
-            <numerusform>%n активных соединений с сетью</numerusform>
-            <numerusform>%n активных соединений с сетью</numerusform>
+            <numerusform>%n Р°РєС‚РёРІРЅРѕРµ СЃРѕРµРґРёРЅРµРЅРёРµ СЃ СЃРµС‚СЊСЋ</numerusform>
+            <numerusform>%n Р°РєС‚РёРІРЅС‹С… СЃРѕРµРґРёРЅРµРЅРёР№ СЃ СЃРµС‚СЊСЋ</numerusform>
+            <numerusform>%n Р°РєС‚РёРІРЅС‹С… СЃРѕРµРґРёРЅРµРЅРёР№ СЃ СЃРµС‚СЊСЋ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Downloaded %1 blocks of transaction history.</source>
-        <translation>Загружено %1 блоков истории транзакций.</translation>
+        <translation>Р—Р°РіСЂСѓР¶РµРЅРѕ %1 Р±Р»РѕРєРѕРІ РёСЃС‚РѕСЂРёРё С‚СЂР°РЅР·Р°РєС†РёР№.</translation>
     </message>
     <message numerus="yes">
         <location line="+22"/>
         <source>%n second(s) ago</source>
         <translation>
-            <numerusform>%n секунду назад</numerusform>
-            <numerusform>%n секунды назад</numerusform>
-            <numerusform>%n секунд назад</numerusform>
+            <numerusform>%n СЃРµРєСѓРЅРґСѓ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n СЃРµРєСѓРЅРґС‹ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n СЃРµРєСѓРЅРґ РЅР°Р·Р°Рґ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n minute(s) ago</source>
         <translation>
-            <numerusform>%n минуту назад</numerusform>
-            <numerusform>%n минуты назад</numerusform>
-            <numerusform>%n минут назад</numerusform>
+            <numerusform>%n РјРёРЅСѓС‚Сѓ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n РјРёРЅСѓС‚С‹ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n РјРёРЅСѓС‚ РЅР°Р·Р°Рґ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n hour(s) ago</source>
         <translation>
-            <numerusform>%n час назад</numerusform>
-            <numerusform>%n часа назад</numerusform>
-            <numerusform>%n часов назад</numerusform>
+            <numerusform>%n С‡Р°СЃ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n С‡Р°СЃР° РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n С‡Р°СЃРѕРІ РЅР°Р·Р°Рґ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n day(s) ago</source>
         <translation>
-            <numerusform>%n день назад</numerusform>
-            <numerusform>%n дня назад</numerusform>
-            <numerusform>%n дней назад</numerusform>
+            <numerusform>%n РґРµРЅСЊ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n РґРЅСЏ РЅР°Р·Р°Рґ</numerusform>
+            <numerusform>%n РґРЅРµР№ РЅР°Р·Р°Рґ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Up to date</source>
-        <translation>Синхронизированно</translation>
+        <translation>РЎРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°РЅРЅРѕ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Catching up...</source>
-        <translation>Синхронизируется...</translation>
+        <translation>РЎРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚СЃСЏ...</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Last received block was generated %1.</source>
-        <translation>Последний полученный блок был сгенерирован %1.</translation>
+        <translation>РџРѕСЃР»РµРґРЅРёР№ РїРѕР»СѓС‡РµРЅРЅС‹Р№ Р±Р»РѕРє Р±С‹Р» СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅ %1.</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>This transaction is over the size limit.  You can still send it for a fee of %1, which goes to the nodes that process your transaction and helps to support the network.  Do you want to pay the fee?</source>
-        <translation>Данная транзакция превышает предельно допустимый размер.  Но Вы можете всё равно совершить её, добавив комиссию в %1, которая отправится тем узлам, которые обработают Вашу транзакцию, и поможет поддержать сеть.  Вы хотите добавить комиссию?</translation>
+        <translation>Р”Р°РЅРЅР°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ РїСЂРµРІС‹С€Р°РµС‚ РїСЂРµРґРµР»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјС‹Р№ СЂР°Р·РјРµСЂ.  РќРѕ Р’С‹ РјРѕР¶РµС‚Рµ РІСЃС‘ СЂР°РІРЅРѕ СЃРѕРІРµСЂС€РёС‚СЊ РµС‘, РґРѕР±Р°РІРёРІ РєРѕРјРёСЃСЃРёСЋ РІ %1, РєРѕС‚РѕСЂР°СЏ РѕС‚РїСЂР°РІРёС‚СЃСЏ С‚РµРј СѓР·Р»Р°Рј, РєРѕС‚РѕСЂС‹Рµ РѕР±СЂР°Р±РѕС‚Р°СЋС‚ Р’Р°С€Сѓ С‚СЂР°РЅР·Р°РєС†РёСЋ, Рё РїРѕРјРѕР¶РµС‚ РїРѕРґРґРµСЂР¶Р°С‚СЊ СЃРµС‚СЊ.  Р’С‹ С…РѕС‚РёС‚Рµ РґРѕР±Р°РІРёС‚СЊ РєРѕРјРёСЃСЃРёСЋ?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Confirm transaction fee</source>
-        <translation>Подтвердите комиссию</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚Рµ РєРѕРјРёСЃСЃРёСЋ</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Sent transaction</source>
-        <translation>Исходящая транзакция</translation>
+        <translation>РСЃС…РѕРґСЏС‰Р°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Incoming transaction</source>
-        <translation>Входящая транзакция</translation>
+        <translation>Р’С…РѕРґСЏС‰Р°СЏ С‚СЂР°РЅР·Р°РєС†РёСЏ</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -612,58 +612,58 @@ Amount: %2
 Type: %3
 Address: %4
 </source>
-        <translation>Дата: %1
-Количество: %2
-Тип: %3
-Адрес: %4
+        <translation>Р”Р°С‚Р°: %1
+РљРѕР»РёС‡РµСЃС‚РІРѕ: %2
+РўРёРї: %3
+РђРґСЂРµСЃ: %4
 </translation>
     </message>
     <message>
         <location line="+100"/>
         <location line="+15"/>
         <source>URI handling</source>
-        <translation>Обработка URI</translation>
+        <translation>РћР±СЂР°Р±РѕС‚РєР° URI</translation>
     </message>
     <message>
         <location line="-15"/>
         <location line="+15"/>
         <source>URI can not be parsed! This can be caused by an invalid BottleCaps address or malformed URI parameters.</source>
-        <translation>Не удалось обработать URI! Это может быть связано с неверным адресом BottleCaps или неправильными параметрами URI.</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РѕР±СЂР°Р±РѕС‚Р°С‚СЊ URI! Р­С‚Рѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЃРІСЏР·Р°РЅРѕ СЃ РЅРµРІРµСЂРЅС‹Рј Р°РґСЂРµСЃРѕРј BottleCaps РёР»Рё РЅРµРїСЂР°РІРёР»СЊРЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё URI.</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation>Бумажник &lt;b&gt;зашифрован&lt;/b&gt; и в настоящее время &lt;b&gt;разблокирован&lt;/b&gt;</translation>
+        <translation>Р‘СѓРјР°Р¶РЅРёРє &lt;b&gt;Р·Р°С€РёС„СЂРѕРІР°РЅ&lt;/b&gt; Рё РІ РЅР°СЃС‚РѕСЏС‰РµРµ РІСЂРµРјСЏ &lt;b&gt;СЂР°Р·Р±Р»РѕРєРёСЂРѕРІР°РЅ&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation>Бумажник &lt;b&gt;зашифрован&lt;/b&gt; и в настоящее время &lt;b&gt;заблокирован&lt;/b&gt;</translation>
+        <translation>Р‘СѓРјР°Р¶РЅРёРє &lt;b&gt;Р·Р°С€РёС„СЂРѕРІР°РЅ&lt;/b&gt; Рё РІ РЅР°СЃС‚РѕСЏС‰РµРµ РІСЂРµРјСЏ &lt;b&gt;Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Backup Wallet</source>
-        <translation>Сделать резервную копию бумажника</translation>
+        <translation>РЎРґРµР»Р°С‚СЊ СЂРµР·РµСЂРІРЅСѓСЋ РєРѕРїРёСЋ Р±СѓРјР°Р¶РЅРёРєР°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Wallet Data (*.dat)</source>
-        <translation>Данные бумажника (*.dat)</translation>
+        <translation>Р”Р°РЅРЅС‹Рµ Р±СѓРјР°Р¶РЅРёРєР° (*.dat)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Backup Failed</source>
-        <translation>Резервное копирование не удалось</translation>
+        <translation>Р РµР·РµСЂРІРЅРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµ РЅРµ СѓРґР°Р»РѕСЃСЊ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>There was an error trying to save the wallet data to the new location.</source>
-        <translation>При попытке сохранения данных бумажника в новое место произошла ошибка.</translation>
+        <translation>РџСЂРё РїРѕРїС‹С‚РєРµ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… Р±СѓРјР°Р¶РЅРёРєР° РІ РЅРѕРІРѕРµ РјРµСЃС‚Рѕ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
         <source>A fatal error occurred. BottleCaps can no longer continue safely and will quit.</source>
-        <translation>Произошла неисправимая ошибка. BottleCaps не может безопасно продолжать работу и будет закрыт.</translation>
+        <translation>РџСЂРѕРёР·РѕС€Р»Р° РЅРµРёСЃРїСЂР°РІРёРјР°СЏ РѕС€РёР±РєР°. BottleCaps РЅРµ РјРѕР¶РµС‚ Р±РµР·РѕРїР°СЃРЅРѕ РїСЂРѕРґРѕР»Р¶Р°С‚СЊ СЂР°Р±РѕС‚Сѓ Рё Р±СѓРґРµС‚ Р·Р°РєСЂС‹С‚.</translation>
     </message>
 </context>
 <context>
@@ -671,7 +671,7 @@ Address: %4
     <message>
         <location filename="../clientmodel.cpp" line="+87"/>
         <source>Network Alert</source>
-        <translation>Сетевая Тревога</translation>
+        <translation>РЎРµС‚РµРІР°СЏ РўСЂРµРІРѕРіР°</translation>
     </message>
 </context>
 <context>
@@ -679,67 +679,67 @@ Address: %4
     <message>
         <location filename="../forms/editaddressdialog.ui" line="+14"/>
         <source>Edit Address</source>
-        <translation>Изменить адрес</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>&amp;Label</source>
-        <translation>&amp;Метка</translation>
+        <translation>&amp;РњРµС‚РєР°</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>The label associated with this address book entry</source>
-        <translation>Метка, связанная с данной записью</translation>
+        <translation>РњРµС‚РєР°, СЃРІСЏР·Р°РЅРЅР°СЏ СЃ РґР°РЅРЅРѕР№ Р·Р°РїРёСЃСЊСЋ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Address</source>
-        <translation>&amp;Адрес</translation>
+        <translation>&amp;РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>The address associated with this address book entry. This can only be modified for sending addresses.</source>
-        <translation>Адрес, связанный с данной записью.</translation>
+        <translation>РђРґСЂРµСЃ, СЃРІСЏР·Р°РЅРЅС‹Р№ СЃ РґР°РЅРЅРѕР№ Р·Р°РїРёСЃСЊСЋ.</translation>
     </message>
     <message>
         <location filename="../editaddressdialog.cpp" line="+20"/>
         <source>New receiving address</source>
-        <translation>Новый адрес для получения</translation>
+        <translation>РќРѕРІС‹Р№ Р°РґСЂРµСЃ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>New sending address</source>
-        <translation>Новый адрес для отправки</translation>
+        <translation>РќРѕРІС‹Р№ Р°РґСЂРµСЃ РґР»СЏ РѕС‚РїСЂР°РІРєРё</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Edit receiving address</source>
-        <translation>Изменение адреса для получения</translation>
+        <translation>РР·РјРµРЅРµРЅРёРµ Р°РґСЂРµСЃР° РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Edit sending address</source>
-        <translation>Изменение адреса для отправки</translation>
+        <translation>РР·РјРµРЅРµРЅРёРµ Р°РґСЂРµСЃР° РґР»СЏ РѕС‚РїСЂР°РІРєРё</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>The entered address &quot;%1&quot; is already in the address book.</source>
-        <translation>Введённый адрес «%1» уже находится в адресной книге.</translation>
+        <translation>Р’РІРµРґС‘РЅРЅС‹Р№ Р°РґСЂРµСЃ В«%1В» СѓР¶Рµ РЅР°С…РѕРґРёС‚СЃСЏ РІ Р°РґСЂРµСЃРЅРѕР№ РєРЅРёРіРµ.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The entered address &quot;%1&quot; is not a valid BottleCaps address.</source>
-        <translation>Введённый адрес &quot;%1&quot; не является правильным BottleCaps-адресом.</translation>
+        <translation>Р’РІРµРґС‘РЅРЅС‹Р№ Р°РґСЂРµСЃ &quot;%1&quot; РЅРµ СЏРІР»СЏРµС‚СЃСЏ РїСЂР°РІРёР»СЊРЅС‹Рј BottleCaps-Р°РґСЂРµСЃРѕРј.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Could not unlock wallet.</source>
-        <translation>Не удается разблокировать бумажник.</translation>
+        <translation>РќРµ СѓРґР°РµС‚СЃСЏ СЂР°Р·Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>New key generation failed.</source>
-        <translation>Генерация нового ключа не удалась.</translation>
+        <translation>Р“РµРЅРµСЂР°С†РёСЏ РЅРѕРІРѕРіРѕ РєР»СЋС‡Р° РЅРµ СѓРґР°Р»Р°СЃСЊ.</translation>
     </message>
 </context>
 <context>
@@ -753,37 +753,37 @@ Address: %4
     <message>
         <location line="-12"/>
         <source>version</source>
-        <translation>версия</translation>
+        <translation>РІРµСЂСЃРёСЏ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Usage:</source>
-        <translation>Использование:</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>command-line options</source>
-        <translation>параметры командной строки</translation>
+        <translation>РїР°СЂР°РјРµС‚СЂС‹ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>UI options</source>
-        <translation>Опции интерфейса</translation>
+        <translation>РћРїС†РёРё РёРЅС‚РµСЂС„РµР№СЃР°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Set language, for example &quot;de_DE&quot; (default: system locale)</source>
-        <translation>Выберите язык, например &quot;de_DE&quot; (по умолчанию: как в системе)</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ СЏР·С‹Рє, РЅР°РїСЂРёРјРµСЂ &quot;de_DE&quot; (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: РєР°Рє РІ СЃРёСЃС‚РµРјРµ)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Start minimized</source>
-        <translation>Запускать свёрнутым</translation>
+        <translation>Р—Р°РїСѓСЃРєР°С‚СЊ СЃРІС‘СЂРЅСѓС‚С‹Рј</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show splash screen on startup (default: 1)</source>
-        <translation>Показывать сплэш при запуске (по умолчанию: 1)</translation>
+        <translation>РџРѕРєР°Р·С‹РІР°С‚СЊ СЃРїР»СЌС€ РїСЂРё Р·Р°РїСѓСЃРєРµ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1)</translation>
     </message>
 </context>
 <context>
@@ -791,194 +791,194 @@ Address: %4
     <message>
         <location filename="../forms/optionsdialog.ui" line="+14"/>
         <source>Options</source>
-        <translation>Опции</translation>
+        <translation>РћРїС†РёРё</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>&amp;Main</source>
-        <translation>&amp;Главная</translation>
+        <translation>&amp;Р“Р»Р°РІРЅР°СЏ</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Optional transaction fee per kB that helps make sure your transactions are processed quickly. Most transactions are 1 kB. Fee 0.01 recommended.</source>
-        <translation>Опциональная комиссия за каждый КБ транзакции, которая позволяет быть уверенным, что Ваша транзакция будет обработана быстро.  Большинство транзакций занимают 1КБ.  Рекомендуется комиссия 0.01.</translation>
+        <translation>РћРїС†РёРѕРЅР°Р»СЊРЅР°СЏ РєРѕРјРёСЃСЃРёСЏ Р·Р° РєР°Р¶РґС‹Р№ РљР‘ С‚СЂР°РЅР·Р°РєС†РёРё, РєРѕС‚РѕСЂР°СЏ РїРѕР·РІРѕР»СЏРµС‚ Р±С‹С‚СЊ СѓРІРµСЂРµРЅРЅС‹Рј, С‡С‚Рѕ Р’Р°С€Р° С‚СЂР°РЅР·Р°РєС†РёСЏ Р±СѓРґРµС‚ РѕР±СЂР°Р±РѕС‚Р°РЅР° Р±С‹СЃС‚СЂРѕ.  Р‘РѕР»СЊС€РёРЅСЃС‚РІРѕ С‚СЂР°РЅР·Р°РєС†РёР№ Р·Р°РЅРёРјР°СЋС‚ 1РљР‘.  Р РµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РєРѕРјРёСЃСЃРёСЏ 0.01.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Pay transaction &amp;fee</source>
-        <translation>Заплатить ко&amp;миссию</translation>
+        <translation>Р—Р°РїР»Р°С‚РёС‚СЊ РєРѕ&amp;РјРёСЃСЃРёСЋ</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Automatically start BottleCaps after logging in to the system.</source>
-        <translation>Автоматически запускать BottleCaps после входа в систему</translation>
+        <translation>РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё Р·Р°РїСѓСЃРєР°С‚СЊ BottleCaps РїРѕСЃР»Рµ РІС…РѕРґР° РІ СЃРёСЃС‚РµРјСѓ</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Start BottleCaps on system login</source>
-        <translation>&amp;Запускать BottleCaps при входе в систему</translation>
+        <translation>&amp;Р—Р°РїСѓСЃРєР°С‚СЊ BottleCaps РїСЂРё РІС…РѕРґРµ РІ СЃРёСЃС‚РµРјСѓ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Detach block and address databases at shutdown. This means they can be moved to another data directory, but it slows down shutdown. The wallet is always detached.</source>
-        <translation>Отключить базы данных блоков и адресов при выходе. Это означает, что их можно будет переместить в другой каталог данных, но завершение работы будет медленнее. Бумажник всегда отключается.</translation>
+        <translation>РћС‚РєР»СЋС‡РёС‚СЊ Р±Р°Р·С‹ РґР°РЅРЅС‹С… Р±Р»РѕРєРѕРІ Рё Р°РґСЂРµСЃРѕРІ РїСЂРё РІС‹С…РѕРґРµ. Р­С‚Рѕ РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РёС… РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РїРµСЂРµРјРµСЃС‚РёС‚СЊ РІ РґСЂСѓРіРѕР№ РєР°С‚Р°Р»РѕРі РґР°РЅРЅС‹С…, РЅРѕ Р·Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р±СѓРґРµС‚ РјРµРґР»РµРЅРЅРµРµ. Р‘СѓРјР°Р¶РЅРёРє РІСЃРµРіРґР° РѕС‚РєР»СЋС‡Р°РµС‚СЃСЏ.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Detach databases at shutdown</source>
-        <translation>&amp;Отключать базы данных при выходе</translation>
+        <translation>&amp;РћС‚РєР»СЋС‡Р°С‚СЊ Р±Р°Р·С‹ РґР°РЅРЅС‹С… РїСЂРё РІС‹С…РѕРґРµ</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Network</source>
-        <translation>&amp;Сеть</translation>
+        <translation>&amp;РЎРµС‚СЊ</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Automatically open the BottleCaps client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Автоматически открыть порт для BottleCaps-клиента на роутере. Работает только если Ваш роутер поддерживает UPnP, и данная функция включена.</translation>
+        <translation>РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё РѕС‚РєСЂС‹С‚СЊ РїРѕСЂС‚ РґР»СЏ BottleCaps-РєР»РёРµРЅС‚Р° РЅР° СЂРѕСѓС‚РµСЂРµ. Р Р°Р±РѕС‚Р°РµС‚ С‚РѕР»СЊРєРѕ РµСЃР»Рё Р’Р°С€ СЂРѕСѓС‚РµСЂ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ UPnP, Рё РґР°РЅРЅР°СЏ С„СѓРЅРєС†РёСЏ РІРєР»СЋС‡РµРЅР°.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Map port using &amp;UPnP</source>
-        <translation>Пробросить порт через &amp;UPnP</translation>
+        <translation>РџСЂРѕР±СЂРѕСЃРёС‚СЊ РїРѕСЂС‚ С‡РµСЂРµР· &amp;UPnP</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Connect to the BottleCaps network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Подключаться к сети BottleCaps через прокси SOCKS (например, при подключении через Tor).</translation>
+        <translation>РџРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ Рє СЃРµС‚Рё BottleCaps С‡РµСЂРµР· РїСЂРѕРєСЃРё SOCKS (РЅР°РїСЂРёРјРµСЂ, РїСЂРё РїРѕРґРєР»СЋС‡РµРЅРёРё С‡РµСЂРµР· Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Connect through SOCKS proxy:</source>
-        <translation>&amp;Подключаться через SOCKS прокси:</translation>
+        <translation>&amp;РџРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ С‡РµСЂРµР· SOCKS РїСЂРѕРєСЃРё:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Proxy &amp;IP:</source>
-        <translation>&amp;IP Прокси: </translation>
+        <translation>&amp;IP РџСЂРѕРєСЃРё: </translation>
     </message>
     <message>
         <location line="+19"/>
         <source>IP address of the proxy (e.g. 127.0.0.1)</source>
-        <translation>IP-адрес прокси (например 127.0.0.1)</translation>
+        <translation>IP-Р°РґСЂРµСЃ РїСЂРѕРєСЃРё (РЅР°РїСЂРёРјРµСЂ 127.0.0.1)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Port:</source>
-        <translation>По&amp;рт: </translation>
+        <translation>РџРѕ&amp;СЂС‚: </translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Port of the proxy (e.g. 9050)</source>
-        <translation>Порт прокси-сервера (например, 9050)</translation>
+        <translation>РџРѕСЂС‚ РїСЂРѕРєСЃРё-СЃРµСЂРІРµСЂР° (РЅР°РїСЂРёРјРµСЂ, 9050)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>SOCKS &amp;Version:</source>
-        <translation>&amp;Версия SOCKS:</translation>
+        <translation>&amp;Р’РµСЂСЃРёСЏ SOCKS:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>SOCKS version of the proxy (e.g. 5)</source>
-        <translation>Версия SOCKS-прокси (например, 5)</translation>
+        <translation>Р’РµСЂСЃРёСЏ SOCKS-РїСЂРѕРєСЃРё (РЅР°РїСЂРёРјРµСЂ, 5)</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>&amp;Window</source>
-        <translation>&amp;Окно</translation>
+        <translation>&amp;РћРєРЅРѕ</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Show only a tray icon after minimizing the window.</source>
-        <translation>Показывать только иконку в системном лотке после сворачивания окна.</translation>
+        <translation>РџРѕРєР°Р·С‹РІР°С‚СЊ С‚РѕР»СЊРєРѕ РёРєРѕРЅРєСѓ РІ СЃРёСЃС‚РµРјРЅРѕРј Р»РѕС‚РєРµ РїРѕСЃР»Рµ СЃРІРѕСЂР°С‡РёРІР°РЅРёСЏ РѕРєРЅР°.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Minimize to the tray instead of the taskbar</source>
-        <translation>&amp;Cворачивать в системный лоток вместо панели задач</translation>
+        <translation>&amp;CРІРѕСЂР°С‡РёРІР°С‚СЊ РІ СЃРёСЃС‚РµРјРЅС‹Р№ Р»РѕС‚РѕРє РІРјРµСЃС‚Рѕ РїР°РЅРµР»Рё Р·Р°РґР°С‡</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Quit in the menu.</source>
-        <translation>Сворачивать вместо закрытия. Если данная опция будет выбрана — приложение закроется только после выбора соответствующего пункта в меню.</translation>
+        <translation>РЎРІРѕСЂР°С‡РёРІР°С‚СЊ РІРјРµСЃС‚Рѕ Р·Р°РєСЂС‹С‚РёСЏ. Р•СЃР»Рё РґР°РЅРЅР°СЏ РѕРїС†РёСЏ Р±СѓРґРµС‚ РІС‹Р±СЂР°РЅР° вЂ” РїСЂРёР»РѕР¶РµРЅРёРµ Р·Р°РєСЂРѕРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РІС‹Р±РѕСЂР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РїСѓРЅРєС‚Р° РІ РјРµРЅСЋ.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>M&amp;inimize on close</source>
-        <translation>С&amp;ворачивать при закрытии</translation>
+        <translation>РЎ&amp;РІРѕСЂР°С‡РёРІР°С‚СЊ РїСЂРё Р·Р°РєСЂС‹С‚РёРё</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Display</source>
-        <translation>О&amp;тображение</translation>
+        <translation>Рћ&amp;С‚РѕР±СЂР°Р¶РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>User Interface &amp;language:</source>
-        <translation>&amp;Язык интерфейса:</translation>
+        <translation>&amp;РЇР·С‹Рє РёРЅС‚РµСЂС„РµР№СЃР°:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>The user interface language can be set here. This setting will take effect after restarting BottleCaps.</source>
-        <translation>Здесь можно выбрать язык интерфейса. Настройки вступят в силу после перезапуска BottleCaps.</translation>
+        <translation>Р—РґРµСЃСЊ РјРѕР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ СЏР·С‹Рє РёРЅС‚РµСЂС„РµР№СЃР°. РќР°СЃС‚СЂРѕР№РєРё РІСЃС‚СѓРїСЏС‚ РІ СЃРёР»Сѓ РїРѕСЃР»Рµ РїРµСЂРµР·Р°РїСѓСЃРєР° BottleCaps.</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>&amp;Unit to show amounts in:</source>
-        <translation>&amp;Отображать суммы в единицах: </translation>
+        <translation>&amp;РћС‚РѕР±СЂР°Р¶Р°С‚СЊ СЃСѓРјРјС‹ РІ РµРґРёРЅРёС†Р°С…: </translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Выберите единицу измерения монет при отображении и отправке.</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ РµРґРёРЅРёС†Сѓ РёР·РјРµСЂРµРЅРёСЏ РјРѕРЅРµС‚ РїСЂРё РѕС‚РѕР±СЂР°Р¶РµРЅРёРё Рё РѕС‚РїСЂР°РІРєРµ.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Whether to show BottleCaps addresses in the transaction list or not.</source>
-        <translation>Показывать ли адреса BottleCaps в списке транзакций.</translation>
+        <translation>РџРѕРєР°Р·С‹РІР°С‚СЊ Р»Рё Р°РґСЂРµСЃР° BottleCaps РІ СЃРїРёСЃРєРµ С‚СЂР°РЅР·Р°РєС†РёР№.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Display addresses in transaction list</source>
-        <translation>&amp;Показывать адреса в списке транзакций</translation>
+        <translation>&amp;РџРѕРєР°Р·С‹РІР°С‚СЊ Р°РґСЂРµСЃР° РІ СЃРїРёСЃРєРµ С‚СЂР°РЅР·Р°РєС†РёР№</translation>
     </message>
     <message>
         <location line="+71"/>
         <source>&amp;OK</source>
-        <translation>О&amp;К</translation>
+        <translation>Рћ&amp;Рљ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Отмена</translation>
+        <translation>&amp;РћС‚РјРµРЅР°</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Apply</source>
-        <translation>&amp;Применить</translation>
+        <translation>&amp;РџСЂРёРјРµРЅРёС‚СЊ</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="+55"/>
         <source>default</source>
-        <translation>по умолчанию</translation>
+        <translation>РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <location line="+147"/>
         <location line="+9"/>
         <source>Warning</source>
-        <translation>Внимание</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ</translation>
     </message>
     <message>
         <location line="-9"/>
         <location line="+9"/>
         <source>This setting will take effect after restarting BottleCaps.</source>
-        <translation>Эта настройка вступит в силу после перезапуска BottleCaps</translation>
+        <translation>Р­С‚Р° РЅР°СЃС‚СЂРѕР№РєР° РІСЃС‚СѓРїРёС‚ РІ СЃРёР»Сѓ РїРѕСЃР»Рµ РїРµСЂРµР·Р°РїСѓСЃРєР° BottleCaps</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>The supplied proxy address is invalid.</source>
-        <translation>Адрес прокси неверен.</translation>
+        <translation>РђРґСЂРµСЃ РїСЂРѕРєСЃРё РЅРµРІРµСЂРµРЅ.</translation>
     </message>
 </context>
 <context>
@@ -986,79 +986,79 @@ Address: %4
     <message>
         <location filename="../forms/overviewpage.ui" line="+14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Р¤РѕСЂРјР°</translation>
     </message>
     <message>
         <location line="+33"/>
         <location line="+183"/>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the BottleCaps network after a connection is established, but this process has not completed yet.</source>
-        <translation>Отображаемая информация может быть устаревшей. Ваш бумажник автоматически синхронизируется с сетью BottleCaps после подключения, но этот процесс пока не завершён.</translation>
+        <translation>РћС‚РѕР±СЂР°Р¶Р°РµРјР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ РјРѕР¶РµС‚ Р±С‹С‚СЊ СѓСЃС‚Р°СЂРµРІС€РµР№. Р’Р°С€ Р±СѓРјР°Р¶РЅРёРє Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚СЃСЏ СЃ СЃРµС‚СЊСЋ BottleCaps РїРѕСЃР»Рµ РїРѕРґРєР»СЋС‡РµРЅРёСЏ, РЅРѕ СЌС‚РѕС‚ РїСЂРѕС†РµСЃСЃ РїРѕРєР° РЅРµ Р·Р°РІРµСЂС€С‘РЅ.</translation>
     </message>
     <message>
         <location line="-141"/>
         <source>Balance:</source>
-        <translation>Баланс:</translation>
+        <translation>Р‘Р°Р»Р°РЅСЃ:</translation>
     </message>
     <message>
         <location line="+118"/>
         <source>Stake:</source>
-        <translation>Доля:</translation>
+        <translation>Р”РѕР»СЏ:</translation>
     </message>
     <message>
         <location line="+58"/>
         <source>Number of transactions:</source>
-        <translation>Количество транзакций:</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ С‚СЂР°РЅР·Р°РєС†РёР№:</translation>
     </message>
     <message>
         <location line="-29"/>
         <source>Unconfirmed:</source>
-        <translation>Не подтверждено:</translation>
+        <translation>РќРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ:</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Wallet</source>
-        <translation>Бумажник</translation>
+        <translation>Р‘СѓРјР°Р¶РЅРёРє</translation>
     </message>
     <message>
         <location line="+124"/>
         <source>Immature:</source>
-        <translation>Незрелые:</translation>
+        <translation>РќРµР·СЂРµР»С‹Рµ:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Mined balance that has not yet matured</source>
-        <translation>Баланс добытых монет, который ещё не созрел</translation>
+        <translation>Р‘Р°Р»Р°РЅСЃ РґРѕР±С‹С‚С‹С… РјРѕРЅРµС‚, РєРѕС‚РѕСЂС‹Р№ РµС‰С‘ РЅРµ СЃРѕР·СЂРµР»</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>&lt;b&gt;Recent transactions&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Последние транзакции&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;РџРѕСЃР»РµРґРЅРёРµ С‚СЂР°РЅР·Р°РєС†РёРё&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="-118"/>
         <source>Your current balance</source>
-        <translation>Ваш текущий баланс</translation>
+        <translation>Р’Р°С€ С‚РµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</source>
-        <translation>Общая сумма всех транзакций, которые до сих пор не подтверждены, и до сих пор не учитываются в текущем балансе</translation>
+        <translation>РћР±С‰Р°СЏ СЃСѓРјРјР° РІСЃРµС… С‚СЂР°РЅР·Р°РєС†РёР№, РєРѕС‚РѕСЂС‹Рµ РґРѕ СЃРёС… РїРѕСЂ РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅС‹, Рё РґРѕ СЃРёС… РїРѕСЂ РЅРµ СѓС‡РёС‚С‹РІР°СЋС‚СЃСЏ РІ С‚РµРєСѓС‰РµРј Р±Р°Р»Р°РЅСЃРµ</translation>
     </message>
     <message>
         <location line="+134"/>
         <source>Total of coins that was staked, and do not yet count toward the current balance</source>
-        <translation>Общая сумма всех монет, используемых для Proof-of-Stake, и не учитывающихся на балансе</translation>
+        <translation>РћР±С‰Р°СЏ СЃСѓРјРјР° РІСЃРµС… РјРѕРЅРµС‚, РёСЃРїРѕР»СЊР·СѓРµРјС‹С… РґР»СЏ Proof-of-Stake, Рё РЅРµ СѓС‡РёС‚С‹РІР°СЋС‰РёС…СЃСЏ РЅР° Р±Р°Р»Р°РЅСЃРµ</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Total number of transactions in wallet</source>
-        <translation>Общее количество транзакций в Вашем бумажнике</translation>
+        <translation>РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚СЂР°РЅР·Р°РєС†РёР№ РІ Р’Р°С€РµРј Р±СѓРјР°Р¶РЅРёРєРµ</translation>
     </message>
     <message>
         <location filename="../overviewpage.cpp" line="+112"/>
         <location line="+1"/>
         <source>out of sync</source>
-        <translation>не синхронизировано</translation>
+        <translation>РЅРµ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°РЅРѕ</translation>
     </message>
 </context>
 <context>
@@ -1066,57 +1066,57 @@ Address: %4
     <message>
         <location filename="../forms/qrcodedialog.ui" line="+14"/>
         <source>QR Code Dialog</source>
-        <translation>Диалог QR-кода</translation>
+        <translation>Р”РёР°Р»РѕРі QR-РєРѕРґР°</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Request Payment</source>
-        <translation>Запросить платёж</translation>
+        <translation>Р—Р°РїСЂРѕСЃРёС‚СЊ РїР»Р°С‚С‘Р¶</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>Amount:</source>
-        <translation>Количество:</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ:</translation>
     </message>
     <message>
         <location line="-44"/>
         <source>Label:</source>
-        <translation>Метка:</translation>
+        <translation>РњРµС‚РєР°:</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Message:</source>
-        <translation>Сообщение:</translation>
+        <translation>РЎРѕРѕР±С‰РµРЅРёРµ:</translation>
     </message>
     <message>
         <location line="+71"/>
         <source>&amp;Save As...</source>
-        <translation>&amp;Сохранить как...</translation>
+        <translation>&amp;РЎРѕС…СЂР°РЅРёС‚СЊ РєР°Рє...</translation>
     </message>
     <message>
         <location filename="../qrcodedialog.cpp" line="+62"/>
         <source>Error encoding URI into QR Code.</source>
-        <translation>Ошибка кодирования URI в QR-код</translation>
+        <translation>РћС€РёР±РєР° РєРѕРґРёСЂРѕРІР°РЅРёСЏ URI РІ QR-РєРѕРґ</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>The entered amount is invalid, please check.</source>
-        <translation>Введено неверное количество, проверьте ещё раз.</translation>
+        <translation>Р’РІРµРґРµРЅРѕ РЅРµРІРµСЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ, РїСЂРѕРІРµСЂСЊС‚Рµ РµС‰С‘ СЂР°Р·.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Resulting URI too long, try to reduce the text for label / message.</source>
-        <translation>Получившийся URI слишком длинный, попробуйте сократить текст метки / сообщения.</translation>
+        <translation>РџРѕР»СѓС‡РёРІС€РёР№СЃСЏ URI СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРѕРєСЂР°С‚РёС‚СЊ С‚РµРєСЃС‚ РјРµС‚РєРё / СЃРѕРѕР±С‰РµРЅРёСЏ.</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Save QR Code</source>
-        <translation>Сохранить QR-код</translation>
+        <translation>РЎРѕС…СЂР°РЅРёС‚СЊ QR-РєРѕРґ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>PNG Images (*.png)</source>
-        <translation>PNG Изображения (*.png)</translation>
+        <translation>PNG РР·РѕР±СЂР°Р¶РµРЅРёСЏ (*.png)</translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ Address: %4
     <message>
         <location filename="../forms/rpcconsole.ui" line="+46"/>
         <source>Client name</source>
-        <translation>Имя клиента</translation>
+        <translation>РРјСЏ РєР»РёРµРЅС‚Р°</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1138,132 +1138,132 @@ Address: %4
         <location line="+23"/>
         <location filename="../rpcconsole.cpp" line="+348"/>
         <source>N/A</source>
-        <translation>Н/Д</translation>
+        <translation>Рќ/Р”</translation>
     </message>
     <message>
         <location line="-217"/>
         <source>Client version</source>
-        <translation>Версия клиента</translation>
+        <translation>Р’РµСЂСЃРёСЏ РєР»РёРµРЅС‚Р°</translation>
     </message>
     <message>
         <location line="-45"/>
         <source>&amp;Information</source>
-        <translation>&amp;Информация</translation>
+        <translation>&amp;РРЅС„РѕСЂРјР°С†РёСЏ</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Using OpenSSL version</source>
-        <translation>Используется версия OpenSSL</translation>
+        <translation>РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРµСЂСЃРёСЏ OpenSSL</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Startup time</source>
-        <translation>Время запуска</translation>
+        <translation>Р’СЂРµРјСЏ Р·Р°РїСѓСЃРєР°</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Network</source>
-        <translation>Сеть</translation>
+        <translation>РЎРµС‚СЊ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Number of connections</source>
-        <translation>Число подключений</translation>
+        <translation>Р§РёСЃР»Рѕ РїРѕРґРєР»СЋС‡РµРЅРёР№</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>On testnet</source>
-        <translation>В тестовой сети</translation>
+        <translation>Р’ С‚РµСЃС‚РѕРІРѕР№ СЃРµС‚Рё</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Block chain</source>
-        <translation>Цепь блоков</translation>
+        <translation>Р¦РµРїСЊ Р±Р»РѕРєРѕРІ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Current number of blocks</source>
-        <translation>Текущее число блоков</translation>
+        <translation>РўРµРєСѓС‰РµРµ С‡РёСЃР»Рѕ Р±Р»РѕРєРѕРІ</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Estimated total blocks</source>
-        <translation>Расчётное число блоков</translation>
+        <translation>Р Р°СЃС‡С‘С‚РЅРѕРµ С‡РёСЃР»Рѕ Р±Р»РѕРєРѕРІ</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Last block time</source>
-        <translation>Время последнего блока</translation>
+        <translation>Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ Р±Р»РѕРєР°</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>&amp;Open</source>
-        <translation>&amp;Открыть</translation>
+        <translation>&amp;РћС‚РєСЂС‹С‚СЊ</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Command-line options</source>
-        <translation>Параметры командной строки</translation>
+        <translation>РџР°СЂР°РјРµС‚СЂС‹ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Show the BottleCaps-Qt help message to get a list with possible BottleCaps command-line options.</source>
-        <translation>Показать помощь по BottleCaps-Qt, чтобы получить список доступных параметров командной строки.</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РїРѕРјРѕС‰СЊ РїРѕ BottleCaps-Qt, С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Show</source>
-        <translation>&amp;Показать</translation>
+        <translation>&amp;РџРѕРєР°Р·Р°С‚СЊ</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>&amp;Console</source>
-        <translation>Консоль</translation>
+        <translation>РљРѕРЅСЃРѕР»СЊ</translation>
     </message>
     <message>
         <location line="-260"/>
         <source>Build date</source>
-        <translation>Дата сборки</translation>
+        <translation>Р”Р°С‚Р° СЃР±РѕСЂРєРё</translation>
     </message>
     <message>
         <location line="-104"/>
         <source>BottleCaps - Debug window</source>
-        <translation>BottleCaps - Окно отладки</translation>
+        <translation>BottleCaps - РћРєРЅРѕ РѕС‚Р»Р°РґРєРё</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>BottleCaps Core</source>
-        <translation>Ядро BottleCaps</translation>
+        <translation>РЇРґСЂРѕ BottleCaps</translation>
     </message>
     <message>
         <location line="+279"/>
         <source>Debug log file</source>
-        <translation>Отладочный лог-файл</translation>
+        <translation>РћС‚Р»Р°РґРѕС‡РЅС‹Р№ Р»РѕРі-С„Р°Р№Р»</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Open the BottleCaps debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Открыть отладочный лог-файл BottleCaps из текущего каталога данных. Это может занять несколько секунд для больших лог-файлов.</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РѕС‚Р»Р°РґРѕС‡РЅС‹Р№ Р»РѕРі-С„Р°Р№Р» BottleCaps РёР· С‚РµРєСѓС‰РµРіРѕ РєР°С‚Р°Р»РѕРіР° РґР°РЅРЅС‹С…. Р­С‚Рѕ РјРѕР¶РµС‚ Р·Р°РЅСЏС‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ РґР»СЏ Р±РѕР»СЊС€РёС… Р»РѕРі-С„Р°Р№Р»РѕРІ.</translation>
     </message>
     <message>
         <location line="+102"/>
         <source>Clear console</source>
-        <translation>Очистить консоль</translation>
+        <translation>РћС‡РёСЃС‚РёС‚СЊ РєРѕРЅСЃРѕР»СЊ</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
         <source>Welcome to the BottleCaps RPC console.</source>
-        <translation>Добро пожаловать в RPC-консоль BottleCaps.</translation>
+        <translation>Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ RPC-РєРѕРЅСЃРѕР»СЊ BottleCaps.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
-        <translation>Используйте стрелки вверх и вниз для просмотра истории и &lt;b&gt;Ctrl-L&lt;/b&gt; для очистки экрана.</translation>
+        <translation>РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЃС‚СЂРµР»РєРё РІРІРµСЂС… Рё РІРЅРёР· РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° РёСЃС‚РѕСЂРёРё Рё &lt;b&gt;Ctrl-L&lt;/b&gt; РґР»СЏ РѕС‡РёСЃС‚РєРё СЌРєСЂР°РЅР°.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
-        <translation>Напишите &lt;b&gt;help&lt;/b&gt; для просмотра доступных команд.</translation>
+        <translation>РќР°РїРёС€РёС‚Рµ &lt;b&gt;help&lt;/b&gt; РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° РґРѕСЃС‚СѓРїРЅС‹С… РєРѕРјР°РЅРґ.</translation>
     </message>
 </context>
 <context>
@@ -1278,32 +1278,32 @@ Address: %4
         <location line="+5"/>
         <location line="+5"/>
         <source>Send Coins</source>
-        <translation>Отправка</translation>
+        <translation>РћС‚РїСЂР°РІРєР°</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Send to multiple recipients at once</source>
-        <translation>Отправить нескольким получателям одновременно</translation>
+        <translation>РћС‚РїСЂР°РІРёС‚СЊ РЅРµСЃРєРѕР»СЊРєРёРј РїРѕР»СѓС‡Р°С‚РµР»СЏРј РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Add &amp;Recipient</source>
-        <translation>&amp;Добавить получателя</translation>
+        <translation>&amp;Р”РѕР±Р°РІРёС‚СЊ РїРѕР»СѓС‡Р°С‚РµР»СЏ</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Remove all transaction fields</source>
-        <translation>Удалить все поля транзакции</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РІСЃРµ РїРѕР»СЏ С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Clear &amp;All</source>
-        <translation>Очистить &amp;всё</translation>
+        <translation>РћС‡РёСЃС‚РёС‚СЊ &amp;РІСЃС‘</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Balance:</source>
-        <translation>Баланс:</translation>
+        <translation>Р‘Р°Р»Р°РЅСЃ:</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1313,67 +1313,67 @@ Address: %4
     <message>
         <location line="+31"/>
         <source>Confirm the send action</source>
-        <translation>Подтвердить отправку</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚СЊ РѕС‚РїСЂР°РІРєСѓ</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>S&amp;end</source>
-        <translation>&amp;Отправить</translation>
+        <translation>&amp;РћС‚РїСЂР°РІРёС‚СЊ</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-59"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to %2 (%3)</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; адресату %2 (%3)</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; Р°РґСЂРµСЃР°С‚Сѓ %2 (%3)</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Confirm send coins</source>
-        <translation>Подтвердите отправку монет</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚Рµ РѕС‚РїСЂР°РІРєСѓ РјРѕРЅРµС‚</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to send %1?</source>
-        <translation>Вы уверены, что хотите отправить %1?</translation>
+        <translation>Р’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ РѕС‚РїСЂР°РІРёС‚СЊ %1?</translation>
     </message>
     <message>
         <location line="+0"/>
         <source> and </source>
-        <translation> и </translation>
+        <translation> Рё </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>The recipient address is not valid, please recheck.</source>
-        <translation>Адрес получателя неверный, пожалуйста, перепроверьте.</translation>
+        <translation>РђРґСЂРµСЃ РїРѕР»СѓС‡Р°С‚РµР»СЏ РЅРµРІРµСЂРЅС‹Р№, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РїРµСЂРµРїСЂРѕРІРµСЂСЊС‚Рµ.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The amount to pay must be larger than 0.</source>
-        <translation>Количество монет для отправки должно быть больше 0.</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ РјРѕРЅРµС‚ РґР»СЏ РѕС‚РїСЂР°РІРєРё РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 0.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The amount exceeds your balance.</source>
-        <translation>Количество отправляемых монет превышает Ваш баланс</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚РїСЂР°РІР»СЏРµРјС‹С… РјРѕРЅРµС‚ РїСЂРµРІС‹С€Р°РµС‚ Р’Р°С€ Р±Р°Р»Р°РЅСЃ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The total exceeds your balance when the %1 transaction fee is included.</source>
-        <translation>Сумма превысит Ваш баланс, если комиссия в размере %1 будет добавлена к транзакции</translation>
+        <translation>РЎСѓРјРјР° РїСЂРµРІС‹СЃРёС‚ Р’Р°С€ Р±Р°Р»Р°РЅСЃ, РµСЃР»Рё РєРѕРјРёСЃСЃРёСЏ РІ СЂР°Р·РјРµСЂРµ %1 Р±СѓРґРµС‚ РґРѕР±Р°РІР»РµРЅР° Рє С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Duplicate address found, can only send to each address once per send operation.</source>
-        <translation>Обнаружен дублирующийся адрес. Отправка на один и тот же адрес возможна только один раз за одну операцию отправки</translation>
+        <translation>РћР±РЅР°СЂСѓР¶РµРЅ РґСѓР±Р»РёСЂСѓСЋС‰РёР№СЃСЏ Р°РґСЂРµСЃ. РћС‚РїСЂР°РІРєР° РЅР° РѕРґРёРЅ Рё С‚РѕС‚ Р¶Рµ Р°РґСЂРµСЃ РІРѕР·РјРѕР¶РЅР° С‚РѕР»СЊРєРѕ РѕРґРёРЅ СЂР°Р· Р·Р° РѕРґРЅСѓ РѕРїРµСЂР°С†РёСЋ РѕС‚РїСЂР°РІРєРё</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Error: Transaction creation failed.</source>
-        <translation>Ошибка: не удалось создать транзакцию.</translation>
+        <translation>РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ С‚СЂР°РЅР·Р°РєС†РёСЋ.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Error: The transaction was rejected. This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
-        <translation>Ошибка: В транзакции отказано.  Такое может произойти, если некоторые монеты уже были потрачены, например, если Вы используете одну копию файла wallet.dat, а монеты были потрачены из другой копии, но не были отмечены как потраченные в этой.</translation>
+        <translation>РћС€РёР±РєР°: Р’ С‚СЂР°РЅР·Р°РєС†РёРё РѕС‚РєР°Р·Р°РЅРѕ.  РўР°РєРѕРµ РјРѕР¶РµС‚ РїСЂРѕРёР·РѕР№С‚Рё, РµСЃР»Рё РЅРµРєРѕС‚РѕСЂС‹Рµ РјРѕРЅРµС‚С‹ СѓР¶Рµ Р±С‹Р»Рё РїРѕС‚СЂР°С‡РµРЅС‹, РЅР°РїСЂРёРјРµСЂ, РµСЃР»Рё Р’С‹ РёСЃРїРѕР»СЊР·СѓРµС‚Рµ РѕРґРЅСѓ РєРѕРїРёСЋ С„Р°Р№Р»Р° wallet.dat, Р° РјРѕРЅРµС‚С‹ Р±С‹Р»Рё РїРѕС‚СЂР°С‡РµРЅС‹ РёР· РґСЂСѓРіРѕР№ РєРѕРїРёРё, РЅРѕ РЅРµ Р±С‹Р»Рё РѕС‚РјРµС‡РµРЅС‹ РєР°Рє РїРѕС‚СЂР°С‡РµРЅРЅС‹Рµ РІ СЌС‚РѕР№.</translation>
     </message>
 </context>
 <context>
@@ -1381,38 +1381,38 @@ Address: %4
     <message>
         <location filename="../forms/sendcoinsentry.ui" line="+14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Р¤РѕСЂРјР°</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>A&amp;mount:</source>
-        <translation>Ко&amp;личество:</translation>
+        <translation>РљРѕ&amp;Р»РёС‡РµСЃС‚РІРѕ:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Pay &amp;To:</source>
-        <translation>Полу&amp;чатель:</translation>
+        <translation>РџРѕР»Сѓ&amp;С‡Р°С‚РµР»СЊ:</translation>
     </message>
     <message>
         <location line="+24"/>
         <location filename="../sendcoinsentry.cpp" line="+25"/>
         <source>Enter a label for this address to add it to your address book</source>
-        <translation>Введите метку для данного адреса (для добавления в адресную книгу)</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РјРµС‚РєСѓ РґР»СЏ РґР°РЅРЅРѕРіРѕ Р°РґСЂРµСЃР° (РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ Р°РґСЂРµСЃРЅСѓСЋ РєРЅРёРіСѓ)</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&amp;Label:</source>
-        <translation>&amp;Метка:</translation>
+        <translation>&amp;РњРµС‚РєР°:</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>The address to send the payment to  (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес получателя платежа (например 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>РђРґСЂРµСЃ РїРѕР»СѓС‡Р°С‚РµР»СЏ РїР»Р°С‚РµР¶Р° (РЅР°РїСЂРёРјРµСЂ 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Choose address from address book</source>
-        <translation>Выберите адрес из адресной книги</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ Р°РґСЂРµСЃ РёР· Р°РґСЂРµСЃРЅРѕР№ РєРЅРёРіРё</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1422,7 +1422,7 @@ Address: %4
     <message>
         <location line="+7"/>
         <source>Paste address from clipboard</source>
-        <translation>Вставить адрес из буфера обмена</translation>
+        <translation>Р’СЃС‚Р°РІРёС‚СЊ Р°РґСЂРµСЃ РёР· Р±СѓС„РµСЂР° РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1432,12 +1432,12 @@ Address: %4
     <message>
         <location line="+7"/>
         <source>Remove this recipient</source>
-        <translation>Удалить этого получателя</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ СЌС‚РѕРіРѕ РїРѕР»СѓС‡Р°С‚РµР»СЏ</translation>
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
         <source>Enter a BottleCaps address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Введите BottleCaps-адрес (например 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>Р’РІРµРґРёС‚Рµ BottleCaps-Р°РґСЂРµСЃ (РЅР°РїСЂРёРјРµСЂ 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
 </context>
 <context>
@@ -1445,29 +1445,29 @@ Address: %4
     <message>
         <location filename="../forms/signverifymessagedialog.ui" line="+14"/>
         <source>Signatures - Sign / Verify a Message</source>
-        <translation>Подписи - подписать/проверить сообщение</translation>
+        <translation>РџРѕРґРїРёСЃРё - РїРѕРґРїРёСЃР°С‚СЊ/РїСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+124"/>
         <source>&amp;Sign Message</source>
-        <translation>&amp;Подписать сообщение</translation>
+        <translation>&amp;РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="-118"/>
         <source>You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation>Вы можете подписывать сообщения своими адресами, чтобы доказать владение ими. Будьте осторожны, не подписывайте что-то неопределённое, так как фишинговые атаки могут обманным путём заставить вас подписать нежелательные сообщения. Подписывайте только те сообщения, с которыми вы согласны вплоть до мелочей.</translation>
+        <translation>Р’С‹ РјРѕР¶РµС‚Рµ РїРѕРґРїРёСЃС‹РІР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ СЃРІРѕРёРјРё Р°РґСЂРµСЃР°РјРё, С‡С‚РѕР±С‹ РґРѕРєР°Р·Р°С‚СЊ РІР»Р°РґРµРЅРёРµ РёРјРё. Р‘СѓРґСЊС‚Рµ РѕСЃС‚РѕСЂРѕР¶РЅС‹, РЅРµ РїРѕРґРїРёСЃС‹РІР°Р№С‚Рµ С‡С‚Рѕ-С‚Рѕ РЅРµРѕРїСЂРµРґРµР»С‘РЅРЅРѕРµ, С‚Р°Рє РєР°Рє С„РёС€РёРЅРіРѕРІС‹Рµ Р°С‚Р°РєРё РјРѕРіСѓС‚ РѕР±РјР°РЅРЅС‹Рј РїСѓС‚С‘Рј Р·Р°СЃС‚Р°РІРёС‚СЊ РІР°СЃ РїРѕРґРїРёСЃР°С‚СЊ РЅРµР¶РµР»Р°С‚РµР»СЊРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ. РџРѕРґРїРёСЃС‹РІР°Р№С‚Рµ С‚РѕР»СЊРєРѕ С‚Рµ СЃРѕРѕР±С‰РµРЅРёСЏ, СЃ РєРѕС‚РѕСЂС‹РјРё РІС‹ СЃРѕРіР»Р°СЃРЅС‹ РІРїР»РѕС‚СЊ РґРѕ РјРµР»РѕС‡РµР№.</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>The address to sign the message with (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес, которым вы хотите подписать сообщение  (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>РђРґСЂРµСЃ, РєРѕС‚РѕСЂС‹Рј РІС‹ С…РѕС‚РёС‚Рµ РїРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ  (РЅР°РїСЂ. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+203"/>
         <source>Choose an address from the address book</source>
-        <translation>Выберите адрес из адресной книги</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ Р°РґСЂРµСЃ РёР· Р°РґСЂРµСЃРЅРѕР№ РєРЅРёРіРё</translation>
     </message>
     <message>
         <location line="-193"/>
@@ -1478,7 +1478,7 @@ Address: %4
     <message>
         <location line="-193"/>
         <source>Paste address from clipboard</source>
-        <translation>Вставить адрес из буфера обмена</translation>
+        <translation>Р’СЃС‚Р°РІРёС‚СЊ Р°РґСЂРµСЃ РёР· Р±СѓС„РµСЂР° РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1488,76 +1488,76 @@ Address: %4
     <message>
         <location line="+12"/>
         <source>Enter the message you want to sign here</source>
-        <translation>Введите сообщение для подписи</translation>
+        <translation>Р’РІРµРґРёС‚Рµ СЃРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РїРѕРґРїРёСЃРё</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Copy the current signature to the system clipboard</source>
-        <translation>Скопировать текущую подпись в системный буфер обмена</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ РїРѕРґРїРёСЃСЊ РІ СЃРёСЃС‚РµРјРЅС‹Р№ Р±СѓС„РµСЂ РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Sign the message to prove you own this BottleCaps address</source>
-        <translation>Подписать сообщение, чтобы доказать владение адресом BottleCaps</translation>
+        <translation>РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ, С‡С‚РѕР±С‹ РґРѕРєР°Р·Р°С‚СЊ РІР»Р°РґРµРЅРёРµ Р°РґСЂРµСЃРѕРј BottleCaps</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Reset all sign message fields</source>
-        <translation>Сбросить значения всех полей подписывания сообщений</translation>
+        <translation>РЎР±СЂРѕСЃРёС‚СЊ Р·РЅР°С‡РµРЅРёСЏ РІСЃРµС… РїРѕР»РµР№ РїРѕРґРїРёСЃС‹РІР°РЅРёСЏ СЃРѕРѕР±С‰РµРЅРёР№</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+146"/>
         <source>Clear &amp;All</source>
-        <translation>Очистить &amp;всё</translation>
+        <translation>РћС‡РёСЃС‚РёС‚СЊ &amp;РІСЃС‘</translation>
     </message>
     <message>
         <location line="-87"/>
         <location line="+70"/>
         <source>&amp;Verify Message</source>
-        <translation>&amp;Проверить сообщение</translation>
+        <translation>&amp;РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="-64"/>
         <source>Enter the signing address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack.</source>
-        <translation>Введите ниже адрес для подписи, сообщение (убедитесь, что переводы строк, пробелы, табы и т.п. в точности скопированы) и подпись, чтобы проверить сообщение. Убедитесь, что не скопировали лишнего в подпись, по сравнению с самим подписываемым сообщением, чтобы не стать жертвой атаки &quot;man-in-the-middle&quot;.</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РЅРёР¶Рµ Р°РґСЂРµСЃ РґР»СЏ РїРѕРґРїРёСЃРё, СЃРѕРѕР±С‰РµРЅРёРµ (СѓР±РµРґРёС‚РµСЃСЊ, С‡С‚Рѕ РїРµСЂРµРІРѕРґС‹ СЃС‚СЂРѕРє, РїСЂРѕР±РµР»С‹, С‚Р°Р±С‹ Рё С‚.Рї. РІ С‚РѕС‡РЅРѕСЃС‚Рё СЃРєРѕРїРёСЂРѕРІР°РЅС‹) Рё РїРѕРґРїРёСЃСЊ, С‡С‚РѕР±С‹ РїСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ. РЈР±РµРґРёС‚РµСЃСЊ, С‡С‚Рѕ РЅРµ СЃРєРѕРїРёСЂРѕРІР°Р»Рё Р»РёС€РЅРµРіРѕ РІ РїРѕРґРїРёСЃСЊ, РїРѕ СЃСЂР°РІРЅРµРЅРёСЋ СЃ СЃР°РјРёРј РїРѕРґРїРёСЃС‹РІР°РµРјС‹Рј СЃРѕРѕР±С‰РµРЅРёРµРј, С‡С‚РѕР±С‹ РЅРµ СЃС‚Р°С‚СЊ Р¶РµСЂС‚РІРѕР№ Р°С‚Р°РєРё &quot;man-in-the-middle&quot;.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>The address the message was signed with (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Адрес, которым было подписано сообщение (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>РђРґСЂРµСЃ, РєРѕС‚РѕСЂС‹Рј Р±С‹Р»Рѕ РїРѕРґРїРёСЃР°РЅРѕ СЃРѕРѕР±С‰РµРЅРёРµ (РЅР°РїСЂ. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Verify the message to ensure it was signed with the specified BottleCaps address</source>
-        <translation>Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом BottleCaps</translation>
+        <translation>РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ, С‡С‚РѕР±С‹ СѓР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ РѕРЅРѕ Р±С‹Р»Рѕ РїРѕРґРїРёСЃР°РЅРѕ СѓРєР°Р·Р°РЅРЅС‹Рј Р°РґСЂРµСЃРѕРј BottleCaps</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Reset all verify message fields</source>
-        <translation>Сбросить все поля проверки сообщения</translation>
+        <translation>РЎР±СЂРѕСЃРёС‚СЊ РІСЃРµ РїРѕР»СЏ РїСЂРѕРІРµСЂРєРё СЃРѕРѕР±С‰РµРЅРёСЏ</translation>
     </message>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
         <source>Enter a BottleCaps address (e.g. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</source>
-        <translation>Введите адрес BottleCaps (напр. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
+        <translation>Р’РІРµРґРёС‚Рµ Р°РґСЂРµСЃ BottleCaps (РЅР°РїСЂ. 4Zo1ga6xuKuQ7JV7M9rGDoxdbYwV5zgQJ5)</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Click &quot;Sign Message&quot; to generate signature</source>
-        <translation>Нажмите &quot;Подписать сообщение&quot; для создания подписи</translation>
+        <translation>РќР°Р¶РјРёС‚Рµ &quot;РџРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ&quot; РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РїРѕРґРїРёСЃРё</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enter BottleCaps signature</source>
-        <translation>Введите подпись BottleCaps</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РїРѕРґРїРёСЃСЊ BottleCaps</translation>
     </message>
     <message>
         <location line="+82"/>
         <location line="+81"/>
         <source>The entered address is invalid.</source>
-        <translation>Введённый адрес неверен</translation>
+        <translation>Р’РІРµРґС‘РЅРЅС‹Р№ Р°РґСЂРµСЃ РЅРµРІРµСЂРµРЅ</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -1565,59 +1565,59 @@ Address: %4
         <location line="+73"/>
         <location line="+8"/>
         <source>Please check the address and try again.</source>
-        <translation>Пожалуйста, проверьте адрес и попробуйте ещё раз.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РїСЂРѕРІРµСЂСЊС‚Рµ Р°РґСЂРµСЃ Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·.</translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+81"/>
         <source>The entered address does not refer to a key.</source>
-        <translation>Введённый адрес не связан с ключом</translation>
+        <translation>Р’РІРµРґС‘РЅРЅС‹Р№ Р°РґСЂРµСЃ РЅРµ СЃРІСЏР·Р°РЅ СЃ РєР»СЋС‡РѕРј</translation>
     </message>
     <message>
         <location line="-73"/>
         <source>Wallet unlock was cancelled.</source>
-        <translation>Разблокировка бумажника была отменена.</translation>
+        <translation>Р Р°Р·Р±Р»РѕРєРёСЂРѕРІРєР° Р±СѓРјР°Р¶РЅРёРєР° Р±С‹Р»Р° РѕС‚РјРµРЅРµРЅР°.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Private key for the entered address is not available.</source>
-        <translation>Для введённого адреса недоступен закрытый ключ</translation>
+        <translation>Р”Р»СЏ РІРІРµРґС‘РЅРЅРѕРіРѕ Р°РґСЂРµСЃР° РЅРµРґРѕСЃС‚СѓРїРµРЅ Р·Р°РєСЂС‹С‚С‹Р№ РєР»СЋС‡</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Message signing failed.</source>
-        <translation>Не удалось подписать сообщение</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРїРёСЃР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Message signed.</source>
-        <translation>Сообщение подписано</translation>
+        <translation>РЎРѕРѕР±С‰РµРЅРёРµ РїРѕРґРїРёСЃР°РЅРѕ</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>The signature could not be decoded.</source>
-        <translation>Подпись не может быть раскодирована.</translation>
+        <translation>РџРѕРґРїРёСЃСЊ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°СЃРєРѕРґРёСЂРѕРІР°РЅР°.</translation>
     </message>
     <message>
         <location line="+0"/>
         <location line="+13"/>
         <source>Please check the signature and try again.</source>
-        <translation>Пожалуйста, проверьте подпись и попробуйте ещё раз.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РїСЂРѕРІРµСЂСЊС‚Рµ РїРѕРґРїРёСЃСЊ Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>The signature did not match the message digest.</source>
-        <translation>Подпись не соответствует отпечатку сообщения.</translation>
+        <translation>РџРѕРґРїРёСЃСЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РѕС‚РїРµС‡Р°С‚РєСѓ СЃРѕРѕР±С‰РµРЅРёСЏ.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Message verification failed.</source>
-        <translation>Проверка сообщения не удалась.</translation>
+        <translation>РџСЂРѕРІРµСЂРєР° СЃРѕРѕР±С‰РµРЅРёСЏ РЅРµ СѓРґР°Р»Р°СЃСЊ.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Message verified.</source>
-        <translation>Сообщение проверено.</translation>
+        <translation>РЎРѕРѕР±С‰РµРЅРёРµ РїСЂРѕРІРµСЂРµРЅРѕ.</translation>
     </message>
 </context>
 <context>
@@ -1625,84 +1625,84 @@ Address: %4
     <message>
         <location filename="../transactiondesc.cpp" line="+19"/>
         <source>Open until %1</source>
-        <translation>Открыто до %1</translation>
+        <translation>РћС‚РєСЂС‹С‚Рѕ РґРѕ %1</translation>
     </message>
     <message numerus="yes">
         <location line="-2"/>
         <source>Open for %n block(s)</source>
         <translation>
-            <numerusform>Открыто для %n блока</numerusform>
-            <numerusform>Открыто для %n блоков</numerusform>
-            <numerusform>Открыто для %n блоков</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєР°</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєРѕРІ</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєРѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+8"/>
         <source>%1/offline</source>
-        <translation>%1/отключен</translation>
+        <translation>%1/РѕС‚РєР»СЋС‡РµРЅ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1/unconfirmed</source>
-        <translation>%1/не подтверждено</translation>
+        <translation>%1/РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 confirmations</source>
-        <translation>%1 подтверждений</translation>
+        <translation>%1 РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation>РЎС‚Р°С‚СѓСЃ</translation>
     </message>
     <message numerus="yes">
         <location line="+7"/>
         <source>, broadcast through %n node(s)</source>
         <translation>
-            <numerusform>, разослано через %n узел</numerusform>
-            <numerusform>, разослано через %n узла</numerusform>
-            <numerusform>, разослано через %n узлов</numerusform>
+            <numerusform>, СЂР°Р·РѕСЃР»Р°РЅРѕ С‡РµСЂРµР· %n СѓР·РµР»</numerusform>
+            <numerusform>, СЂР°Р·РѕСЃР»Р°РЅРѕ С‡РµСЂРµР· %n СѓР·Р»Р°</numerusform>
+            <numerusform>, СЂР°Р·РѕСЃР»Р°РЅРѕ С‡РµСЂРµР· %n СѓР·Р»РѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Date</source>
-        <translation>Дата</translation>
+        <translation>Р”Р°С‚Р°</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Source</source>
-        <translation>Источник</translation>
+        <translation>РСЃС‚РѕС‡РЅРёРє</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Generated</source>
-        <translation>Сгенерированно</translation>
+        <translation>РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅРѕ</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+17"/>
         <source>From</source>
-        <translation>От</translation>
+        <translation>РћС‚</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+22"/>
         <location line="+58"/>
         <source>To</source>
-        <translation>Для</translation>
+        <translation>Р”Р»СЏ</translation>
     </message>
     <message>
         <location line="-77"/>
         <location line="+2"/>
         <source>own address</source>
-        <translation>свой адрес</translation>
+        <translation>СЃРІРѕР№ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>label</source>
-        <translation>метка</translation>
+        <translation>РјРµС‚РєР°</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -1711,21 +1711,21 @@ Address: %4
         <location line="+17"/>
         <location line="+30"/>
         <source>Credit</source>
-        <translation>Кредит</translation>
+        <translation>РљСЂРµРґРёС‚</translation>
     </message>
     <message numerus="yes">
         <location line="-102"/>
         <source>matures in %n more block(s)</source>
         <translation>
-            <numerusform>будет доступно через %n блок</numerusform>
-            <numerusform>будет доступно через %n блока</numerusform>
-            <numerusform>будет доступно через %n блоков</numerusform>
+            <numerusform>Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРЅРѕ С‡РµСЂРµР· %n Р±Р»РѕРє</numerusform>
+            <numerusform>Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРЅРѕ С‡РµСЂРµР· %n Р±Р»РѕРєР°</numerusform>
+            <numerusform>Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРЅРѕ С‡РµСЂРµР· %n Р±Р»РѕРєРѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>not accepted</source>
-        <translation>не принято</translation>
+        <translation>РЅРµ РїСЂРёРЅСЏС‚Рѕ</translation>
     </message>
     <message>
         <location line="+44"/>
@@ -1733,82 +1733,82 @@ Address: %4
         <location line="+15"/>
         <location line="+30"/>
         <source>Debit</source>
-        <translation>Дебет</translation>
+        <translation>Р”РµР±РµС‚</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Transaction fee</source>
-        <translation>Комиссия</translation>
+        <translation>РљРѕРјРёСЃСЃРёСЏ</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Net amount</source>
-        <translation>Чистая сумма</translation>
+        <translation>Р§РёСЃС‚Р°СЏ СЃСѓРјРјР°</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Message</source>
-        <translation>Сообщение</translation>
+        <translation>РЎРѕРѕР±С‰РµРЅРёРµ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Comment</source>
-        <translation>Комментарий:</translation>
+        <translation>РљРѕРјРјРµРЅС‚Р°СЂРёР№:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Transaction ID</source>
-        <translation>ID транзакции</translation>
+        <translation>ID С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Generated coins must mature 520 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to &quot;not accepted&quot; and it won&apos;t be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation>Сгенерированные монеты должны подождать 520 блоков, прежде чем они могут быть потрачены. Когда Вы сгенерировали этот блок, он был отправлен в сеть для добавления в цепочку блоков. Если данная процедура не удастся, статус изменится на «не подтверждено», и монеты будут недействительны. Это иногда происходит в случае, если другой узел сгенерирует блок на несколько секунд раньше вас.</translation>
+        <translation>РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Рµ РјРѕРЅРµС‚С‹ РґРѕР»Р¶РЅС‹ РїРѕРґРѕР¶РґР°С‚СЊ 520 Р±Р»РѕРєРѕРІ, РїСЂРµР¶РґРµ С‡РµРј РѕРЅРё РјРѕРіСѓС‚ Р±С‹С‚СЊ РїРѕС‚СЂР°С‡РµРЅС‹. РљРѕРіРґР° Р’С‹ СЃРіРµРЅРµСЂРёСЂРѕРІР°Р»Рё СЌС‚РѕС‚ Р±Р»РѕРє, РѕРЅ Р±С‹Р» РѕС‚РїСЂР°РІР»РµРЅ РІ СЃРµС‚СЊ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ С†РµРїРѕС‡РєСѓ Р±Р»РѕРєРѕРІ. Р•СЃР»Рё РґР°РЅРЅР°СЏ РїСЂРѕС†РµРґСѓСЂР° РЅРµ СѓРґР°СЃС‚СЃСЏ, СЃС‚Р°С‚СѓСЃ РёР·РјРµРЅРёС‚СЃСЏ РЅР° В«РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕВ», Рё РјРѕРЅРµС‚С‹ Р±СѓРґСѓС‚ РЅРµРґРµР№СЃС‚РІРёС‚РµР»СЊРЅС‹. Р­С‚Рѕ РёРЅРѕРіРґР° РїСЂРѕРёСЃС…РѕРґРёС‚ РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РґСЂСѓРіРѕР№ СѓР·РµР» СЃРіРµРЅРµСЂРёСЂСѓРµС‚ Р±Р»РѕРє РЅР° РЅРµСЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ СЂР°РЅСЊС€Рµ РІР°СЃ.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Staked coins must wait 520 blocks before they can return to balance and be spent.  When you generated this proof-of-stake block, it was broadcast to the network to be added to the block chain.  If it fails to get into the chain, it will change to \"not accepted\" and not be a valid stake.  This may occasionally happen if another node generates a proof-of-stake block within a few seconds of yours.</source>
-        <translation>Использованные в Proof-of-Stake монеты должны подождать 520 блоков, прежде чем они вернутся на баланс и смогут быть потрачены. Когда вы сгенерировали этот proof-of-stake блок, он был отправлен в сеть для добавления в цепочку блоков. Если данная процедура не удается, статус изменится на \"не подтверждени\" и блок будет недействителен. Это иногда происходит в случае, если другой узел сгенерирует блок на несколько секунд раньше вас.</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°РЅРЅС‹Рµ РІ Proof-of-Stake РјРѕРЅРµС‚С‹ РґРѕР»Р¶РЅС‹ РїРѕРґРѕР¶РґР°С‚СЊ 520 Р±Р»РѕРєРѕРІ, РїСЂРµР¶РґРµ С‡РµРј РѕРЅРё РІРµСЂРЅСѓС‚СЃСЏ РЅР° Р±Р°Р»Р°РЅСЃ Рё СЃРјРѕРіСѓС‚ Р±С‹С‚СЊ РїРѕС‚СЂР°С‡РµРЅС‹. РљРѕРіРґР° РІС‹ СЃРіРµРЅРµСЂРёСЂРѕРІР°Р»Рё СЌС‚РѕС‚ proof-of-stake Р±Р»РѕРє, РѕРЅ Р±С‹Р» РѕС‚РїСЂР°РІР»РµРЅ РІ СЃРµС‚СЊ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ С†РµРїРѕС‡РєСѓ Р±Р»РѕРєРѕРІ. Р•СЃР»Рё РґР°РЅРЅР°СЏ РїСЂРѕС†РµРґСѓСЂР° РЅРµ СѓРґР°РµС‚СЃСЏ, СЃС‚Р°С‚СѓСЃ РёР·РјРµРЅРёС‚СЃСЏ РЅР° \"РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРё\" Рё Р±Р»РѕРє Р±СѓРґРµС‚ РЅРµРґРµР№СЃС‚РІРёС‚РµР»РµРЅ. Р­С‚Рѕ РёРЅРѕРіРґР° РїСЂРѕРёСЃС…РѕРґРёС‚ РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РґСЂСѓРіРѕР№ СѓР·РµР» СЃРіРµРЅРµСЂРёСЂСѓРµС‚ Р±Р»РѕРє РЅР° РЅРµСЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ СЂР°РЅСЊС€Рµ РІР°СЃ.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Debug information</source>
-        <translation>Отладочная информация</translation>
+        <translation>РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Transaction</source>
-        <translation>Транзакция</translation>
+        <translation>РўСЂР°РЅР·Р°РєС†РёСЏ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Inputs</source>
-        <translation>Входы</translation>
+        <translation>Р’С…РѕРґС‹</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Amount</source>
-        <translation>Количество</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>true</source>
-        <translation>истина</translation>
+        <translation>РёСЃС‚РёРЅР°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>false</source>
-        <translation>ложь</translation>
+        <translation>Р»РѕР¶СЊ</translation>
     </message>
     <message>
         <location line="-211"/>
         <source>, has not been successfully broadcast yet</source>
-        <translation>, ещё не было успешно разослано</translation>
+        <translation>, РµС‰С‘ РЅРµ Р±С‹Р»Рѕ СѓСЃРїРµС€РЅРѕ СЂР°Р·РѕСЃР»Р°РЅРѕ</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>unknown</source>
-        <translation>неизвестно</translation>
+        <translation>РЅРµРёР·РІРµСЃС‚РЅРѕ</translation>
     </message>
 </context>
 <context>
@@ -1816,12 +1816,12 @@ Address: %4
     <message>
         <location filename="../forms/transactiondescdialog.ui" line="+14"/>
         <source>Transaction details</source>
-        <translation>Детали транзакции</translation>
+        <translation>Р”РµС‚Р°Р»Рё С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>This pane shows a detailed description of the transaction</source>
-        <translation>Данный диалог показывает детализированную статистику по выбранной транзакции</translation>
+        <translation>Р”Р°РЅРЅС‹Р№ РґРёР°Р»РѕРі РїРѕРєР°Р·С‹РІР°РµС‚ РґРµС‚Р°Р»РёР·РёСЂРѕРІР°РЅРЅСѓСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ РїРѕ РІС‹Р±СЂР°РЅРЅРѕР№ С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
 </context>
 <context>
@@ -1829,125 +1829,125 @@ Address: %4
     <message>
         <location filename="../transactiontablemodel.cpp" line="+226"/>
         <source>Date</source>
-        <translation>Дата</translation>
+        <translation>Р”Р°С‚Р°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>РўРёРї</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation>РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Amount</source>
-        <translation>Количество</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ</translation>
     </message>
     <message numerus="yes">
         <location line="+57"/>
         <source>Open for %n block(s)</source>
         <translation>
-            <numerusform>Открыто для %n блока</numerusform>
-            <numerusform>Открыто для %n блоков</numerusform>
-            <numerusform>Открыто для %n блоков</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєР°</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєРѕРІ</numerusform>
+            <numerusform>РћС‚РєСЂС‹С‚Рѕ РґР»СЏ %n Р±Р»РѕРєРѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Open until %1</source>
-        <translation>Открыто до %1</translation>
+        <translation>РћС‚РєСЂС‹С‚Рѕ РґРѕ %1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Offline (%1 confirmations)</source>
-        <translation>Оффлайн (%1 подтверждений)</translation>
+        <translation>РћС„С„Р»Р°Р№РЅ (%1 РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Unconfirmed (%1 of %2 confirmations)</source>
-        <translation>Не подтверждено (%1 из %2 подтверждений)</translation>
+        <translation>РќРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ (%1 РёР· %2 РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Confirmed (%1 confirmations)</source>
-        <translation>Подтверждено (%1 подтверждений)</translation>
+        <translation>РџРѕРґС‚РІРµСЂР¶РґРµРЅРѕ (%1 РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№)</translation>
     </message>
     <message numerus="yes">
         <location line="+8"/>
         <source>Mined balance will be available when it matures in %n more block(s)</source>
         <translation>
-            <numerusform>Добытыми монетами можно будет воспользоваться через %n блок</numerusform>
-            <numerusform>Добытыми монетами можно будет воспользоваться через %n блока</numerusform>
-            <numerusform>Добытыми монетами можно будет воспользоваться через %n блоков</numerusform>
+            <numerusform>Р”РѕР±С‹С‚С‹РјРё РјРѕРЅРµС‚Р°РјРё РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРѕСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ С‡РµСЂРµР· %n Р±Р»РѕРє</numerusform>
+            <numerusform>Р”РѕР±С‹С‚С‹РјРё РјРѕРЅРµС‚Р°РјРё РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРѕСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ С‡РµСЂРµР· %n Р±Р»РѕРєР°</numerusform>
+            <numerusform>Р”РѕР±С‹С‚С‹РјРё РјРѕРЅРµС‚Р°РјРё РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РІРѕСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ С‡РµСЂРµР· %n Р±Р»РѕРєРѕРІ</numerusform>
         </translation>
     </message>
     <message>
         <location line="+5"/>
         <source>This block was not received by any other nodes and will probably not be accepted!</source>
-        <translation>Этот блок не был получен другими узлами и, возможно, не будет принят!</translation>
+        <translation>Р­С‚РѕС‚ Р±Р»РѕРє РЅРµ Р±С‹Р» РїРѕР»СѓС‡РµРЅ РґСЂСѓРіРёРјРё СѓР·Р»Р°РјРё Рё, РІРѕР·РјРѕР¶РЅРѕ, РЅРµ Р±СѓРґРµС‚ РїСЂРёРЅСЏС‚!</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Generated but not accepted</source>
-        <translation>Сгенерированно, но не подтверждено</translation>
+        <translation>РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅРѕ, РЅРѕ РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Received with</source>
-        <translation>Получено</translation>
+        <translation>РџРѕР»СѓС‡РµРЅРѕ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Received from</source>
-        <translation>Получено от</translation>
+        <translation>РџРѕР»СѓС‡РµРЅРѕ РѕС‚</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Sent to</source>
-        <translation>Отправлено</translation>
+        <translation>РћС‚РїСЂР°РІР»РµРЅРѕ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Payment to yourself</source>
-        <translation>Отправлено себе</translation>
+        <translation>РћС‚РїСЂР°РІР»РµРЅРѕ СЃРµР±Рµ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mined</source>
-        <translation>Добыто</translation>
+        <translation>Р”РѕР±С‹С‚Рѕ</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>(n/a)</source>
-        <translation>[не доступно]</translation>
+        <translation>[РЅРµ РґРѕСЃС‚СѓРїРЅРѕ]</translation>
     </message>
     <message>
         <location line="+199"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
-        <translation>Статус транзакции. Подведите курсор к нужному полю для того, чтобы увидеть количество подтверждений.</translation>
+        <translation>РЎС‚Р°С‚СѓСЃ С‚СЂР°РЅР·Р°РєС†РёРё. РџРѕРґРІРµРґРёС‚Рµ РєСѓСЂСЃРѕСЂ Рє РЅСѓР¶РЅРѕРјСѓ РїРѕР»СЋ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ СѓРІРёРґРµС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Date and time that the transaction was received.</source>
-        <translation>Дата и время, когда транзакция была получена.</translation>
+        <translation>Р”Р°С‚Р° Рё РІСЂРµРјСЏ, РєРѕРіРґР° С‚СЂР°РЅР·Р°РєС†РёСЏ Р±С‹Р»Р° РїРѕР»СѓС‡РµРЅР°.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Type of transaction.</source>
-        <translation>Тип транзакции.</translation>
+        <translation>РўРёРї С‚СЂР°РЅР·Р°РєС†РёРё.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Destination address of transaction.</source>
-        <translation>Адрес назначения транзакции.</translation>
+        <translation>РђРґСЂРµСЃ РЅР°Р·РЅР°С‡РµРЅРёСЏ С‚СЂР°РЅР·Р°РєС†РёРё.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Amount removed from or added to balance.</source>
-        <translation>Сумма, добавленная, или снятая с баланса.</translation>
+        <translation>РЎСѓРјРјР°, РґРѕР±Р°РІР»РµРЅРЅР°СЏ, РёР»Рё СЃРЅСЏС‚Р°СЏ СЃ Р±Р°Р»Р°РЅСЃР°.</translation>
     </message>
 </context>
 <context>
@@ -1956,137 +1956,137 @@ Address: %4
         <location filename="../transactionview.cpp" line="+55"/>
         <location line="+16"/>
         <source>All</source>
-        <translation>Все</translation>
+        <translation>Р’СЃРµ</translation>
     </message>
     <message>
         <location line="-15"/>
         <source>Today</source>
-        <translation>Сегодня</translation>
+        <translation>РЎРµРіРѕРґРЅСЏ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This week</source>
-        <translation>На этой неделе</translation>
+        <translation>РќР° СЌС‚РѕР№ РЅРµРґРµР»Рµ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This month</source>
-        <translation>В этом месяце</translation>
+        <translation>Р’ СЌС‚РѕРј РјРµСЃСЏС†Рµ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Last month</source>
-        <translation>За последний месяц</translation>
+        <translation>Р—Р° РїРѕСЃР»РµРґРЅРёР№ РјРµСЃСЏС†</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This year</source>
-        <translation>В этом году</translation>
+        <translation>Р’ СЌС‚РѕРј РіРѕРґСѓ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Range...</source>
-        <translation>Промежуток...</translation>
+        <translation>РџСЂРѕРјРµР¶СѓС‚РѕРє...</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Received with</source>
-        <translation>Получено на</translation>
+        <translation>РџРѕР»СѓС‡РµРЅРѕ РЅР°</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Sent to</source>
-        <translation>Отправлено на</translation>
+        <translation>РћС‚РїСЂР°РІР»РµРЅРѕ РЅР°</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>To yourself</source>
-        <translation>Отправленные себе</translation>
+        <translation>РћС‚РїСЂР°РІР»РµРЅРЅС‹Рµ СЃРµР±Рµ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mined</source>
-        <translation>Добытые</translation>
+        <translation>Р”РѕР±С‹С‚С‹Рµ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Другое</translation>
+        <translation>Р”СЂСѓРіРѕРµ</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Enter address or label to search</source>
-        <translation>Введите адрес или метку для поиска</translation>
+        <translation>Р’РІРµРґРёС‚Рµ Р°РґСЂРµСЃ РёР»Рё РјРµС‚РєСѓ РґР»СЏ РїРѕРёСЃРєР°</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Min amount</source>
-        <translation>Мин. сумма</translation>
+        <translation>РњРёРЅ. СЃСѓРјРјР°</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>Copy address</source>
-        <translation>Копировать адрес</translation>
+        <translation>РљРѕРїРёСЂРѕРІР°С‚СЊ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copy label</source>
-        <translation>Копировать метку</translation>
+        <translation>РљРѕРїРёСЂРѕРІР°С‚СЊ РјРµС‚РєСѓ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copy amount</source>
-        <translation>Скопировать сумму</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСѓРјРјСѓ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edit label</source>
-        <translation>Изменить метку</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ РјРµС‚РєСѓ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show transaction details</source>
-        <translation>Показать подробности транзакции</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РїРѕРґСЂРѕР±РЅРѕСЃС‚Рё С‚СЂР°РЅР·Р°РєС†РёРё</translation>
     </message>
     <message>
         <location line="+142"/>
         <source>Export Transaction Data</source>
-        <translation>Экспортировать данные транзакций</translation>
+        <translation>Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РґР°РЅРЅС‹Рµ С‚СЂР°РЅР·Р°РєС†РёР№</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation>Текст, разделённый запятыми (*.csv)</translation>
+        <translation>РўРµРєСЃС‚, СЂР°Р·РґРµР»С‘РЅРЅС‹Р№ Р·Р°РїСЏС‚С‹РјРё (*.csv)</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Confirmed</source>
-        <translation>Подтверждено</translation>
+        <translation>РџРѕРґС‚РІРµСЂР¶РґРµРЅРѕ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date</source>
-        <translation>Дата</translation>
+        <translation>Р”Р°С‚Р°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>РўРёРї</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Label</source>
-        <translation>Метка</translation>
+        <translation>РњРµС‚РєР°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation>РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Amount</source>
-        <translation>Количество</translation>
+        <translation>РљРѕР»РёС‡РµСЃС‚РІРѕ</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2096,22 +2096,22 @@ Address: %4
     <message>
         <location line="+4"/>
         <source>Error exporting</source>
-        <translation>Ошибка экспорта</translation>
+        <translation>РћС€РёР±РєР° СЌРєСЃРїРѕСЂС‚Р°</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Could not write to file %1.</source>
-        <translation>Невозможно записать в файл %1.</translation>
+        <translation>РќРµРІРѕР·РјРѕР¶РЅРѕ Р·Р°РїРёСЃР°С‚СЊ РІ С„Р°Р№Р» %1.</translation>
     </message>
     <message>
         <location line="+95"/>
         <source>Range:</source>
-        <translation>Промежуток от:</translation>
+        <translation>РџСЂРѕРјРµР¶СѓС‚РѕРє РѕС‚:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>to</source>
-        <translation>до</translation>
+        <translation>РґРѕ</translation>
     </message>
 </context>
 <context>
@@ -2119,7 +2119,7 @@ Address: %4
     <message>
         <location filename="../walletmodel.cpp" line="+192"/>
         <source>Sending...</source>
-        <translation>Отправка....</translation>
+        <translation>РћС‚РїСЂР°РІРєР°....</translation>
     </message>
 </context>
 <context>
@@ -2127,118 +2127,118 @@ Address: %4
     <message>
         <location filename="../bitcoinstrings.cpp" line="+82"/>
         <source>BottleCaps version</source>
-        <translation>Версия</translation>
+        <translation>Р’РµСЂСЃРёСЏ</translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Usage:</source>
-        <translation>Использование:</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ:</translation>
     </message>
     <message>
         <location line="-25"/>
         <source>Send command to -server or bitcoind</source>
-        <translation>Отправить команду на -server или bitcoind</translation>
+        <translation>РћС‚РїСЂР°РІРёС‚СЊ РєРѕРјР°РЅРґСѓ РЅР° -server РёР»Рё bitcoind</translation>
     </message>
     <message>
         <location line="-19"/>
         <source>List commands</source>
-        <translation>Список команд
+        <translation>РЎРїРёСЃРѕРє РєРѕРјР°РЅРґ
 </translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Get help for a command</source>
-        <translation>Получить помощь по команде</translation>
+        <translation>РџРѕР»СѓС‡РёС‚СЊ РїРѕРјРѕС‰СЊ РїРѕ РєРѕРјР°РЅРґРµ</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Options:</source>
-        <translation>Опции:</translation>
+        <translation>РћРїС†РёРё:</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Specify configuration file (default: BottleCaps.conf)</source>
-        <translation>Указать конфигурационный файл (по умолчанию: BottleCaps.conf)</translation>
+        <translation>РЈРєР°Р·Р°С‚СЊ РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅС‹Р№ С„Р°Р№Р» (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: BottleCaps.conf)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Specify pid file (default: BottleCapsd.pid)</source>
-        <translation>Указать pid-файл (по умолчанию: BottleCaps.pid)</translation>
+        <translation>РЈРєР°Р·Р°С‚СЊ pid-С„Р°Р№Р» (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: BottleCaps.pid)</translation>
     </message>
     <message>
         <location line="-47"/>
         <source>Generate coins</source>
-        <translation>Генерировать монеты</translation>
+        <translation>Р“РµРЅРµСЂРёСЂРѕРІР°С‚СЊ РјРѕРЅРµС‚С‹</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Don&apos;t generate coins</source>
-        <translation>Не генерировать монеты</translation>
+        <translation>РќРµ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РјРѕРЅРµС‚С‹</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>Specify data directory</source>
-        <translation>Укажите каталог данных</translation>
+        <translation>РЈРєР°Р¶РёС‚Рµ РєР°С‚Р°Р»РѕРі РґР°РЅРЅС‹С…</translation>
     </message>
     <message>
         <location line="-8"/>
         <source>Set database cache size in megabytes (default: 25)</source>
-        <translation>Установить размер кэша базы данных в мегабайтах (по умолчанию: 25)</translation>
+        <translation>РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЂР°Р·РјРµСЂ РєСЌС€Р° Р±Р°Р·С‹ РґР°РЅРЅС‹С… РІ РјРµРіР°Р±Р°Р№С‚Р°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 25)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Set database disk log size in megabytes (default: 100)</source>
-        <translation>Установить размер лога базы данных в мегабайтах (по умолчанию: 100)</translation>
+        <translation>РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЂР°Р·РјРµСЂ Р»РѕРіР° Р±Р°Р·С‹ РґР°РЅРЅС‹С… РІ РјРµРіР°Р±Р°Р№С‚Р°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 100)</translation>
     </message>
     <message>
         <location line="-26"/>
         <source>Listen for connections on &lt;port&gt; (default: 7777 or testnet: 17777)</source>
-        <translation>Принимать входящие подключения на &lt;port&gt; (по умолчанию: 7777 или 17777 в тестовой сети)</translation>
+        <translation>РџСЂРёРЅРёРјР°С‚СЊ РІС…РѕРґСЏС‰РёРµ РїРѕРґРєР»СЋС‡РµРЅРёСЏ РЅР° &lt;port&gt; (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 7777 РёР»Рё 17777 РІ С‚РµСЃС‚РѕРІРѕР№ СЃРµС‚Рё)</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
-        <translation>Поддерживать не более &lt;n&gt; подключений к узлам (по умолчанию: 125)</translation>
+        <translation>РџРѕРґРґРµСЂР¶РёРІР°С‚СЊ РЅРµ Р±РѕР»РµРµ &lt;n&gt; РїРѕРґРєР»СЋС‡РµРЅРёР№ Рє СѓР·Р»Р°Рј (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 125)</translation>
     </message>
     <message>
         <location line="-33"/>
         <source>Connect to a node to retrieve peer addresses, and disconnect</source>
-        <translation>Подключиться к узлу, чтобы получить список адресов других участников и отключиться</translation>
+        <translation>РџРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє СѓР·Р»Сѓ, С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє Р°РґСЂРµСЃРѕРІ РґСЂСѓРіРёС… СѓС‡Р°СЃС‚РЅРёРєРѕРІ Рё РѕС‚РєР»СЋС‡РёС‚СЊСЃСЏ</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Specify your own public address</source>
-        <translation>Укажите ваш собственный публичный адрес</translation>
+        <translation>РЈРєР°Р¶РёС‚Рµ РІР°С€ СЃРѕР±СЃС‚РІРµРЅРЅС‹Р№ РїСѓР±Р»РёС‡РЅС‹Р№ Р°РґСЂРµСЃ</translation>
     </message>
     <message>
         <location line="-75"/>
         <source>Bind to given address. Use [host]:port notation for IPv6</source>
-        <translation>Привязаться (bind) к указанному адресу. Используйте запись вида [хост]:порт для IPv6</translation>
+        <translation>РџСЂРёРІСЏР·Р°С‚СЊСЃСЏ (bind) Рє СѓРєР°Р·Р°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ Р·Р°РїРёСЃСЊ РІРёРґР° [С…РѕСЃС‚]:РїРѕСЂС‚ РґР»СЏ IPv6</translation>
     </message>
     <message>
         <location line="+77"/>
         <source>Threshold for disconnecting misbehaving peers (default: 100)</source>
-        <translation>Порог для отключения неправильно ведущих себя узлов (по умолчанию: 100)</translation>
+        <translation>РџРѕСЂРѕРі РґР»СЏ РѕС‚РєР»СЋС‡РµРЅРёСЏ РЅРµРїСЂР°РІРёР»СЊРЅРѕ РІРµРґСѓС‰РёС… СЃРµР±СЏ СѓР·Р»РѕРІ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 100)</translation>
     </message>
     <message>
         <location line="-112"/>
         <source>Number of seconds to keep misbehaving peers from reconnecting (default: 86400)</source>
-        <translation>Число секунд блокирования неправильно ведущих себя узлов (по умолчанию: 86400)</translation>
+        <translation>Р§РёСЃР»Рѕ СЃРµРєСѓРЅРґ Р±Р»РѕРєРёСЂРѕРІР°РЅРёСЏ РЅРµРїСЂР°РІРёР»СЊРЅРѕ РІРµРґСѓС‰РёС… СЃРµР±СЏ СѓР·Р»РѕРІ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 86400)</translation>
     </message>
     <message>
         <location line="-25"/>
         <source>An error occurred while setting up the RPC port %u for listening on IPv4: %s</source>
-        <translation>Произошла ошибка при открытии RPC-порта %u для прослушивания на IPv4: %s</translation>
+        <translation>РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё RPC-РїРѕСЂС‚Р° %u РґР»СЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ РЅР° IPv4: %s</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>An error occurred while setting up the RPC port %u for listening on IPv6, falling back to IPv4: %s</source>
-        <translation>Произошла ошибка при открытии на прослушивание IPv6 RCP-порта %u, возвращаемся к IPv4: %s</translation>
+        <translation>РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё РЅР° РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ IPv6 RCP-РїРѕСЂС‚Р° %u, РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє IPv4: %s</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Detach block and address databases. Increases shutdown time (default: 0)</source>
-        <translation>Отключить базы данных блоков и адресов. Увеличивает время завершения работы (по умолчанию: 0)</translation>
+        <translation>РћС‚РєР»СЋС‡РёС‚СЊ Р±Р°Р·С‹ РґР°РЅРЅС‹С… Р±Р»РѕРєРѕРІ Рё Р°РґСЂРµСЃРѕРІ. РЈРІРµР»РёС‡РёРІР°РµС‚ РІСЂРµРјСЏ Р·Р°РІРµСЂС€РµРЅРёСЏ СЂР°Р±РѕС‚С‹ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 0)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2248,213 +2248,213 @@ Address: %4
     <message>
         <location line="+13"/>
         <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8344 or testnet: 18344)</source>
-        <translation>Прослушивать подключения JSON-RPC на &lt;порту&gt; (по умолчанию: 8344 или для testnet: 18344)</translation>
+        <translation>РџСЂРѕСЃР»СѓС€РёРІР°С‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёСЏ JSON-RPC РЅР° &lt;РїРѕСЂС‚Сѓ&gt; (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 8344 РёР»Рё РґР»СЏ testnet: 18344)</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Warning: error reading wallet.dat! All keys read correctly, but transaction data or address book entries might be missing or incorrect.</source>
-        <translation>Внимание: ошибка чтения wallet.dat! Все ключи восстановлены, но записи в адресной книге и истории транзакций могут быть некорректными.</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: РѕС€РёР±РєР° С‡С‚РµРЅРёСЏ wallet.dat! Р’СЃРµ РєР»СЋС‡Рё РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅС‹, РЅРѕ Р·Р°РїРёСЃРё РІ Р°РґСЂРµСЃРЅРѕР№ РєРЅРёРіРµ Рё РёСЃС‚РѕСЂРёРё С‚СЂР°РЅР·Р°РєС†РёР№ РјРѕРіСѓС‚ Р±С‹С‚СЊ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Warning: wallet.dat corrupt, data salvaged! Original wallet.dat saved as wallet.{timestamp}.bak in %s; if your balance or transactions are incorrect you should restore from a backup.</source>
-        <translation>Внимание: wallet.dat был поврежден, данные восстановлены! Оригинальный wallet.dat сохранен как wallet.{timestamp}.bak в %s;, если ваши транзакции или баланс отображаются неправильно, следует восстановить его из данной копии.</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: wallet.dat Р±С‹Р» РїРѕРІСЂРµР¶РґРµРЅ, РґР°РЅРЅС‹Рµ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅС‹! РћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ wallet.dat СЃРѕС…СЂР°РЅРµРЅ РєР°Рє wallet.{timestamp}.bak РІ %s;, РµСЃР»Рё РІР°С€Рё С‚СЂР°РЅР·Р°РєС†РёРё РёР»Рё Р±Р°Р»Р°РЅСЃ РѕС‚РѕР±СЂР°Р¶Р°СЋС‚СЃСЏ РЅРµРїСЂР°РІРёР»СЊРЅРѕ, СЃР»РµРґСѓРµС‚ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РµРіРѕ РёР· РґР°РЅРЅРѕР№ РєРѕРїРёРё.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Accept command line and JSON-RPC commands</source>
-        <translation>Принимать командную строку и команды JSON-RPC</translation>
+        <translation>РџСЂРёРЅРёРјР°С‚СЊ РєРѕРјР°РЅРґРЅСѓСЋ СЃС‚СЂРѕРєСѓ Рё РєРѕРјР°РЅРґС‹ JSON-RPC</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Attempt to recover private keys from a corrupt wallet.dat</source>
-        <translation>Попытка восстановления ключей из поврежденного wallet.dat</translation>
+        <translation>РџРѕРїС‹С‚РєР° РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РєР»СЋС‡РµР№ РёР· РїРѕРІСЂРµР¶РґРµРЅРЅРѕРіРѕ wallet.dat</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Importing blockchain data file.</source>
-        <translation>Импортируется файл цепи блоков.</translation>
+        <translation>РРјРїРѕСЂС‚РёСЂСѓРµС‚СЃСЏ С„Р°Р№Р» С†РµРїРё Р±Р»РѕРєРѕРІ.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Importing bootstrap blockchain data file.</source>
-        <translation>Импортируется bootstrap-файл цепи блоков.</translation>
+        <translation>РРјРїРѕСЂС‚РёСЂСѓРµС‚СЃСЏ bootstrap-С„Р°Р№Р» С†РµРїРё Р±Р»РѕРєРѕРІ.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Run in the background as a daemon and accept commands</source>
-        <translation>Запускаться в фоне как демон и принимать команды</translation>
+        <translation>Р—Р°РїСѓСЃРєР°С‚СЊСЃСЏ РІ С„РѕРЅРµ РєР°Рє РґРµРјРѕРЅ Рё РїСЂРёРЅРёРјР°С‚СЊ РєРѕРјР°РЅРґС‹</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>Use the test network</source>
-        <translation>Использовать тестовую сеть</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚РµСЃС‚РѕРІСѓСЋ СЃРµС‚СЊ</translation>
     </message>
     <message>
         <location line="-93"/>
         <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>
-        <translation>Принимать подключения извне (по умолчанию: 1, если не используется -proxy или -connect)</translation>
+        <translation>РџСЂРёРЅРёРјР°С‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёСЏ РёР·РІРЅРµ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1, РµСЃР»Рё РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ -proxy РёР»Рё -connect)</translation>
     </message>
     <message>
         <location line="-42"/>
         <source>Error: The transaction was rejected.  This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
-        <translation>Ошибка: В транзакции отказано.  Такое может произойти, если некоторые монеты уже были потрачены, например, если Вы используете одну копию файла wallet.dat, а монеты были потрачены из другой копии, но не были отмечены как потраченные в этой.</translation>
+        <translation>РћС€РёР±РєР°: Р’ С‚СЂР°РЅР·Р°РєС†РёРё РѕС‚РєР°Р·Р°РЅРѕ.  РўР°РєРѕРµ РјРѕР¶РµС‚ РїСЂРѕРёР·РѕР№С‚Рё, РµСЃР»Рё РЅРµРєРѕС‚РѕСЂС‹Рµ РјРѕРЅРµС‚С‹ СѓР¶Рµ Р±С‹Р»Рё РїРѕС‚СЂР°С‡РµРЅС‹, РЅР°РїСЂРёРјРµСЂ, РµСЃР»Рё Р’С‹ РёСЃРїРѕР»СЊР·СѓРµС‚Рµ РѕРґРЅСѓ РєРѕРїРёСЋ С„Р°Р№Р»Р° wallet.dat, Р° РјРѕРЅРµС‚С‹ Р±С‹Р»Рё РїРѕС‚СЂР°С‡РµРЅС‹ РёР· РґСЂСѓРіРѕР№ РєРѕРїРёРё, РЅРѕ РЅРµ Р±С‹Р»Рё РѕС‚РјРµС‡РµРЅС‹ РєР°Рє РїРѕС‚СЂР°С‡РµРЅРЅС‹Рµ РІ СЌС‚РѕР№.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Error: This transaction requires a transaction fee of at least %s because of its amount, complexity, or use of recently received funds  </source>
-        <translation>Ошибка: эта транзакция требует комиссию в размере как минимум %s из-за её объёма, сложности или использования недавно полученных средств  </translation>
+        <translation>РћС€РёР±РєР°: СЌС‚Р° С‚СЂР°РЅР·Р°РєС†РёСЏ С‚СЂРµР±СѓРµС‚ РєРѕРјРёСЃСЃРёСЋ РІ СЂР°Р·РјРµСЂРµ РєР°Рє РјРёРЅРёРјСѓРј %s РёР·-Р·Р° РµС‘ РѕР±СЉС‘РјР°, СЃР»РѕР¶РЅРѕСЃС‚Рё РёР»Рё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РЅРµРґР°РІРЅРѕ РїРѕР»СѓС‡РµРЅРЅС‹С… СЃСЂРµРґСЃС‚РІ  </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Set maximum size of high-priority/low-fee transactions in bytes (default: 27000)</source>
-        <translation>Максимальный размер высокоприоритетных/низкокомиссионных транзакций в байтах (по умолчанию: 27000)</translation>
+        <translation>РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РІС‹СЃРѕРєРѕРїСЂРёРѕСЂРёС‚РµС‚РЅС‹С…/РЅРёР·РєРѕРєРѕРјРёСЃСЃРёРѕРЅРЅС‹С… С‚СЂР°РЅР·Р°РєС†РёР№ РІ Р±Р°Р№С‚Р°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 27000)</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Warning: -paytxfee is set very high! This is the transaction fee you will pay if you send a transaction.</source>
-        <translation>Внимание: установлено очень большое значение -paytxfee. Это комиссия, которую вы заплатите при проведении транзакции.</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РѕС‡РµРЅСЊ Р±РѕР»СЊС€РѕРµ Р·РЅР°С‡РµРЅРёРµ -paytxfee. Р­С‚Рѕ РєРѕРјРёСЃСЃРёСЏ, РєРѕС‚РѕСЂСѓСЋ РІС‹ Р·Р°РїР»Р°С‚РёС‚Рµ РїСЂРё РїСЂРѕРІРµРґРµРЅРёРё С‚СЂР°РЅР·Р°РєС†РёРё.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Warning: Displayed transactions may not be correct! You may need to upgrade, or other nodes may need to upgrade.</source>
-        <translation>Внимание: отображаемые транзакции могут быть некорректны! Вам или другим узлам, возможно, следует обновиться.</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹Рµ С‚СЂР°РЅР·Р°РєС†РёРё РјРѕРіСѓС‚ Р±С‹С‚СЊ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹! Р’Р°Рј РёР»Рё РґСЂСѓРіРёРј СѓР·Р»Р°Рј, РІРѕР·РјРѕР¶РЅРѕ, СЃР»РµРґСѓРµС‚ РѕР±РЅРѕРІРёС‚СЊСЃСЏ.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong BottleCaps will not work properly.</source>
-        <translation>Внимание: убедитесь, что дата и время на Вашем компьютере выставлены верно. Если Ваши часы идут неправильно, BottleCaps будет работать некорректно.</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: СѓР±РµРґРёС‚РµСЃСЊ, С‡С‚Рѕ РґР°С‚Р° Рё РІСЂРµРјСЏ РЅР° Р’Р°С€РµРј РєРѕРјРїСЊСЋС‚РµСЂРµ РІС‹СЃС‚Р°РІР»РµРЅС‹ РІРµСЂРЅРѕ. Р•СЃР»Рё Р’Р°С€Рё С‡Р°СЃС‹ РёРґСѓС‚ РЅРµРїСЂР°РІРёР»СЊРЅРѕ, BottleCaps Р±СѓРґРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ.</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Block creation options:</source>
-        <translation>Параметры создания блоков:</translation>
+        <translation>РџР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРёСЏ Р±Р»РѕРєРѕРІ:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Connect only to the specified node(s)</source>
-        <translation>Подключаться только к указанному узлу(ам)</translation>
+        <translation>РџРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ Рє СѓРєР°Р·Р°РЅРЅРѕРјСѓ СѓР·Р»Сѓ(Р°Рј)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Discover own IP address (default: 1 when listening and no -externalip)</source>
-        <translation>Определить свой IP (по умолчанию: 1 при прослушивании и если не используется -externalip)</translation>
+        <translation>РћРїСЂРµРґРµР»РёС‚СЊ СЃРІРѕР№ IP (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1 РїСЂРё РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРё Рё РµСЃР»Рё РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ -externalip)</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Error: Transaction creation failed  </source>
-        <translation>Ошибка: Создание транзакции не удалось  </translation>
+        <translation>РћС€РёР±РєР°: РЎРѕР·РґР°РЅРёРµ С‚СЂР°РЅР·Р°РєС†РёРё РЅРµ СѓРґР°Р»РѕСЃСЊ  </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Error: Wallet locked, unable to create transaction  </source>
-        <translation>Ошибка: бумажник заблокирован, невозможно создать транзакцию  </translation>
+        <translation>РћС€РёР±РєР°: Р±СѓРјР°Р¶РЅРёРє Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ, РЅРµРІРѕР·РјРѕР¶РЅРѕ СЃРѕР·РґР°С‚СЊ С‚СЂР°РЅР·Р°РєС†РёСЋ  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
-        <translation>Не удалось начать прослушивание на порту. Используйте -listen=0 если вас это устраивает.</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°С‡Р°С‚СЊ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РЅР° РїРѕСЂС‚Сѓ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ -listen=0 РµСЃР»Рё РІР°СЃ СЌС‚Рѕ СѓСЃС‚СЂР°РёРІР°РµС‚.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find peers using DNS lookup (default: 0 unless -connect)</source>
-        <translation>Искать узлы с помощью DNS (по умолчанию: 0)</translation>
+        <translation>РСЃРєР°С‚СЊ СѓР·Р»С‹ СЃ РїРѕРјРѕС‰СЊСЋ DNS (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 0)</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Invalid -tor address: &apos;%s&apos;</source>
-        <translation>Неверный адрес -tor: &apos;%s&apos;</translation>
+        <translation>РќРµРІРµСЂРЅС‹Р№ Р°РґСЂРµСЃ -tor: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Maximum per-connection receive buffer, &lt;n&gt;*1000 bytes (default: 5000)</source>
-        <translation>Максимальный размер буфера приёма на соединение, &lt;n&gt;*1000 байт (по умолчанию: 5000)</translation>
+        <translation>РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РїСЂРёС‘РјР° РЅР° СЃРѕРµРґРёРЅРµРЅРёРµ, &lt;n&gt;*1000 Р±Р°Р№С‚ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 5000)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Maximum per-connection send buffer, &lt;n&gt;*1000 bytes (default: 1000)</source>
-        <translation>Максимальный размер буфера отправки на соединение, &lt;n&gt;*1000 байт (по умолчанию: 1000)</translation>
+        <translation>РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РѕС‚РїСЂР°РІРєРё РЅР° СЃРѕРµРґРёРЅРµРЅРёРµ, &lt;n&gt;*1000 Р±Р°Р№С‚ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1000)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Only connect to nodes in network &lt;net&gt; (IPv4, IPv6 or Tor)</source>
-        <translation>Подключаться только к узлам из сети &lt;net&gt; (IPv4, IPv6 или Tor)</translation>
+        <translation>РџРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ Рє СѓР·Р»Р°Рј РёР· СЃРµС‚Рё &lt;net&gt; (IPv4, IPv6 РёР»Рё Tor)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Output extra debugging information. Implies all other -debug* options</source>
-        <translation>Выводить больше отладочной информации. Включает все остальные опции -debug*</translation>
+        <translation>Р’С‹РІРѕРґРёС‚СЊ Р±РѕР»СЊС€Рµ РѕС‚Р»Р°РґРѕС‡РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё. Р’РєР»СЋС‡Р°РµС‚ РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ РѕРїС†РёРё -debug*</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Output extra network debugging information</source>
-        <translation>Выводить дополнительную сетевую отладочную информацию</translation>
+        <translation>Р’С‹РІРѕРґРёС‚СЊ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅСѓСЋ СЃРµС‚РµРІСѓСЋ РѕС‚Р»Р°РґРѕС‡РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Prepend debug output with timestamp</source>
-        <translation>Дописывать отметки времени к отладочному выводу</translation>
+        <translation>Р”РѕРїРёСЃС‹РІР°С‚СЊ РѕС‚РјРµС‚РєРё РІСЂРµРјРµРЅРё Рє РѕС‚Р»Р°РґРѕС‡РЅРѕРјСѓ РІС‹РІРѕРґСѓ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
         <translation>
-Параметры SSL: (см. Bitcoin Wiki для инструкций по настройке SSL)</translation>
+РџР°СЂР°РјРµС‚СЂС‹ SSL: (СЃРј. Bitcoin Wiki РґР»СЏ РёРЅСЃС‚СЂСѓРєС†РёР№ РїРѕ РЅР°СЃС‚СЂРѕР№РєРµ SSL)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select the version of socks proxy to use (4-5, default: 5)</source>
-        <translation>Выберите версию SOCKS-прокси (4-5, по умолчанию: 5)</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ РІРµСЂСЃРёСЋ SOCKS-РїСЂРѕРєСЃРё (4-5, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 5)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Send trace/debug info to console instead of debug.log file</source>
-        <translation>Выводить информацию трассировки/отладки на консоль вместо файла debug.log</translation>
+        <translation>Р’С‹РІРѕРґРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ С‚СЂР°СЃСЃРёСЂРѕРІРєРё/РѕС‚Р»Р°РґРєРё РЅР° РєРѕРЅСЃРѕР»СЊ РІРјРµСЃС‚Рѕ С„Р°Р№Р»Р° debug.log</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Send trace/debug info to debugger</source>
-        <translation>Отправлять информацию трассировки/отладки в отладчик</translation>
+        <translation>РћС‚РїСЂР°РІР»СЏС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ С‚СЂР°СЃСЃРёСЂРѕРІРєРё/РѕС‚Р»Р°РґРєРё РІ РѕС‚Р»Р°РґС‡РёРє</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Set maximum block size in bytes (default: 250000)</source>
-        <translation>Максимальный размер блока в байтах (по умолчанию: 250000)</translation>
+        <translation>РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ Р±Р»РѕРєР° РІ Р±Р°Р№С‚Р°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 250000)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Set minimum block size in bytes (default: 0)</source>
-        <translation>Минимальный размер блока в байтах (по умолчанию: 0)</translation>
+        <translation>РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ Р±Р»РѕРєР° РІ Р±Р°Р№С‚Р°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 0)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Shrink debug.log file on client startup (default: 1 when no -debug)</source>
-        <translation>Сжимать файл debug.log при запуске клиента (по умолчанию: 1, если нет -debug)</translation>
+        <translation>РЎР¶РёРјР°С‚СЊ С„Р°Р№Р» debug.log РїСЂРё Р·Р°РїСѓСЃРєРµ РєР»РёРµРЅС‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1, РµСЃР»Рё РЅРµС‚ -debug)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Specify connection timeout in milliseconds (default: 5000)</source>
-        <translation>Таймаут соединения в миллисекундах (по умолчанию: 5000)</translation>
+        <translation>РўР°Р№РјР°СѓС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ РјРёР»Р»РёСЃРµРєСѓРЅРґР°С… (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 5000)</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Use UPnP to map the listening port (default: 0)</source>
-        <translation>Использовать UPnP для проброса порта (по умолчанию: 0)</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ UPnP РґР»СЏ РїСЂРѕР±СЂРѕСЃР° РїРѕСЂС‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 0)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use UPnP to map the listening port (default: 1 when listening)</source>
-        <translation>Использовать UPnP для проброса порта (по умолчанию: 1, если используется прослушивание)</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ UPnP РґР»СЏ РїСЂРѕР±СЂРѕСЃР° РїРѕСЂС‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1, РµСЃР»Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use proxy to reach tor hidden services (default: same as -proxy)</source>
-        <translation>Использовать прокси для скрытых сервисов (по умолчанию: тот же, что и в -proxy)</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРѕРєСЃРё РґР»СЏ СЃРєСЂС‹С‚С‹С… СЃРµСЂРІРёСЃРѕРІ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: С‚РѕС‚ Р¶Рµ, С‡С‚Рѕ Рё РІ -proxy)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Username for JSON-RPC connections</source>
-        <translation>Имя для подключений JSON-RPC</translation>
+        <translation>РРјСЏ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёР№ JSON-RPC</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2464,12 +2464,12 @@ Address: %4
     <message>
         <location line="+2"/>
         <source>Warning: Disk space is low!</source>
-        <translation>Внимание: мало места на диске!</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: РјР°Р»Рѕ РјРµСЃС‚Р° РЅР° РґРёСЃРєРµ!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Warning: This version is obsolete, upgrade required!</source>
-        <translation>Внимание: эта версия устарела, требуется обновление!</translation>
+        <translation>Р’РЅРёРјР°РЅРёРµ: СЌС‚Р° РІРµСЂСЃРёСЏ СѓСЃС‚Р°СЂРµР»Р°, С‚СЂРµР±СѓРµС‚СЃСЏ РѕР±РЅРѕРІР»РµРЅРёРµ!</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2479,82 +2479,82 @@ Address: %4
     <message>
         <location line="-43"/>
         <source>Password for JSON-RPC connections</source>
-        <translation>Пароль для подключений JSON-RPC</translation>
+        <translation>РџР°СЂРѕР»СЊ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёР№ JSON-RPC</translation>
     </message>
     <message>
         <location line="-53"/>
         <source>Allow JSON-RPC connections from specified IP address</source>
-        <translation>Разрешить подключения JSON-RPC с указанного IP</translation>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёСЏ JSON-RPC СЃ СѓРєР°Р·Р°РЅРЅРѕРіРѕ IP</translation>
     </message>
     <message>
         <location line="+61"/>
         <source>Send commands to node running on &lt;ip&gt; (default: 127.0.0.1)</source>
-        <translation>Посылать команды узлу, запущенному на &lt;ip&gt; (по умолчанию: 127.0.0.1)</translation>
+        <translation>РџРѕСЃС‹Р»Р°С‚СЊ РєРѕРјР°РЅРґС‹ СѓР·Р»Сѓ, Р·Р°РїСѓС‰РµРЅРЅРѕРјСѓ РЅР° &lt;ip&gt; (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 127.0.0.1)</translation>
     </message>
     <message>
         <location line="-99"/>
         <source>Execute command when the best block changes (%s in cmd is replaced by block hash)</source>
-        <translation>Выполнить команду, когда появляется новый блок (%s в команде заменяется на хэш блока)</translation>
+        <translation>Р’С‹РїРѕР»РЅРёС‚СЊ РєРѕРјР°РЅРґСѓ, РєРѕРіРґР° РїРѕСЏРІР»СЏРµС‚СЃСЏ РЅРѕРІС‹Р№ Р±Р»РѕРє (%s РІ РєРѕРјР°РЅРґРµ Р·Р°РјРµРЅСЏРµС‚СЃСЏ РЅР° С…СЌС€ Р±Р»РѕРєР°)</translation>
     </message>
     <message>
         <location line="+122"/>
         <source>Upgrade wallet to latest format</source>
-        <translation>Обновить бумажник до последнего формата</translation>
+        <translation>РћР±РЅРѕРІРёС‚СЊ Р±СѓРјР°Р¶РЅРёРє РґРѕ РїРѕСЃР»РµРґРЅРµРіРѕ С„РѕСЂРјР°С‚Р°</translation>
     </message>
     <message>
         <location line="-15"/>
         <source>Set key pool size to &lt;n&gt; (default: 100)</source>
-        <translation>Установить размер запаса ключей в &lt;n&gt; (по умолчанию: 100)</translation>
+        <translation>РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЂР°Р·РјРµСЂ Р·Р°РїР°СЃР° РєР»СЋС‡РµР№ РІ &lt;n&gt; (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 100)</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Rescan the block chain for missing wallet transactions</source>
-        <translation>Перепроверить цепь блоков на предмет отсутствующих в бумажнике транзакций</translation>
+        <translation>РџРµСЂРµРїСЂРѕРІРµСЂРёС‚СЊ С†РµРїСЊ Р±Р»РѕРєРѕРІ РЅР° РїСЂРµРґРјРµС‚ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёС… РІ Р±СѓРјР°Р¶РЅРёРєРµ С‚СЂР°РЅР·Р°РєС†РёР№</translation>
     </message>
     <message>
         <location line="-24"/>
         <source>How many blocks to check at startup (default: 2500, 0 = all)</source>
-        <translation>Сколько блоков проверять при запуске (по умолчанию: 2500, 0 = все)</translation>
+        <translation>РЎРєРѕР»СЊРєРѕ Р±Р»РѕРєРѕРІ РїСЂРѕРІРµСЂСЏС‚СЊ РїСЂРё Р·Р°РїСѓСЃРєРµ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 2500, 0 = РІСЃРµ)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>How thorough the block verification is (0-6, default: 1)</source>
-        <translation>Насколько тщательно проверять блоки (0-6, по умолчанию: 1)</translation>
+        <translation>РќР°СЃРєРѕР»СЊРєРѕ С‚С‰Р°С‚РµР»СЊРЅРѕ РїСЂРѕРІРµСЂСЏС‚СЊ Р±Р»РѕРєРё (0-6, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Imports blocks from external blk000?.dat file</source>
-        <translation>Импортировать блоки из внешнего файла blk000?.dat</translation>
+        <translation>РРјРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ Р±Р»РѕРєРё РёР· РІРЅРµС€РЅРµРіРѕ С„Р°Р№Р»Р° blk000?.dat</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>Use OpenSSL (https) for JSON-RPC connections</source>
-        <translation>Использовать OpenSSL (https) для подключений JSON-RPC</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ OpenSSL (https) РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёР№ JSON-RPC</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Server certificate file (default: server.cert)</source>
-        <translation>Файл серверного сертификата (по умолчанию: server.cert)</translation>
+        <translation>Р¤Р°Р№Р» СЃРµСЂРІРµСЂРЅРѕРіРѕ СЃРµСЂС‚РёС„РёРєР°С‚Р° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: server.cert)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Server private key (default: server.pem)</source>
-        <translation>Приватный ключ сервера (по умолчанию: server.pem)</translation>
+        <translation>РџСЂРёРІР°С‚РЅС‹Р№ РєР»СЋС‡ СЃРµСЂРІРµСЂР° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: server.pem)</translation>
     </message>
     <message>
         <location line="-127"/>
         <source>Acceptable ciphers (default: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH)</source>
-        <translation>Разрешённые алгоритмы (по умолчанию: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH)</translation>
+        <translation>Р Р°Р·СЂРµС€С‘РЅРЅС‹Рµ Р°Р»РіРѕСЂРёС‚РјС‹ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH)</translation>
     </message>
     <message>
         <location line="+139"/>
         <source>This help message</source>
-        <translation>Эта справка</translation>
+        <translation>Р­С‚Р° СЃРїСЂР°РІРєР°</translation>
     </message>
     <message>
         <location line="-131"/>
         <source>Cannot obtain a lock on data directory %s.  BottleCaps is probably already running.</source>
-        <translation>Невозможно установить блокировку на рабочую директорию %s.  Возможно, бумажник уже запущен.</translation>
+        <translation>РќРµРІРѕР·РјРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ Р±Р»РѕРєРёСЂРѕРІРєСѓ РЅР° СЂР°Р±РѕС‡СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ %s.  Р’РѕР·РјРѕР¶РЅРѕ, Р±СѓРјР°Р¶РЅРёРє СѓР¶Рµ Р·Р°РїСѓС‰РµРЅ.</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -2564,157 +2564,157 @@ Address: %4
     <message>
         <location line="+77"/>
         <source>Unable to bind to %s on this computer (bind returned error %d, %s)</source>
-        <translation>Невозможно привязаться к %s на этом компьютере (bind вернул ошибку %d, %s)</translation>
+        <translation>РќРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРёРІСЏР·Р°С‚СЊСЃСЏ Рє %s РЅР° СЌС‚РѕРј РєРѕРјРїСЊСЋС‚РµСЂРµ (bind РІРµСЂРЅСѓР» РѕС€РёР±РєСѓ %d, %s)</translation>
     </message>
     <message>
         <location line="-69"/>
         <source>Connect through socks proxy</source>
-        <translation>Подключаться через socks прокси</translation>
+        <translation>РџРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ С‡РµСЂРµР· socks РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
-        <translation>Разрешить поиск в DNS для -addnode, -seednode и -connect</translation>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РїРѕРёСЃРє РІ DNS РґР»СЏ -addnode, -seednode Рё -connect</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Loading addresses...</source>
-        <translation>Загрузка адресов...</translation>
+        <translation>Р—Р°РіСЂСѓР·РєР° Р°РґСЂРµСЃРѕРІ...</translation>
     </message>
     <message>
         <location line="-26"/>
         <source>Error loading blkindex.dat</source>
-        <translation>Ошибка чтения blkindex.dat</translation>
+        <translation>РћС€РёР±РєР° С‡С‚РµРЅРёСЏ blkindex.dat</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Error loading wallet.dat: Wallet corrupted</source>
-        <translation>Ошибка загрузки wallet.dat: Бумажник поврежден</translation>
+        <translation>РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё wallet.dat: Р‘СѓРјР°Р¶РЅРёРє РїРѕРІСЂРµР¶РґРµРЅ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Error loading wallet.dat: Wallet requires newer version of BottleCaps</source>
-        <translation>Ошибка загрузки wallet.dat: бумажник требует более новую версию BottleCaps</translation>
+        <translation>РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё wallet.dat: Р±СѓРјР°Р¶РЅРёРє С‚СЂРµР±СѓРµС‚ Р±РѕР»РµРµ РЅРѕРІСѓСЋ РІРµСЂСЃРёСЋ BottleCaps</translation>
     </message>
     <message>
         <location line="+73"/>
         <source>Wallet needed to be rewritten: restart BottleCaps to complete</source>
-        <translation>Необходимо перезаписать бумажник, перезапустите BottleCaps для завершения операции.</translation>
+        <translation>РќРµРѕР±С…РѕРґРёРјРѕ РїРµСЂРµР·Р°РїРёСЃР°С‚СЊ Р±СѓРјР°Р¶РЅРёРє, РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ BottleCaps РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РѕРїРµСЂР°С†РёРё.</translation>
     </message>
     <message>
         <location line="-75"/>
         <source>Error loading wallet.dat</source>
-        <translation>Ошибка при загрузке wallet.dat</translation>
+        <translation>РћС€РёР±РєР° РїСЂРё Р·Р°РіСЂСѓР·РєРµ wallet.dat</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Invalid -proxy address: &apos;%s&apos;</source>
-        <translation>Неверный адрес -proxy: &apos;%s&apos;</translation>
+        <translation>РќРµРІРµСЂРЅС‹Р№ Р°РґСЂРµСЃ -proxy: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Unknown network specified in -onlynet: &apos;%s&apos;</source>
-        <translation>В параметре -onlynet указана неизвестная сеть: &apos;%s&apos;</translation>
+        <translation>Р’ РїР°СЂР°РјРµС‚СЂРµ -onlynet СѓРєР°Р·Р°РЅР° РЅРµРёР·РІРµСЃС‚РЅР°СЏ СЃРµС‚СЊ: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>Unknown -socks proxy version requested: %i</source>
-        <translation>В параметре -socks запрошена неизвестная версия: %i</translation>
+        <translation>Р’ РїР°СЂР°РјРµС‚СЂРµ -socks Р·Р°РїСЂРѕС€РµРЅР° РЅРµРёР·РІРµСЃС‚РЅР°СЏ РІРµСЂСЃРёСЏ: %i</translation>
     </message>
     <message>
         <location line="-74"/>
         <source>Cannot resolve -bind address: &apos;%s&apos;</source>
-        <translation>Не удаётся разрешить адрес в параметре -bind: &apos;%s&apos;</translation>
+        <translation>РќРµ СѓРґР°С‘С‚СЃСЏ СЂР°Р·СЂРµС€РёС‚СЊ Р°РґСЂРµСЃ РІ РїР°СЂР°РјРµС‚СЂРµ -bind: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cannot resolve -externalip address: &apos;%s&apos;</source>
-        <translation>Не удаётся разрешить адрес в параметре -externalip: &apos;%s&apos;</translation>
+        <translation>РќРµ СѓРґР°С‘С‚СЃСЏ СЂР°Р·СЂРµС€РёС‚СЊ Р°РґСЂРµСЃ РІ РїР°СЂР°РјРµС‚СЂРµ -externalip: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: &apos;%s&apos;</source>
-        <translation>Неверное количество в параметре -paytxfee=&lt;кол-во&gt;: &apos;%s&apos;</translation>
+        <translation>РќРµРІРµСЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІ РїР°СЂР°РјРµС‚СЂРµ -paytxfee=&lt;РєРѕР»-РІРѕ&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="-15"/>
         <source>Error: could not start node</source>
-        <translation>Ошибка: не удалось запустить узел</translation>
+        <translation>РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ СѓР·РµР»</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Sending...</source>
-        <translation>Отправка...</translation>
+        <translation>РћС‚РїСЂР°РІРєР°...</translation>
     </message>
     <message>
         <location line="-24"/>
         <source>Invalid amount</source>
-        <translation>Неверное количество</translation>
+        <translation>РќРµРІРµСЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>Insufficient funds</source>
-        <translation>Недостаточно монет</translation>
+        <translation>РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРѕРЅРµС‚</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Loading block index...</source>
-        <translation>Загрузка индекса блоков...</translation>
+        <translation>Р—Р°РіСЂСѓР·РєР° РёРЅРґРµРєСЃР° Р±Р»РѕРєРѕРІ...</translation>
     </message>
     <message>
         <location line="-46"/>
         <source>Add a node to connect to and attempt to keep the connection open</source>
-        <translation>Добавить узел для подключения и пытаться поддерживать соединение открытым</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ СѓР·РµР» РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рё РїС‹С‚Р°С‚СЊСЃСЏ РїРѕРґРґРµСЂР¶РёРІР°С‚СЊ СЃРѕРµРґРёРЅРµРЅРёРµ РѕС‚РєСЂС‹С‚С‹Рј</translation>
     </message>
     <message>
         <location line="-25"/>
         <source>Unable to bind to %s on this computer. BottleCaps is probably already running.</source>
-        <translation>Невозможно привязаться к %s на этом компьютере.  Возможно, BottleCaps уже работает.</translation>
+        <translation>РќРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРёРІСЏР·Р°С‚СЊСЃСЏ Рє %s РЅР° СЌС‚РѕРј РєРѕРјРїСЊСЋС‚РµСЂРµ.  Р’РѕР·РјРѕР¶РЅРѕ, BottleCaps СѓР¶Рµ СЂР°Р±РѕС‚Р°РµС‚.</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>Find peers using internet relay chat (default: 1)</source>
-        <translation>Найти участников через IRC (по умолчанию: 1)</translation>
+        <translation>РќР°Р№С‚Рё СѓС‡Р°СЃС‚РЅРёРєРѕРІ С‡РµСЂРµР· IRC (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ: 1)</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Fee per KB to add to transactions you send</source>
-        <translation>Комиссия на килобайт, добавляемая к вашим транзакциям</translation>
+        <translation>РљРѕРјРёСЃСЃРёСЏ РЅР° РєРёР»РѕР±Р°Р№С‚, РґРѕР±Р°РІР»СЏРµРјР°СЏ Рє РІР°С€РёРј С‚СЂР°РЅР·Р°РєС†РёСЏРј</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Loading wallet...</source>
-        <translation>Загрузка бумажника...</translation>
+        <translation>Р—Р°РіСЂСѓР·РєР° Р±СѓРјР°Р¶РЅРёРєР°...</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Cannot downgrade wallet</source>
-        <translation>Не удаётся понизить версию бумажника</translation>
+        <translation>РќРµ СѓРґР°С‘С‚СЃСЏ РїРѕРЅРёР·РёС‚СЊ РІРµСЂСЃРёСЋ Р±СѓРјР°Р¶РЅРёРєР°</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cannot initialize keypool</source>
-        <translation>Не удаётся инициализировать массив ключей</translation>
+        <translation>РќРµ СѓРґР°С‘С‚СЃСЏ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РјР°СЃСЃРёРІ РєР»СЋС‡РµР№</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cannot write default address</source>
-        <translation>Не удаётся записать адрес по умолчанию</translation>
+        <translation>РќРµ СѓРґР°С‘С‚СЃСЏ Р·Р°РїРёСЃР°С‚СЊ Р°РґСЂРµСЃ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Rescanning...</source>
-        <translation>Сканирование...</translation>
+        <translation>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ...</translation>
     </message>
     <message>
         <location line="-40"/>
         <source>Done loading</source>
-        <translation>Загрузка завершена</translation>
+        <translation>Р—Р°РіСЂСѓР·РєР° Р·Р°РІРµСЂС€РµРЅР°</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>To use the %s option</source>
-        <translation>Чтобы использовать опцию %s</translation>
+        <translation>Р§С‚РѕР±С‹ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕРїС†РёСЋ %s</translation>
     </message>
     <message>
         <location line="-150"/>
@@ -2726,28 +2726,28 @@ rpcpassword=%s
 (you do not need to remember this password)
 If the file does not exist, create it with owner-readable-only file permissions.
 </source>
-        <translation>%s, вы должны установить опцию rpcpassword в конфигурационном файле:
+        <translation>%s, РІС‹ РґРѕР»Р¶РЅС‹ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РѕРїС†РёСЋ rpcpassword РІ РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРј С„Р°Р№Р»Рµ:
  %s
-Рекомендуется использовать следующий случайный пароль:
+Р РµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЃР»РµРґСѓСЋС‰РёР№ СЃР»СѓС‡Р°Р№РЅС‹Р№ РїР°СЂРѕР»СЊ:
 rpcuser=bitcoinrpc
 rpcpassword=%s
-(вам не нужно запоминать этот пароль)
-Если файл не существует, создайте его и установите права доступа только для владельца.
+(РІР°Рј РЅРµ РЅСѓР¶РЅРѕ Р·Р°РїРѕРјРёРЅР°С‚СЊ СЌС‚РѕС‚ РїР°СЂРѕР»СЊ)
+Р•СЃР»Рё С„Р°Р№Р» РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, СЃРѕР·РґР°Р№С‚Рµ РµРіРѕ Рё СѓСЃС‚Р°РЅРѕРІРёС‚Рµ РїСЂР°РІР° РґРѕСЃС‚СѓРїР° С‚РѕР»СЊРєРѕ РґР»СЏ РІР»Р°РґРµР»СЊС†Р°.
 </translation>
     </message>
     <message>
         <location line="+91"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation>РћС€РёР±РєР°</translation>
     </message>
     <message>
         <location line="-30"/>
         <source>You must set rpcpassword=&lt;password&gt; in the configuration file:
 %s
 If the file does not exist, create it with owner-readable-only file permissions.</source>
-        <translation>Вы должны установить rpcpassword=&lt;password&gt; в конфигурационном файле:
+        <translation>Р’С‹ РґРѕР»Р¶РЅС‹ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ rpcpassword=&lt;password&gt; РІ РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРј С„Р°Р№Р»Рµ:
 %s
-Если файл не существует, создайте его и установите права доступа только для владельца.</translation>
+Р•СЃР»Рё С„Р°Р№Р» РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, СЃРѕР·РґР°Р№С‚Рµ РµРіРѕ Рё СѓСЃС‚Р°РЅРѕРІРёС‚Рµ РїСЂР°РІР° РґРѕСЃС‚СѓРїР° С‚РѕР»СЊРєРѕ РґР»СЏ РІР»Р°РґРµР»СЊС†Р°.</translation>
     </message>
 </context>
 </TS>
