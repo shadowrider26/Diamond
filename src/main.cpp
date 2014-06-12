@@ -469,7 +469,7 @@ bool CTransaction::CheckTransaction() const
         if (txout.IsEmpty() && !IsCoinBase() && !IsCoinStake())
             return DoS(100, error("CTransaction::CheckTransaction() : txout empty for user transaction"));
 
-        if(totalCoin < VALUE_CHANGE)
+        if(totalCoin < VALUE_CHANGE || totalCoin > POS_RESTART)
         {
             // ppcoin: enforce minimum output amount
             if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
@@ -477,7 +477,7 @@ bool CTransaction::CheckTransaction() const
         }
         else
         {
-            if (txout.nValue < 0)
+            if ((!txout.IsEmpty()) && txout.nValue < 0)
                 return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue negative"));
         }
 
@@ -974,7 +974,12 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
     }
     else
     {
-        if(totalCoin > 1000000)
+	// Diamond v2 coin mechanics
+	// 0.10 reward after 1,000,000 created
+	// 0.02 reward after 2,500,000 created
+        if(totalCoin > 2500000)
+            nSubsidy = 2 * CENT;
+        else if(totalCoin > 1000000)
             nSubsidy = 10 * CENT;
         else if(totalCoin > 2500000)
             nSubsidy = 2 * CENT;
@@ -989,30 +994,28 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     if(totalCoin >= VALUE_CHANGE || fTestNet)
     {
         int64 nRewardCoinYear;
-        int nSubsidy = 0;
+        int64 nSubsidy = 0;
         nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
         if(fTestNet)
-            nSubsidy = nCoinAge * 50 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8) / COIN;
-        if(totalCoin > VALUE_CHANGE)
-        {
-            nSubsidy = nCoinAge * 50 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8) / COIN;
-        }
-        else if(totalCoin > VALUE_CHANGE + 4000)
-        {
-            nSubsidy = nCoinAge / COIN * 50 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8);
-        }
-        else if(totalCoin > 1500000)
-        {
-            nSubsidy = nCoinAge / COIN * 25 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8);
-        }
-        else if(totalCoin > 2500000)
-        {
-            nSubsidy = nCoinAge / COIN * 5 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8);
-        }
-        else if(totalCoin > 3500000)
-        {
-            nSubsidy = nCoinAge / COIN * 1 * MAX_MINT_PROOF_OF_STAKE * 33 / (365 * 33 + 8);
-        }
+            nSubsidy = nCoinAge * 50 * CENT / 365;
+		else
+		{
+		// Diamond v2 PoS spec:
+		// 50% algorithm switch to 1,500,000 coins
+		// 25% from 1,500,000 to 2,500,000 coins
+		// 5% from 2,500,000 to 3,500,000 coins
+		// 1% ever since 3,500,000 coins
+			if (totalCoin > 3500000)
+			    nRewardCoinYear = 1 * CENT;
+			else if (totalCoin > 2500000)
+			    nRewardCoinYear = 5 * CENT;
+			else if (totalCoin > 1500000)
+			    nRewardCoinYear = 25 * CENT;
+			else
+			    nRewardCoinYear = 50 * CENT;
+
+			nSubsidy = nCoinAge * nRewardCoinYear / 365;
+		}
 
         if (fDebug && GetBoolArg("-printcreation"))
             printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
@@ -1134,6 +1137,22 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         return bnTargetLimit.GetCompact(); // second block
 
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    // fix block spacing
+    // DK activating this will result in a fork
+    if (fProofOfStake && GetTotalCoin() > POS_RESTART)
+    {
+	if(nActualSpacing < 0)
+	{
+	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
+	    nActualSpacing = 1;
+	}
+	else if(nActualSpacing > nTargetTimespan)
+	{
+	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
+	    nActualSpacing = nTargetTimespan;
+	}
+    }
 
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
@@ -1987,11 +2006,7 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64& nCoinAge) const
             printf("coin age nValueIn=%"PRI64d" nTimeDiff=%d bnCentSecond=%s\n", nValueIn, nTime - txPrev.nTime, bnCentSecond.ToString().c_str());
     }
 
-    CBigNum bnCoinDay;
-    if(totalCoin >= VALUE_CHANGE)
-        bnCoinDay = bnCentSecond * CENT / (24 * 60 * 60);
-    else
-        bnCoinDay = bnCentSecond * CENT / COIN / (24 * 60 * 60);
+    CBigNum bnCoinDay = bnCentSecond * CENT / COIN / (24 * 60 * 60);
     if (fDebug && GetBoolArg("-printcoinage"))
         printf("coin age bnCoinDay=%s\n", bnCoinDay.ToString().c_str());
     nCoinAge = bnCoinDay.getuint64();
@@ -2108,16 +2123,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
     }
 
-    //just for test
-    if(pindexBest != NULL && pindexBest->nHeight > 50 && fTestNet)
-        nCoinbaseMaturity = 15;
-
-    if(totalCoin > VALUE_CHANGE)
-    {
-        nStakeMinAge = 30 * 24 * 60 * 60;
-        nStakeMaxAge = -1;
-    }
-
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
 
@@ -2126,7 +2131,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         return DoS(100, error("CheckBlock() : size limits failed"));
 
     // Check proof of work matches claimed amount
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(hash1, nBits) && !CheckProofOfWork(hash2, nBits))
+    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
         return DoS(50, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
@@ -2287,10 +2292,10 @@ bool CBlock::AcceptBlock()
 
 CBigNum CBlockIndex::GetBlockTrust() const
 {
-	CBigNum bnTarget;
-	bnTarget.SetCompact(nBits);
-	if (bnTarget <= 0)
-		return 0;
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
+    if (bnTarget <= 0)
+        return 0;
 	return (IsProofOfStake()? (CBigNum(1)<<256) / (bnTarget+1) : 1);
 }
 
@@ -4423,8 +4428,6 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     while (fGenerateBitcoins || fProofOfStake)
     {
         totalCoin = GetTotalCoin();
-        if(totalCoin < VALUE_CHANGE && fProofOfStake)
-            break;
         if (fShutdown)
             return;
         while (vNodes.empty() || IsInitialBlockDownload())
