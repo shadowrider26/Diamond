@@ -1,7 +1,8 @@
 #ifndef MACDOCKICONHANDLER_H
 #define MACDOCKICONHANDLER_H
 
-#include <QtCore/QObject>
+#include <QObject>
+#include <QMainWindow>
 
 class QMenu;
 class QIcon;
@@ -24,6 +25,7 @@ public:
     QMenu *dockMenu();
     void setIcon(const QIcon &icon);
 
+    void setMainWindow(QMainWindow *window);
     static MacDockIconHandler *instance();
 
     void handleDockIconClickEvent();
@@ -39,6 +41,7 @@ private:
     DockIconClickEventHandler *m_dockIconClickEventHandler;
     QWidget *m_dummyWidget;
     QMenu *m_dockMenu;
+    QMainWindow *mainWindow;
 };
 
 #endif // MACDOCKICONCLICKHANDLER_H

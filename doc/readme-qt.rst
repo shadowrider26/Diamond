@@ -1,4 +1,4 @@
-Bitcoin-qt: Qt4 GUI for Bitcoin
+Diamond-qt: Qt5 GUI for Diamond
 ===============================
 
 Build instructions
@@ -23,9 +23,9 @@ then execute the following:
     qmake
     make
 
-Alternatively, install Qt Creator and open the `bitcoin-qt.pro` file.
+Alternatively, install Qt Creator and open the `diamond-qt.pro` file.
 
-An executable named `bitcoin-qt` will be built.
+An executable named `diamond-qt` will be built.
 
 
 Windows
@@ -59,7 +59,7 @@ Mac OS X
 ::
 
 	sudo port selfupdate
-	sudo port install boost db48 miniupnpc
+        sudo port install boost db48 miniupnpc qrencode
 
 - Open the .pro file in Qt Creator and build as normal (cmd-B)
 
@@ -138,7 +138,7 @@ Ubuntu 11.10 warning
 ====================
 
 Ubuntu 11.10 has a package called 'qt-at-spi' installed by default.  At the time of writing, having that package
-installed causes bitcoin-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
+installed causes Diamond-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
 isn't yet fixed.
 
 Until the bug is fixed, you can remove the qt-at-spi package to work around the problem, though this will presumably
