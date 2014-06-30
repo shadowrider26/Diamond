@@ -3025,6 +3025,21 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return true;
         }
 
+
+        // Diamond: disconnect any known version prior 2.0.2.1
+        // as these have PoS not working and could serve us garbage
+        if (fDebug) printf("connected subver %s\n", pfrom->strSubVer.c_str());
+        if (!strcmp(pfrom->strSubVer.c_str(),"/Diamond:2.0.1/")
+            || !strcmp(pfrom->strSubVer.c_str(),"/Diamond:0.7.2/")
+            || !strcmp(pfrom->strSubVer.c_str(),"/Satoshi:0.7.2/")
+            || !strcmp(pfrom->strSubVer.c_str(),"")
+           )
+        {
+            printf("partner %s using obsolete client %s\n", pfrom->addr.ToString().c_str(), pfrom->strSubVer.c_str());
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
         // ppcoin: record my external IP reported by peer
         if (addrFrom.IsRoutable() && addrMe.IsRoutable())
             addrSeenByPeer = addrMe;
