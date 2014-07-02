@@ -3028,7 +3028,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
         // Diamond: disconnect any known version prior 2.0.2.1
         // as these have PoS not working and could serve us garbage
-        if (fDebug) printf("connected subver %s\n", pfrom->strSubVer.c_str());
+        printf("connected subver %s\n", pfrom->strSubVer.c_str());
         if (!strcmp(pfrom->strSubVer.c_str(),"/Diamond:2.0.1/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Diamond:0.7.2/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Satoshi:0.7.2/")
@@ -4686,31 +4686,30 @@ int64 GetContributionAmount(int64 totalCoin) {
 uint256 CBlock::GetHash(bool existingBlock) const
 {
     // There are two distinct cases when we are called
-	// First case is with with a block already in the blockchain index
+    // First case is with with a block already in the blockchain index
     // Second is for a new block
-
 
     if (existingBlock)
     {
         //printf("CBlock::GetHash() look up an existing block\n");
         // TODO: reverse checks when Groestl blocks become more
-		// calculate Scrypt first
+        // calculate Scrypt first
     	uint256 hash_scrypt = GetHashScrypt();
     	// find the index position(s)
-		CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
+        CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
         if (pblockindex_scrypt)
-		    return hash_scrypt;
+             return hash_scrypt;
 
-		// we are here so it must be Groestl
+        // we are here so it must be Groestl
     	uint256 hash_groestl = GetHashGroestl();
-		CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
-		if (pblockindex_groestl)
-		    return hash_groestl;
+	CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
+	if (pblockindex_groestl)
+	    return hash_groestl;
     }
 
     // new block or not found in blockchain
     if(totalCoin < VALUE_CHANGE)
-		return GetHashScrypt();
+	return GetHashScrypt();
 
     return GetHashGroestl();
 }

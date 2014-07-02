@@ -1444,7 +1444,7 @@ public:
         return block.GetHashScrypt();
     }
 
-    uint256 GetBlockHashGroest() const
+    uint256 GetBlockHashGroestl() const
     {
         CBlock block;
         block.nVersion        = nVersion;
