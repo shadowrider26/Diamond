@@ -27,6 +27,8 @@ using namespace boost;
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
 
+bool fUseFastIndex;
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // Shutdown
@@ -425,6 +427,8 @@ bool AppInit2()
         if (nNewTimeout > 0 && nNewTimeout < 600000)
             nConnectTimeout = nNewTimeout;
     }
+
+    fUseFastIndex = GetBoolArg("-fastindex", true);
 
     // Continue to put "/P2SH/" in the coinbase to monitor
     // BIP16 support.
