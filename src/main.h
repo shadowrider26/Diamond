@@ -1442,30 +1442,6 @@ public:
         return blockHash;
     }
 
-    uint256 GetBlockHashScrypt() const
-    {
-        CBlock block;
-        block.nVersion        = nVersion;
-        block.hashPrevBlock   = hashPrev;
-        block.hashMerkleRoot  = hashMerkleRoot;
-        block.nTime           = nTime;
-        block.nBits           = nBits;
-        block.nNonce          = nNonce;
-        return block.GetHashScrypt();
-    }
-
-    uint256 GetBlockHashGroestl() const
-    {
-        CBlock block;
-        block.nVersion        = nVersion;
-        block.hashPrevBlock   = hashPrev;
-        block.hashMerkleRoot  = hashMerkleRoot;
-        block.nTime           = nTime;
-        block.nBits           = nBits;
-        block.nNonce          = nNonce;
-        return block.GetHashGroestl();
-    }
-
     std::string ToString() const
     {
         std::string str = "CDiskBlockIndex(";

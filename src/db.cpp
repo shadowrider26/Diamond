@@ -863,10 +863,8 @@ bool CTxDB::LoadBlockIndexGuts()
 
             // Construct block index object
             uint256 blockHash;
-            if(diskindex.nMoneySupply / COIN <= VALUE_CHANGE)
-                blockHash = diskindex.GetBlockHashScrypt();
-            else
-                blockHash =  diskindex.GetBlockHashGroest();
+            totalCoin = diskindex.nMoneySupply / COIN;
+            blockHash = diskindex.GetBlockHash();
 
             // Construct block index object
             CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
@@ -898,7 +896,7 @@ bool CTxDB::LoadBlockIndexGuts()
             }
 
             // Watch for genesis block
-            if (pindexGenesisBlock == NULL && diskindex.GetBlockHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
+            if (pindexGenesisBlock == NULL && blockHash == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
                 pindexGenesisBlock = pindexNew;
 
             if (!pindexNew->CheckIndex())

@@ -4709,7 +4709,7 @@ uint256 CBlock::GetHash(bool existingBlock) const
 
     // new block or not found in blockchain
     if(totalCoin < VALUE_CHANGE)
-	return GetHashScrypt();
+        return GetHashScrypt();
 
     return GetHashGroestl();
 }
