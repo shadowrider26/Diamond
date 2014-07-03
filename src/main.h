@@ -1355,7 +1355,7 @@ public:
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),
-            GetBlockHash().ToString().c_str());
+            phashBlock ? GetBlockHash().ToString().c_str() : "*not initialized*");
     }
 
     void print() const
