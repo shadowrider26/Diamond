@@ -47,6 +47,6 @@ Start up the new diamondd.
 
 
 See the documentation/wiki at the Diamond site:
-  http://diamond.cc/
+  http://bit.diamonds/
 for help and more information.
 
