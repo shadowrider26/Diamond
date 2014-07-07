@@ -4695,6 +4695,10 @@ uint256 CBlock::GetHash(bool existingBlock) const
         // TODO: reverse checks when Groestl blocks become more
         // calculate Scrypt first
     	uint256 hash_scrypt = GetHashScrypt();
+        if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {
+            printf("GetHash(): hash fixed up (scrypt)\n");
+            return  uint256("0x00000d652b612a94e1c830bf4e05106438ea6b53372b29206f0b820d91a9b67b");
+        }
     	// find the index position(s)
         CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
         if (pblockindex_scrypt)
