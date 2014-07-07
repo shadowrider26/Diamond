@@ -1358,6 +1358,55 @@ bool CWallet::CreateTransaction(CScript scriptPubKey, int64 nValue, CWalletTx& w
     return CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, strTxComment);
 }
 
+// Diamond: get current stake generation power
+// This function should closely match the logic and values in CTransaction::GetCoinAge()
+uint64 CWallet::GetStakeMintPower(const CKeyStore& keystore)
+{
+    // Choose coins to use
+    int64 nBalance = GetBalance();
+    int64 nReserveBalance = 0;
+    uint64 nCoinAge = 0;
+    CBigNum bnCentSecond = 0; // coin age in the unit of cent-seconds
+
+    if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
+    {
+        error("CreateCoinStake : invalid reserve balance amount");
+        return 0;
+    }
+
+    if (nBalance <= nReserveBalance)
+        return 0;
+
+    set<pair<const CWalletTx*,unsigned int> > setCoins;
+    vector<const CWalletTx*> vwtxPrev;
+    int64 nValueIn = 0;
+    if (!SelectCoins(nBalance - nReserveBalance, GetTime(), setCoins, nValueIn))
+        return 0;
+    if (setCoins.empty())
+        return 0;
+
+    BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
+    {
+        CTxDB txdb("r");
+        CTxIndex txindex;
+        if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
+            continue;
+
+        // Do not count input that is still too young
+        if (pcoin.first->nTime + nStakeMinAge > GetTime())
+            continue;
+
+        bnCentSecond += CBigNum(pcoin.first->vout[pcoin.second].nValue) * (GetTime() - pcoin.first->nTime) / CENT;
+    }
+    CBigNum bnCoinDay = bnCentSecond * CENT / COIN / (24 * 60 * 60);
+    nCoinAge = bnCoinDay.getuint64();
+
+    if (fDebug && GetBoolArg("-printcoinage"))
+        printf("StakePower bnCoinDay=%"PRI64d"\n", nCoinAge);
+
+    return nCoinAge;
+}
+
 // ppcoin: create coin stake transaction
 bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64 nSearchInterval, CTransaction& txNew)
 {
