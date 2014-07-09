@@ -1140,16 +1140,16 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     // DK activating this will result in a fork
     if (fProofOfStake && GetTotalCoin() > POS_RESTART)
     {
-	if(nActualSpacing < 0)
-	{
-	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
-	    nActualSpacing = 1;
-	}
-	else if(nActualSpacing > nTargetTimespan)
-	{
-	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
-	    nActualSpacing = nTargetTimespan;
-	}
+        if(nActualSpacing < 0)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
+            nActualSpacing = 1;
+        }
+        else if(nActualSpacing > nTargetTimespan)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
+            nActualSpacing = nTargetTimespan;
+        }
     }
 
     // ppcoin: target change every block
@@ -2110,7 +2110,6 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
     return true;
 }
 
-
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
     // Update the coin mechanics variables post algorithm change
@@ -2148,6 +2147,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         if (vtx[i].IsCoinStake())
             return DoS(100, error("CheckBlock() : coinstake in wrong position"));
 
+    // ppcoin: coinbase output should be empty if proof-of-stake block
     if(totalCoin >= VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
@@ -4669,7 +4669,6 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
         }
     }
 }
-
 
 // Diamond coin mechanics
 // Foundation contribution

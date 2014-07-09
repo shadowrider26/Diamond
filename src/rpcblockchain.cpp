@@ -42,7 +42,6 @@ double GetDifficulty(const CBlockIndex* blockindex)
     return dDiff;
 }
 
-
 int64 GetTotalCoin()
 {
     return pindexBest->nMoneySupply / COIN;
