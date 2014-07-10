@@ -989,10 +989,10 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 // simple algorithm, not depend on the diff
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
 {
+    int64 nRewardCoinYear;
+    int64 nSubsidy = 0;
     if(totalCoin >= VALUE_CHANGE || fTestNet)
     {
-        int64 nRewardCoinYear;
-        int64 nSubsidy = 0;
         nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
         if(fTestNet)
             nSubsidy = nCoinAge * 50 * CENT / 365;
@@ -1021,39 +1021,37 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     }
     else
     {
-        int64 nRewardCoinYear;
+        CBigNum bnRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE; // Base stake mint rate, 100% year interest
+        CBigNum bnTarget;
+        bnTarget.SetCompact(nBits);
+        CBigNum bnTargetLimit = bnProofOfStakeLimit;
+        bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
 
-            CBigNum bnRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE; // Base stake mint rate, 100% year interest
-            CBigNum bnTarget;
-            bnTarget.SetCompact(nBits);
-            CBigNum bnTargetLimit = bnProofOfStakeLimit;
-            bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
+        // Diamond: reward for coin-year is cut in half every 64x multiply of PoS difficulty
+        // A reasonably continuous curve is used to avoid shock to market
+        // (nRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit / bnTarget
+        //
+        // Human readable form:
+        //
+        // nRewardCoinYear = 1 / (posdiff ^ 1/4)
 
-            // Diamond: reward for coin-year is cut in half every 64x multiply of PoS difficulty
-            // A reasonably continuous curve is used to avoid shock to market
-            // (nRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit / bnTarget
-            //
-            // Human readable form:
-            //
-            // nRewardCoinYear = 1 / (posdiff ^ 1/4)
+        CBigNum bnLowerBound = 1 * CENT; // Lower interest bound is 1% per year
+        CBigNum bnUpperBound = bnRewardCoinYearLimit;
+        while (bnLowerBound + CENT <= bnUpperBound)
+        {
+            CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
+            if (fDebug && GetBoolArg("-printcreation"))
+                printf("GetProofOfStakeReward() : lower=%"PRI64d" upper=%"PRI64d" mid=%"PRI64d"\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
+            if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnTarget)
+                bnUpperBound = bnMidValue;
+            else
+                bnLowerBound = bnMidValue;
+        }
 
-            CBigNum bnLowerBound = 1 * CENT; // Lower interest bound is 1% per year
-            CBigNum bnUpperBound = bnRewardCoinYearLimit;
-            while (bnLowerBound + CENT <= bnUpperBound)
-            {
-                CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
-                if (fDebug && GetBoolArg("-printcreation"))
-                    printf("GetProofOfStakeReward() : lower=%"PRI64d" upper=%"PRI64d" mid=%"PRI64d"\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
-                if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnTarget)
-                    bnUpperBound = bnMidValue;
-                else
-                    bnLowerBound = bnMidValue;
-            }
+        nRewardCoinYear = bnUpperBound.getuint64();
+        nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
 
-            nRewardCoinYear = bnUpperBound.getuint64();
-            nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
-
-        int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+        nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
         if (fDebug && GetBoolArg("-printcreation"))
             printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
         return nSubsidy;
@@ -3025,7 +3023,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return true;
         }
 
-
         // Diamond: disconnect any known version prior 2.0.2.1
         // as these have PoS not working and could serve us garbage
         printf("connected subver %s\n", pfrom->strSubVer.c_str());
@@ -4437,18 +4434,20 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
-    totalCoin = GetTotalCoin();
+
     while (fGenerateBitcoins || fProofOfStake)
     {
         totalCoin = GetTotalCoin();
         if (fShutdown)
             return;
-        while (vNodes.empty() || IsInitialBlockDownload())
+
+        while (vNodes.empty() || IsInitialBlockDownload() || pwallet->IsLocked())
         {
+            nLastCoinStakeSearchInterval = 0;
             Sleep(1000);
             if (fShutdown)
                 return;
-            if ((!fGenerateBitcoins) && !fProofOfStake)
+            if (!fGenerateBitcoins && !fProofOfStake)
                 return;
         }
 
@@ -4492,8 +4491,8 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             continue;
         }
 
-//        printf("Running BitcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
-//               ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+        //printf("Running BitcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        //       ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
         // Pre-build hash buffers
@@ -4536,7 +4535,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                 {
                     if (!pblock->SignBlock(*pwalletMain))
                     {
-//                        strMintWarning = strMintMessage;
+                        strMintWarning = strMintMessage;
                         break;
                     }
                     strMintWarning = "";

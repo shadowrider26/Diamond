@@ -860,10 +860,8 @@ bool CTxDB::LoadBlockIndexGuts()
             CDiskBlockIndex diskindex;
             ssValue >> diskindex;
 
-            // Construct block index object
-            uint256 blockHash;
             totalCoin = diskindex.nMoneySupply / COIN;
-            blockHash = diskindex.GetBlockHash();
+            uint256 blockHash = diskindex.GetBlockHash();
 
             // Construct block index object
             CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
