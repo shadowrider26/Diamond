@@ -32,6 +32,16 @@ static std::map<int, unsigned int> mapStakeModifierCheckpoints =
         ( 317997, 0xfd318368u )
 	;
 
+// Get time weight
+int64 GetWeight(int64 nIntervalBeginning, int64 nIntervalEnd)
+{
+    // Kernel hash weight starts from 0 at the min age
+    // this change increases active coins participating the hash and helps
+    // to secure the network when proof-of-stake difficulty is low
+
+    return min(nIntervalEnd - nIntervalBeginning - nStakeMinAge, (int64)nStakeMaxAge);
+}
+
 // Get the last stake modifier and its generation time from a given block
 static bool GetLastStakeModifier(const CBlockIndex* pindex, uint64& nStakeModifier, int64& nModifierTime)
 {
@@ -239,7 +249,7 @@ static bool GetKernelStakeModifier(uint256 hashBlockFrom, uint64& nStakeModifier
             else
 			{
 				// printf(">> nStakeModifierTime = %"PRI64d", pindexFrom->GetBlockTime() = %"PRI64d", nStakeModifierSelectionInterval = %"PRI64d"\n",
-				// 	nStakeModifierTime, pindexFrom->GetBlockTime(), nStakeModifierSelectionInterval);
+				// nStakeModifierTime, pindexFrom->GetBlockTime(), nStakeModifierSelectionInterval);
                 return false;
 			}
         }
@@ -279,9 +289,6 @@ static bool GetKernelStakeModifier(uint256 hashBlockFrom, uint64& nStakeModifier
 //
 bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned int nTxPrevOffset, const CTransaction& txPrev, const COutPoint& prevout, unsigned int nTimeTx, uint256& hashProofOfStake, bool fPrintProofOfStake)
 {
-//    if(totalCoin < VALUE_CHANGE && pindexBest->nHeight > 376497 && !fTestNet)
-//        return false;
-
     if (nTimeTx < txPrev.nTime)  // Transaction timestamp violation
         return error("CheckStakeKernelHash() : nTime violation");
 
@@ -299,15 +306,6 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
 // DK changing calculations here creates a fork
     int64 nTimeWeight = min((int64)nTimeTx - txPrev.nTime, (int64)nStakeMaxAge) - nStakeMinAge;
     CBigNum bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
-//    CBigNum bnCoinDayWeight;
-//    if (totalCoin < 391430)
-//        bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
-//    else
-//        bnCoinDayWeight = CBigNum(max(1000 * COIN, nValueIn)) * nTimeWeight / (24 * 60 * 60);
-
-//printf("calculation: nValueIn=%lld, max=%lld\n", nValueIn, max(1000 * COIN, nValueIn));
-//printf("CheckStakeKernelHash(): bnCoinDayWeight old style = %s, new style = %s\n", (CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60)).ToString().c_str(), (CBigNum(max(1000 * COIN, nValueIn)) * nTimeWeight / COIN / (24 * 60 * 60)).ToString().c_str());
-//printf("CheckStakeKernelHash(): nTimeWeight=%lld\n", nTimeWeight);
 
 	// printf(">>> CheckStakeKernelHash: nTimeWeight = %"PRI64d"\n", nTimeWeight);
     // Calculate hash

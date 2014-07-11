@@ -210,6 +210,7 @@ static const CRPCCommand vRPCCommands[] =
     { "getgenerate",            &getgenerate,            true,   false },
     { "setgenerate",            &setgenerate,            true,   false },
     { "gethashespersec",        &gethashespersec,        true,   false },
+    { "getnetworkhashps",       &getnetworkhashps,       true,   false },
     { "getinfo",                &getinfo,                true,   false },
     { "getmininginfo",          &getmininginfo,          true,   false },
     { "getnewaddress",          &getnewaddress,          true,   false },
@@ -742,7 +743,7 @@ void ThreadRPCServer2(void* parg)
         uiInterface.ThreadSafeMessageBox(strprintf(
             _("%s, you must set a rpcpassword in the configuration file:\n %s\n"
               "It is recommended you use the following random password:\n"
-              "rpcuser=bitcoinrpc\n"
+              "rpcuser=diamondrpc\n"
               "rpcpassword=%s\n"
               "(you do not need to remember this password)\n"
               "If the file does not exist, create it with owner-readable-only file permissions.\n"),

@@ -14,9 +14,10 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgb(69, 87, 96);
-QPushButton{background-color:rgba(97, 147, 174, 255);color:white;}
-QToolTip {background-color:#1f333e !important; color:white !important; border-style: none;}</string>
+   <string notr="true">background-color:transparent;
+    QLabel {background-color:transparent; color:white;}
+    QToolTip {background-color:#1f333e !important; color:white !important; border-style: none;}
+   </string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -31,7 +32,7 @@ QToolTip {background-color:#1f333e !important; color:white !important; border-st
    <item row="5" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;A&amp;amp;mount:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>A&amp;mount:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -44,7 +45,7 @@ QToolTip {background-color:#1f333e !important; color:white !important; border-st
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Pay &amp;amp;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Pay &amp;To:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -58,7 +59,8 @@ QToolTip {background-color:#1f333e !important; color:white !important; border-st
     <widget class="BitcoinAmountField" name="payAmount">
      <property name="styleSheet">
       <string notr="true">color:white;
-QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
+       QToolTip {background-color:#1f333e; color:white; border-style: none;}
+      </string>
      </property>
     </widget>
    </item>
@@ -75,9 +77,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Enter a label for this address to add it to your address book</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -85,7 +84,7 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
    <item row="4" column="0">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;&amp;amp;Label:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&amp;Label:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -105,9 +104,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>The address to send the payment to  (e.g. dc8hQjs9oy9AHPCSF5aTvkcRVECojV3joC)</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-       </property>
        <property name="maxLength">
         <number>34</number>
        </property>
@@ -117,9 +113,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
       <widget class="QToolButton" name="addressBookButton">
        <property name="toolTip">
         <string>Choose address from address book</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string/>
@@ -138,9 +131,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Paste address from clipboard</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-       </property>
        <property name="text">
         <string/>
        </property>
@@ -157,9 +147,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
       <widget class="QToolButton" name="deleteButton">
        <property name="toolTip">
         <string>Remove this recipient</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string/>

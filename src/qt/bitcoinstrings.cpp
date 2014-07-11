@@ -10,7 +10,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "%s, you must set a rpcpassword in the configuration file:\n"
 " %s\n"
 "It is recommended you use the following random password:\n"
-"rpcuser=bitcoinrpc\n"
+"rpcuser=diamondrpc\n"
 "rpcpassword=%s\n"
 "(you do not need to remember this password)\n"
 "If the file does not exist, create it with owner-readable-only file "
@@ -44,7 +44,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Execute command when the best block changes (%s in cmd is replaced by block "
 "hash)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
-"Listen for JSON-RPC connections on <port> (default: 8344 or testnet: 18344)"),
+"Listen for JSON-RPC connections on <port> (default: 17772 or testnet: 27772)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Number of seconds to keep misbehaving peers from reconnecting (default: "
 "86400)"),
@@ -116,7 +116,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -paytxfee=<amount>: '%s'")
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -reservebalance=<amount>"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount"),
 QT_TRANSLATE_NOOP("bitcoin-core", "List commands"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 27772 or testnet: 17772)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 17771 or testnet: 27771)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading addresses..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading block index..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading wallet..."),

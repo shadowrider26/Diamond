@@ -89,6 +89,7 @@ extern std::map<uint256, CBlock*> mapOrphanBlocks;
 
 // Settings
 extern int64 nTransactionFee;
+extern bool fUseFastIndex;
 
 // Minimum disk space required - used in CheckDiskSpace()
 static const uint64 nMinDiskSpace = 52428800;
@@ -1355,7 +1356,7 @@ public:
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),
-            GetBlockHash().ToString().c_str());
+            phashBlock ? GetBlockHash().ToString().c_str() : "*not initialized*");
     }
 
     void print() const
@@ -1369,12 +1370,16 @@ public:
 /** Used to marshal pointers into hashes for db storage. */
 class CDiskBlockIndex : public CBlockIndex
 {
+private:
+    uint256 blockHash;
+
 public:
     uint256 hashPrev;
     uint256 hashNext;
 
     CDiskBlockIndex()
     {
+        blockHash = 0;
         hashPrev = 0;
         hashNext = 0;
     }
@@ -1418,22 +1423,14 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+        READWRITE(blockHash);
     )
 
     uint256 GetBlockHash() const
     {
-        CBlock block;
-        block.nVersion        = nVersion;
-        block.hashPrevBlock   = hashPrev;
-        block.hashMerkleRoot  = hashMerkleRoot;
-        block.nTime           = nTime;
-        block.nBits           = nBits;
-        block.nNonce          = nNonce;
-        return block.GetHash();
-    }
+        if (fUseFastIndex && (nTime < GetAdjustedTime() - 24 * 60 * 60) && blockHash != 0)
+            return blockHash;
 
-    uint256 GetBlockHashScrypt() const
-    {
         CBlock block;
         block.nVersion        = nVersion;
         block.hashPrevBlock   = hashPrev;
@@ -1441,19 +1438,8 @@ public:
         block.nTime           = nTime;
         block.nBits           = nBits;
         block.nNonce          = nNonce;
-        return block.GetHashScrypt();
-    }
-
-    uint256 GetBlockHashGroest() const
-    {
-        CBlock block;
-        block.nVersion        = nVersion;
-        block.hashPrevBlock   = hashPrev;
-        block.hashMerkleRoot  = hashMerkleRoot;
-        block.nTime           = nTime;
-        block.nBits           = nBits;
-        block.nNonce          = nNonce;
-        return block.GetHashGroestl();
+        const_cast<CDiskBlockIndex*>(this)->blockHash = block.GetHash();
+        return blockHash;
     }
 
     std::string ToString() const

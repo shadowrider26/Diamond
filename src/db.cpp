@@ -679,7 +679,6 @@ bool CTxDB::LoadBlockIndex()
     pindexBest = mapBlockIndex[hashBestChain];
     nBestHeight = pindexBest->nHeight;
     bnBestChainTrust = pindexBest->bnChainTrust;
-
     printf("LoadBlockIndex(): hashBestChain=%s  height=%d  trust=%s  date=%s\n",
       hashBestChain.ToString().substr(0,20).c_str(), nBestHeight, bnBestChainTrust.ToString().c_str(),
       DateTimeStrFormat("%x %H:%M:%S", pindexBest->GetBlockTime()).c_str());
@@ -861,12 +860,8 @@ bool CTxDB::LoadBlockIndexGuts()
             CDiskBlockIndex diskindex;
             ssValue >> diskindex;
 
-            // Construct block index object
-            uint256 blockHash;
-            if(diskindex.nMoneySupply / COIN <= VALUE_CHANGE)
-                blockHash = diskindex.GetBlockHashScrypt();
-            else
-                blockHash =  diskindex.GetBlockHashGroest();
+            totalCoin = diskindex.nMoneySupply / COIN;
+            uint256 blockHash = diskindex.GetBlockHash();
 
             // Construct block index object
             CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
@@ -898,7 +893,7 @@ bool CTxDB::LoadBlockIndexGuts()
             }
 
             // Watch for genesis block
-            if (pindexGenesisBlock == NULL && diskindex.GetBlockHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
+            if (pindexGenesisBlock == NULL && blockHash == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
                 pindexGenesisBlock = pindexNew;
 
             if (!pindexNew->CheckIndex())

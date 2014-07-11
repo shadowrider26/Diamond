@@ -989,10 +989,10 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 // simple algorithm, not depend on the diff
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
 {
+    int64 nRewardCoinYear;
+    int64 nSubsidy = 0;
     if(totalCoin >= VALUE_CHANGE || fTestNet)
     {
-        int64 nRewardCoinYear;
-        int64 nSubsidy = 0;
         nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
         if(fTestNet)
             nSubsidy = nCoinAge * 50 * CENT / 365;
@@ -1021,39 +1021,37 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
     }
     else
     {
-        int64 nRewardCoinYear;
+        CBigNum bnRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE; // Base stake mint rate, 100% year interest
+        CBigNum bnTarget;
+        bnTarget.SetCompact(nBits);
+        CBigNum bnTargetLimit = bnProofOfStakeLimit;
+        bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
 
-            CBigNum bnRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE; // Base stake mint rate, 100% year interest
-            CBigNum bnTarget;
-            bnTarget.SetCompact(nBits);
-            CBigNum bnTargetLimit = bnProofOfStakeLimit;
-            bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
+        // Diamond: reward for coin-year is cut in half every 64x multiply of PoS difficulty
+        // A reasonably continuous curve is used to avoid shock to market
+        // (nRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit / bnTarget
+        //
+        // Human readable form:
+        //
+        // nRewardCoinYear = 1 / (posdiff ^ 1/4)
 
-            // Diamond: reward for coin-year is cut in half every 64x multiply of PoS difficulty
-            // A reasonably continuous curve is used to avoid shock to market
-            // (nRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit / bnTarget
-            //
-            // Human readable form:
-            //
-            // nRewardCoinYear = 1 / (posdiff ^ 1/4)
+        CBigNum bnLowerBound = 1 * CENT; // Lower interest bound is 1% per year
+        CBigNum bnUpperBound = bnRewardCoinYearLimit;
+        while (bnLowerBound + CENT <= bnUpperBound)
+        {
+            CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
+            if (fDebug && GetBoolArg("-printcreation"))
+                printf("GetProofOfStakeReward() : lower=%"PRI64d" upper=%"PRI64d" mid=%"PRI64d"\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
+            if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnTarget)
+                bnUpperBound = bnMidValue;
+            else
+                bnLowerBound = bnMidValue;
+        }
 
-            CBigNum bnLowerBound = 1 * CENT; // Lower interest bound is 1% per year
-            CBigNum bnUpperBound = bnRewardCoinYearLimit;
-            while (bnLowerBound + CENT <= bnUpperBound)
-            {
-                CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
-                if (fDebug && GetBoolArg("-printcreation"))
-                    printf("GetProofOfStakeReward() : lower=%"PRI64d" upper=%"PRI64d" mid=%"PRI64d"\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
-                if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnTarget)
-                    bnUpperBound = bnMidValue;
-                else
-                    bnLowerBound = bnMidValue;
-            }
+        nRewardCoinYear = bnUpperBound.getuint64();
+        nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
 
-            nRewardCoinYear = bnUpperBound.getuint64();
-            nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, MAX_MINT_PROOF_OF_STAKE);
-
-        int64 nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+        nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
         if (fDebug && GetBoolArg("-printcreation"))
             printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
         return nSubsidy;
@@ -1140,16 +1138,16 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     // DK activating this will result in a fork
     if (fProofOfStake && GetTotalCoin() > POS_RESTART)
     {
-	if(nActualSpacing < 0)
-	{
-	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
-	    nActualSpacing = 1;
-	}
-	else if(nActualSpacing > nTargetTimespan)
-	{
-	    if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
-	    nActualSpacing = nTargetTimespan;
-	}
+        if(nActualSpacing < 0)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
+            nActualSpacing = 1;
+        }
+        else if(nActualSpacing > nTargetTimespan)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
+            nActualSpacing = nTargetTimespan;
+        }
     }
 
     // ppcoin: target change every block
@@ -2110,7 +2108,6 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
     return true;
 }
 
-
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
     // Update the coin mechanics variables post algorithm change
@@ -2148,6 +2145,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         if (vtx[i].IsCoinStake())
             return DoS(100, error("CheckBlock() : coinstake in wrong position"));
 
+    // ppcoin: coinbase output should be empty if proof-of-stake block
     if(totalCoin >= VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
@@ -3025,10 +3023,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return true;
         }
 
-
         // Diamond: disconnect any known version prior 2.0.2.1
         // as these have PoS not working and could serve us garbage
-        if (fDebug) printf("connected subver %s\n", pfrom->strSubVer.c_str());
+        printf("connected subver %s\n", pfrom->strSubVer.c_str());
         if (!strcmp(pfrom->strSubVer.c_str(),"/Diamond:2.0.1/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Diamond:0.7.2/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Satoshi:0.7.2/")
@@ -4437,18 +4434,20 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
-    totalCoin = GetTotalCoin();
+
     while (fGenerateBitcoins || fProofOfStake)
     {
         totalCoin = GetTotalCoin();
         if (fShutdown)
             return;
-        while (vNodes.empty() || IsInitialBlockDownload())
+
+        while (vNodes.empty() || IsInitialBlockDownload() || pwallet->IsLocked())
         {
+            nLastCoinStakeSearchInterval = 0;
             Sleep(1000);
             if (fShutdown)
                 return;
-            if ((!fGenerateBitcoins) && !fProofOfStake)
+            if (!fGenerateBitcoins && !fProofOfStake)
                 return;
         }
 
@@ -4492,8 +4491,8 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
             continue;
         }
 
-//        printf("Running BitcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
-//               ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+        //printf("Running BitcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        //       ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
         // Pre-build hash buffers
@@ -4536,7 +4535,7 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
                 {
                     if (!pblock->SignBlock(*pwalletMain))
                     {
-//                        strMintWarning = strMintMessage;
+                        strMintWarning = strMintMessage;
                         break;
                     }
                     strMintWarning = "";
@@ -4670,7 +4669,6 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
     }
 }
 
-
 // Diamond coin mechanics
 // Foundation contribution
 // 0.05 until 1000000 coins generated
@@ -4686,31 +4684,34 @@ int64 GetContributionAmount(int64 totalCoin) {
 uint256 CBlock::GetHash(bool existingBlock) const
 {
     // There are two distinct cases when we are called
-	// First case is with with a block already in the blockchain index
+    // First case is with with a block already in the blockchain index
     // Second is for a new block
-
 
     if (existingBlock)
     {
         //printf("CBlock::GetHash() look up an existing block\n");
         // TODO: reverse checks when Groestl blocks become more
-		// calculate Scrypt first
+        // calculate Scrypt first
     	uint256 hash_scrypt = GetHashScrypt();
+        if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {
+            printf("GetHash(): hash fixed up (scrypt)\n");
+            return  uint256("0x00000d652b612a94e1c830bf4e05106438ea6b53372b29206f0b820d91a9b67b");
+        }
     	// find the index position(s)
-		CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
+        CBlockIndex* pblockindex_scrypt = mapBlockIndex[hash_scrypt];
         if (pblockindex_scrypt)
-		    return hash_scrypt;
+             return hash_scrypt;
 
-		// we are here so it must be Groestl
+        // we are here so it must be Groestl
     	uint256 hash_groestl = GetHashGroestl();
-		CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
-		if (pblockindex_groestl)
-		    return hash_groestl;
+	CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
+	if (pblockindex_groestl)
+	    return hash_groestl;
     }
 
     // new block or not found in blockchain
     if(totalCoin < VALUE_CHANGE)
-		return GetHashScrypt();
+        return GetHashScrypt();
 
     return GetHashGroestl();
 }

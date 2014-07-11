@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = diamond-qt
-VERSION = 0.1.0.2
+VERSION = 2.0.3.0
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -133,6 +133,8 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/transactiontablemodel.h \
     src/qt/addresstablemodel.h \
     src/qt/optionsdialog.h \
+    src/qt/coincontroldialog.h \
+    src/qt/coincontroltreewidget.h \
     src/qt/sendcoinsdialog.h \
     src/qt/addressbookpage.h \
     src/qt/signverifymessagedialog.h \
@@ -145,6 +147,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/bignum.h \
     src/checkpoints.h \
     src/compat.h \
+    src/coincontrol.h \
     src/sync.h \
     src/util.h \
     src/uint256.h \
@@ -213,6 +216,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
     src/qt/sendcoinsdialog.cpp \
+    src/qt/coincontroldialog.cpp \
+    src/qt/coincontroltreewidget.cpp \
     src/qt/addressbookpage.cpp \
     src/qt/signverifymessagedialog.cpp \
     src/qt/aboutdialog.cpp \
@@ -280,6 +285,7 @@ RESOURCES += \
     src/qt/bitcoin.qrc
 
 FORMS += \
+    src/qt/forms/coincontroldialog.ui \
     src/qt/forms/sendcoinsdialog.ui \
     src/qt/forms/addressbookpage.ui \
     src/qt/forms/signverifymessagedialog.ui \

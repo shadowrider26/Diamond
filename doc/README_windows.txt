@@ -2,7 +2,7 @@
 Copyright (c) 2013-2014 Diamond Foundation
 
 
-Diamond 2.0.2 BETA
+Diamond 2.0.3
 
 Copyright (c) 2013-2014 Diamond Foundation
 Copyright (c) 2013 NovaCoin Developers
@@ -47,6 +47,6 @@ Start up the new diamondd.
 
 
 See the documentation/wiki at the Diamond site:
-  http://diamond.cc/
+  http://bit.diamonds/
 for help and more information.
 
