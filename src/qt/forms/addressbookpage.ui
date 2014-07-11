@@ -14,14 +14,16 @@
    <string>Address Book</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">AddressBookPage{background:transparent; color: white;}</string>
+   <string notr="true">
+    AddressBookPage{background:transparent; color: white;}
+    QTableView {background-color:rgb(69, 87, 96); color:white;}
+    QToolTip {background-color:#1f333e; color:white; border-style: none;}
+    QPushButton {background-color:rgb(69, 87, 96); color: white;}
+   </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="labelExplanation">
-     <property name="styleSheet">
-      <string notr="true">color:white;</string>
-     </property>
      <property name="text">
       <string>These are your Diamond addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</string>
      </property>
@@ -483,10 +485,6 @@
      <property name="toolTip">
       <string>Double-click to edit address or label</string>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QTableView {background-color:rgb(69, 87, 96); color:white;}
-QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-     </property>
      <property name="tabKeyNavigation">
       <bool>false</bool>
      </property>
@@ -514,9 +512,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Create a new address</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
-       </property>
        <property name="text">
         <string>&amp;New Address</string>
        </property>
@@ -531,9 +526,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Copy the currently selected address to the system clipboard</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
-       </property>
        <property name="text">
         <string>&amp;Copy Address</string>
        </property>
@@ -545,9 +537,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
      </item>
      <item>
       <widget class="QPushButton" name="showQRCode">
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
-       </property>
        <property name="text">
         <string>Show &amp;QR Code</string>
        </property>
@@ -561,9 +550,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
       <widget class="QPushButton" name="signMessage">
        <property name="toolTip">
         <string>Sign a message to prove you own a Diamond address</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
        </property>
        <property name="text">
         <string>Sign &amp;Message</string>
@@ -579,9 +565,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Verify a message to ensure it was signed with a specified Diamond address</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
-       </property>
        <property name="text">
         <string>&amp;Verify Message</string>
        </property>
@@ -595,9 +578,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
       <widget class="QPushButton" name="deleteButton">
        <property name="toolTip">
         <string>Delete the currently selected address from the list</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:rgb(69, 87, 96); color: white;</string>
        </property>
        <property name="text">
         <string>&amp;Delete</string>

@@ -22,7 +22,7 @@
      <item>
       <widget class="QFrame" name="frame">
        <property name="styleSheet">
-        <string notr="true">background-color:rgba(255, 255, 255, 40); color: white;</string>
+        <string notr="true">background-color:transparent; color:white;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -308,7 +308,7 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
      <item>
       <widget class="QFrame" name="frame_2">
        <property name="styleSheet">
-        <string notr="true">background-color:rgba(255, 255, 255, 40); color: white;</string>
+        <string notr="true">background-color:transparent; color:white;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>

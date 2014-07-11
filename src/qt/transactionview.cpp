@@ -35,8 +35,7 @@ TransactionView::TransactionView(QWidget *parent) :
 {
     // Build filter row
     setContentsMargins(0,0,0,0);
-    setStyleSheet("background-color:rgba(255, 255, 255, 40); color: white;");
-
+    setStyleSheet("background-color:#1f333e; color: white;");
 
     QHBoxLayout *hlayout = new QHBoxLayout();
     hlayout->setContentsMargins(0,0,0,0);
@@ -86,6 +85,7 @@ TransactionView::TransactionView(QWidget *parent) :
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
     addressWidget->setPlaceholderText(tr("Enter address or label to search"));
+    addressWidget->setStyleSheet("background-color:#1f333e; color:white; border:none;");
 #endif
     hlayout->addWidget(addressWidget);
 

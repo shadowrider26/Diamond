@@ -6,17 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
-    <height>234</height>
+    <width>831</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Send Coins</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">SendCoinsDialog {background:transparent; color:white;}
-QToolTip {background-color:#1f333e; color:white; border-style: none;}
-</string>
+   <string notr="true">
+    SendCoinsDialog {background:transparent; color:white;}
+    QPushButton {background-color:rgb(69, 87, 96); color:white;}
+    QLabel {background-color:transparent; color:white;}
+    QFrame {background-color:transparent; color:white;}
+    QCheckBox {background-color:transparent; color:white;}
+    QLineEdit {background-color:#1f333e; color:white; border: none;}
+    QToolTip {background-color:#1f333e; color:white; border-style: none;}
+   </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="bottomMargin">
@@ -595,9 +601,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}
    </item>
    <item>
     <widget class="QFrame" name="horizontalFrame">
-     <property name="styleSheet">
-      <string notr="true">background-color:rgb(69, 87, 96)</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -608,15 +611,12 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Transaction comment:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Transaction comment:</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="editTxComment">
-        <property name="styleSheet">
-         <string notr="true">color:white;</string>
-        </property>
        </widget>
       </item>
      </layout>
@@ -624,10 +624,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
-     <property name="styleSheet">
-      <string notr="true">
-background-color:rgba(255, 255, 255, 40); color: white;</string>
-     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -641,7 +637,7 @@ background-color:rgba(255, 255, 255, 40); color: white;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background:transparent;</string>
+       <string notr="true">background-color:rgb(59, 88, 104);</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="leftMargin">
@@ -687,10 +683,6 @@ background-color:rgba(255, 255, 255, 40); color: white;</string>
        <property name="toolTip">
         <string>Send to multiple recipients at once</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {background-color:rgb(69, 87, 96); color: white;}
-QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-       </property>
        <property name="text">
         <string>Add &amp;Recipient</string>
        </property>
@@ -717,10 +709,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        <property name="toolTip">
         <string>Remove all transaction fields</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {background-color:rgb(69, 87, 96); color: white;}
-QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
-       </property>
        <property name="text">
         <string>Clear &amp;All</string>
        </property>
@@ -743,6 +731,12 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <item>
         <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Balance:</string>
          </property>
@@ -750,6 +744,12 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </item>
        <item>
         <widget class="QLabel" name="labelBalance">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -786,10 +786,6 @@ QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="toolTip">
         <string>Confirm the send action</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {background-color:rgb(69, 87, 96); color: white;}
-QToolTip {background-color:#1f333e; color:white; border-style: none;}</string>
        </property>
        <property name="text">
         <string>S&amp;end</string>

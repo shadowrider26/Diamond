@@ -38,7 +38,7 @@
         <string>The label associated with this address book entry</string>
        </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">background-color:#1f333e; color:white; border: none;</string>
        </property>
       </widget>
      </item>
