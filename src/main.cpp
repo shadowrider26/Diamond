@@ -3020,10 +3020,11 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return true;
         }
 
-        // Diamond: disconnect any known version prior 2.0.2.1
+        // Diamond: disconnect any known version prior 2.0.3
         // as these have PoS not working and could serve us garbage
         printf("connected subver %s\n", pfrom->strSubVer.c_str());
         if (!strcmp(pfrom->strSubVer.c_str(),"/Diamond:2.0.1/")
+            || !strcmp(pfrom->strSubVer.c_str(),"/Diamond:2.0.2.1/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Diamond:0.7.2/")
             || !strcmp(pfrom->strSubVer.c_str(),"/Satoshi:0.7.2/")
             || !strcmp(pfrom->strSubVer.c_str(),"")
