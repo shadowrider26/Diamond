@@ -4519,8 +4519,8 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 
         while (true)
         {
-            // always calculate totalCoins
-            totalCoins = GetTotalCoins();
+            // always calculate totalCoin
+            totalCoin = GetTotalCoin();
             // new block, use groestl
             uint256 hash = pblock->GetHashGroestl();
             if (hash <= hashTarget)
