@@ -94,7 +94,6 @@ extern bool fUseFastIndex;
 // Minimum disk space required - used in CheckDiskSpace()
 static const uint64 nMinDiskSpace = 52428800;
 
-
 class CReserveKey;
 class CTxDB;
 class CTxIndex;
@@ -131,8 +130,6 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan);
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake);
 void BitcoinMiner(CWallet *pwallet, bool fProofOfStake);
 void ResendWalletTransactions();
-
-
 
 
 
