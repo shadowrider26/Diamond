@@ -2347,8 +2347,19 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         if (bnNewBlock > bnRequired)
         {
             if (pfrom)
-                pfrom->Misbehaving(100);
-            return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+                pfrom->Misbehaving(10); // danbi: was 100, but that's way too heavy handed
+            if (fDebug)
+            {
+                printf("ProcessBlock(): ");
+                pblock->print();
+                printf("\n");
+            }
+            // danbi: Only refuse this block if time distance between the last sync checkpoint 
+            // and the block's time is less than the checkpoints max span
+            if (deltaTime < CHECKPOINT_MAX_SPAN)
+                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+            else
+                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
         }
     }
 
