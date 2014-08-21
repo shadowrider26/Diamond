@@ -469,7 +469,7 @@ bool CTransaction::CheckTransaction() const
         if (txout.IsEmpty() && !IsCoinBase() && !IsCoinStake())
             return DoS(100, error("CTransaction::CheckTransaction() : txout empty for user transaction"));
 
-        if(totalCoin < VALUE_CHANGE || totalCoin > POS_RESTART)
+        if(totalCoin <= VALUE_CHANGE || totalCoin > POS_RESTART)
         {
             // ppcoin: enforce minimum output amount
             if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
@@ -947,7 +947,7 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
     int64 nSubsidy = COIN;
 
-    if(totalCoin < VALUE_CHANGE)
+    if(totalCoin <= VALUE_CHANGE)
     {
         std::string cseed_str = prevHash.ToString().substr(6,7);
         const char* cseed = cseed_str.c_str();
@@ -987,7 +987,7 @@ int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTi
 {
     int64 nRewardCoinYear;
     int64 nSubsidy = 0;
-    if(totalCoin >= VALUE_CHANGE || fTestNet)
+    if(totalCoin > VALUE_CHANGE || fTestNet)
     {
         nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
         if(fTestNet)
@@ -1680,7 +1680,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 		// printf("==> Got prevHash = %s\n", prevHash.ToString().c_str());
 	}
 
-    if(totalCoin < VALUE_CHANGE)
+    if(totalCoin <= VALUE_CHANGE)
     {
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
             return false;
@@ -1689,7 +1689,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return false;
 
-    if(totalCoin >= VALUE_CHANGE && IsProofOfWork())
+    if(totalCoin > VALUE_CHANGE && IsProofOfWork())
     {
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
@@ -2105,7 +2105,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 {
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
-    if(totalCoin >= VALUE_CHANGE && !fTestNet)
+    if(totalCoin > VALUE_CHANGE && !fTestNet)
     {
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
@@ -2139,7 +2139,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
             return DoS(100, error("CheckBlock() : coinstake in wrong position"));
 
     // ppcoin: coinbase output should be empty if proof-of-stake block
-    if(totalCoin >= VALUE_CHANGE)
+    if(totalCoin > VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
             return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
@@ -2975,6 +2975,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         printf("dropmessagestest DROPPING RECV MESSAGE\n");
         return true;
     }
+    // make sure we have current totalCoin
+    totalCoin = GetTotalCoin();
 
     if (strCommand == "version")
     {
@@ -4032,7 +4034,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if(totalCoin >= VALUE_CHANGE)
+    if(totalCoin > VALUE_CHANGE)
     {
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         txNew.vout.resize(2);
@@ -4089,7 +4091,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
                     pblock->vtx[0].vout[0].SetEmpty();
-                    if(totalCoin >= VALUE_CHANGE)
+                    if(totalCoin > VALUE_CHANGE)
                         pblock->vtx[0].vout[1].SetEmpty();
                     pblock->vtx[0].nTime = txCoinStake.nTime;
                     pblock->vtx.push_back(txCoinStake);
@@ -4297,7 +4299,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if(totalCoin >= VALUE_CHANGE)
+            if(totalCoin > VALUE_CHANGE)
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
         }
 
@@ -4394,7 +4396,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     pblock->print();
     if (pblock->IsProofOfWork())
     {
-        if(totalCoin >= VALUE_CHANGE)
+        if(totalCoin > VALUE_CHANGE)
             printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue + pblock->vtx[0].vout[1].nValue).c_str());
         else
             printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4671,11 +4673,21 @@ uint256 CBlock::GetHash(bool existingBlock) const
     if (existingBlock)
     {
         //printf("CBlock::GetHash() look up an existing block\n");
-        // TODO: reverse checks when Groestl blocks become more
-        // calculate Scrypt first
+        // We first check Groestl hash as that's less expensive and
+        // there are enough groestl blocks now
+    	uint256 hash_groestl = GetHashGroestl();
+        if (hash_groestl == uint256("0xe12ddb2c35d84403b0a045574ecce223f7e2f0db4506e76ed3d43bc464ace40c")) {
+            printf("GetHash(true): hash fixed up (groestl)\n");
+            return  uint256("0x000009d32c4f8ec5d66a65e88c8099da31452de0daec3b0b68926659b50b4e8f");
+        }
+	CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
+	if (pblockindex_groestl)
+	    return hash_groestl;
+
+        // we are here so it must be Scrypt
     	uint256 hash_scrypt = GetHashScrypt();
         if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {
-            printf("GetHash(): hash fixed up (scrypt)\n");
+            printf("GetHash(true): hash fixed up (scrypt)\n");
             return  uint256("0x00000d652b612a94e1c830bf4e05106438ea6b53372b29206f0b820d91a9b67b");
         }
     	// find the index position(s)
@@ -4683,16 +4695,25 @@ uint256 CBlock::GetHash(bool existingBlock) const
         if (pblockindex_scrypt)
              return hash_scrypt;
 
-        // we are here so it must be Groestl
-    	uint256 hash_groestl = GetHashGroestl();
-	CBlockIndex* pblockindex_groestl = mapBlockIndex[hash_groestl];
-	if (pblockindex_groestl)
-	    return hash_groestl;
+        // XXX: We are here, asked for an existing hash but did not find it!
+        printf("CBlock::GetHash(true): neither scrypt nor groestl hash found in the block index! Failing back..\n");
     }
 
     // new block or not found in blockchain
-    if(totalCoin < VALUE_CHANGE)
-        return GetHashScrypt();
+    if(totalCoin <= VALUE_CHANGE)
+    {
+    	uint256 hash_scrypt = GetHashScrypt();
+        if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {
+            printf("GetHash(): hash fixed up (scrypt)\n");
+            return  uint256("0x00000d652b612a94e1c830bf4e05106438ea6b53372b29206f0b820d91a9b67b");
+        }
+        return hash_scrypt;
+    }
 
-    return GetHashGroestl();
+    uint256 hash_groestl = GetHashGroestl();
+    if (hash_groestl == uint256("0xe12ddb2c35d84403b0a045574ecce223f7e2f0db4506e76ed3d43bc464ace40c")) {
+        printf("GetHash(): hash fixed up (groestl)\n");
+        return  uint256("0x000009d32c4f8ec5d66a65e88c8099da31452de0daec3b0b68926659b50b4e8f");
+    }
+    return hash_groestl;
 }

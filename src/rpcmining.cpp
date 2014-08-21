@@ -505,7 +505,7 @@ Value getblocktemplate(const Array& params, bool fHelp)
 	result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
 	result.push_back(Pair("transactions", transactions));
 	result.push_back(Pair("coinbaseaux", aux));
-        if(totalCoin >= VALUE_CHANGE)
+        if(totalCoin > VALUE_CHANGE)
 	    result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].vout[0].nValue + (int64_t)pblock->vtx[0].vout[1].nValue));
 	else
 	    result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].vout[0].nValue));
