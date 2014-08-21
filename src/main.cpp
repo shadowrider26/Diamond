@@ -500,7 +500,7 @@ bool CTransaction::CheckTransaction() const
     if (IsCoinBase())
     {
         if (vin[0].scriptSig.size() < 2 || vin[0].scriptSig.size() > 100)
-            return DoS(100, error("CTransaction::CheckTransaction() : coinbase script size"));
+            return DoS(100, error("CTransaction::CheckTransaction() : coinbase script size is invalid"));
     }
     else
     {
@@ -620,7 +620,7 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
                 return error("CTxMemPool::accept() : FetchInputs found invalid tx %s", hash.ToString().substr(0,10).c_str());
             if (pfMissingInputs)
                 *pfMissingInputs = true;
-            return false;
+            return error("CTxMemPool::accept() : FetchInputs failed %s", hash.ToString().substr(0,10).c_str());
         }
 
         // Check for non-standard pay-to-script-hash in inputs
@@ -1104,7 +1104,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake) 
+unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
@@ -1166,6 +1166,7 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
+    // danbi: substitute false for error as we call it with both algorithms for now
     // Check range
     if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
         return false;
@@ -1919,8 +1920,9 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
     bnBestChainTrust = pindexNew->bnChainTrust;
     nTimeBestReceived = GetTime();
     nTransactionsUpdated++;
-    printf("SetBestChain: new best=%s  height=%d  trust=%s  date=%s\n",
+    printf("SetBestChain: new best=%s  height=%d  trust=%s moneysupply=%s date=%s\n",
       hashBestChain.ToString().c_str(), nBestHeight, bnBestChainTrust.ToString().c_str(),
+      FormatMoney(pindexBest->nMoneySupply).c_str(),
       DateTimeStrFormat("%x %H:%M:%S", pindexBest->GetBlockTime()).c_str());
 
 	printf("Stake checkpoint: %x\n", pindexBest->nStakeModifierChecksum);
@@ -3336,7 +3338,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         {
             if (pindex->GetBlockHash() == hashStop)
             {
-                printf("  getblocks stopping at %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
+                printf("  getblocks (hashStop) stopping at %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
                 // ppcoin: tell downloading node about the latest block if it's
                 // without risk being rejected due to stake connection check
                 if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
@@ -3351,7 +3353,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             {
                 // When this block is requested, we'll send an inv that'll make them
                 // getblocks the next batch of inventory.
-                printf("  getblocks stopping at limit %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
+                printf("  getblocks (nLimit) stopping at limit %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
                 pfrom->hashContinue = pindex->GetBlockHash();
                 break;
             }
