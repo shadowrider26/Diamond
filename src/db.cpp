@@ -883,11 +883,11 @@ bool CTxDB::LoadBlockIndexGuts()
             pindexNew->nBits          = diskindex.nBits;
             pindexNew->nNonce         = diskindex.nNonce;
 
-            if(pindexNew->nMoneySupply / COIN == VALUE_CHANGE)
+            if(totalCoin == VALUE_CHANGE)
             {
                 pindexSave = pindexNew;
             }
-            if(pindexNew->nMoneySupply / COIN == VALUE_CHANGE + 1)
+            if(totalCoin == VALUE_CHANGE + 1)
             {
                 pindexSaveNext = pindexNew;
             }
