@@ -1680,14 +1680,17 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 		// printf("==> Got prevHash = %s\n", prevHash.ToString().c_str());
 	}
 
+    // danbi: update totalCoin as we are one behind here
+    // XXX: this might backfire in case of error...
+    totalCoin = pindex->nMoneySupply / COIN;
     if(totalCoin <= VALUE_CHANGE)
     {
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
-            return false;
+            return error("ConnectBlock() : claiming to have created too much (old)");
     }
     else
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
-            return false;
+            return error("ConnectBlock() : claiming to have created too much (new)");
 
     if(totalCoin > VALUE_CHANGE && IsProofOfWork())
     {
