@@ -853,69 +853,115 @@ bool CTxDB::LoadBlockIndexGuts()
         // Unserialize
 
         try {
-        string strType;
-        ssKey >> strType;
-        if (strType == "blockindex" && !fRequestShutdown)
-        {
-            CDiskBlockIndex diskindex;
-            ssValue >> diskindex;
-
-            totalCoin = diskindex.nMoneySupply / COIN;
-            uint256 blockHash = diskindex.GetBlockHash();
-
-            // Construct block index object
-            CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
-            pindexNew->pprev          = InsertBlockIndex(diskindex.hashPrev);
-            pindexNew->pnext          = InsertBlockIndex(diskindex.hashNext);
-            pindexNew->nFile          = diskindex.nFile;
-            pindexNew->nBlockPos      = diskindex.nBlockPos;
-            pindexNew->nHeight        = diskindex.nHeight;
-            pindexNew->nMint          = diskindex.nMint;
-            pindexNew->nMoneySupply   = diskindex.nMoneySupply;
-            pindexNew->nFlags         = diskindex.nFlags;
-            pindexNew->nStakeModifier = diskindex.nStakeModifier;
-            pindexNew->prevoutStake   = diskindex.prevoutStake;
-            pindexNew->nStakeTime     = diskindex.nStakeTime;
-            pindexNew->hashProofOfStake = diskindex.hashProofOfStake;
-            pindexNew->nVersion       = diskindex.nVersion;
-            pindexNew->hashMerkleRoot = diskindex.hashMerkleRoot;
-            pindexNew->nTime          = diskindex.nTime;
-            pindexNew->nBits          = diskindex.nBits;
-            pindexNew->nNonce         = diskindex.nNonce;
-
-            if(pindexNew->nMoneySupply / COIN == VALUE_CHANGE)
+            string strType;
+            ssKey >> strType;
+            if (strType == "blockindex" && !fRequestShutdown)
             {
-                pindexSave = pindexNew;
+                CDiskBlockIndex diskindex;
+                ssValue >> diskindex;
+
+                totalCoin = diskindex.nMoneySupply / COIN;
+                uint256 blockHash = diskindex.GetBlockHash();
+
+                // clean up junk from the block index
+                if (totalCoin == 0) {
+                    printf("money supply = 0\n");
+                    diskindex.print();
+                    if (blockHash != (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
+                    {
+                        // not the genesis block, garbage anyway
+                        printf("deleted\n");
+                        continue;
+                    }
+                }
+                if (totalCoin == VALUE_CHANGE) {
+                    printf("height = %d, hash = %s\n", diskindex.nHeight, diskindex.GetBlockHash().ToString().c_str());
+                    diskindex.print();
+                    if (diskindex.hashNext == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac"))
+                    {
+                        // assign proper hash value
+                        printf("changed\n");
+                        diskindex.hashNext = uint256("0x00000d652b612a94e1c830bf4e05106438ea6b53372b29206f0b820d91a9b67b");
+                    }
+                    if (diskindex.GetBlockHash() == uint256("0xe12ddb2c35d84403b0a045574ecce223f7e2f0db4506e76ed3d43bc464ace40c"))
+                    {
+                        // this hash version should not be here, delete
+                        printf("deleted\n");
+                        continue;
+                    }
+                }
+                if (totalCoin == VALUE_CHANGE+1) {
+                    // for information
+                    printf("height = %d, hash = %s\n", diskindex.nHeight, diskindex.GetBlockHash().ToString().c_str());
+                    diskindex.print();
+                }
+                // end cleanup
+
+                // Construct block index object
+                CBlockIndex* pindexNew = InsertBlockIndex(blockHash);
+                pindexNew->pprev          = InsertBlockIndex(diskindex.hashPrev);
+                pindexNew->pnext          = InsertBlockIndex(diskindex.hashNext);
+                pindexNew->nFile          = diskindex.nFile;
+                pindexNew->nBlockPos      = diskindex.nBlockPos;
+                pindexNew->nHeight        = diskindex.nHeight;
+                pindexNew->nMint          = diskindex.nMint;
+                pindexNew->nMoneySupply   = diskindex.nMoneySupply;
+                pindexNew->nFlags         = diskindex.nFlags;
+                pindexNew->nStakeModifier = diskindex.nStakeModifier;
+                pindexNew->prevoutStake   = diskindex.prevoutStake;
+                pindexNew->nStakeTime     = diskindex.nStakeTime;
+                pindexNew->hashProofOfStake = diskindex.hashProofOfStake;
+                pindexNew->nVersion       = diskindex.nVersion;
+                pindexNew->hashMerkleRoot = diskindex.hashMerkleRoot;
+                pindexNew->nTime          = diskindex.nTime;
+                pindexNew->nBits          = diskindex.nBits;
+                pindexNew->nNonce         = diskindex.nNonce;
+
+                if(totalCoin == VALUE_CHANGE)
+                    pindexSave = pindexNew;
+                if(totalCoin == VALUE_CHANGE + 1)
+                    pindexSaveNext = pindexNew;
+
+                // Watch for genesis block
+                if (pindexGenesisBlock == NULL && blockHash == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
+                    pindexGenesisBlock = pindexNew;
+
+                if (!pindexNew->CheckIndex())
+                    return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
+
+                // ppcoin: build setStakeSeen
+                if (pindexNew->IsProofOfStake())
+                    setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
             }
-            if(pindexNew->nMoneySupply / COIN == VALUE_CHANGE + 1)
+            else
             {
-                pindexSaveNext = pindexNew;
+                break; // if shutdown requested or finished loading block index
             }
-
-            // Watch for genesis block
-            if (pindexGenesisBlock == NULL && blockHash == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
-                pindexGenesisBlock = pindexNew;
-
-            if (!pindexNew->CheckIndex())
-                return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
-
-            // ppcoin: build setStakeSeen
-            if (pindexNew->IsProofOfStake())
-                setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
-        }
-        else
-        {
-            break; // if shutdown requested or finished loading block index
-        }
         }    // try
         catch (std::exception &e) {
             return error("%s() : deserialize error", __PRETTY_FUNCTION__);
         }
     }
     if(pindexSaveNext != NULL && pindexSave != NULL && pindexSave->pnext == NULL)
+    {
+        printf("linked pnext at switch block\n");
         pindexSave->pnext = pindexSaveNext;
+    }
 
     pcursor->close();
+
+    printf ("verify mapBlockIndex\n");
+    count=0;
+    BOOST_FOREACH(const PAIRTYPE(uint256, CBlockIndex*)& item, mapBlockIndex)
+    {
+        CBlockIndex* pindex = item.second;
+        if (pindex->nHeight == 0) {
+	        printf("nHeight=0 count=%d\n", count);
+            pindex->print();
+        }
+        count++;
+    }
+    printf("end verify\n");
 
     return true;
 }
