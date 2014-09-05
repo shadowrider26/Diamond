@@ -834,10 +834,12 @@ bool CTxDB::LoadBlockIndexGuts()
     if (!pcursor)
         return false;
 
+    int count=0;
     // Load mapBlockIndex
     unsigned int fFlags = DB_SET_RANGE;
     while (true)
     {
+        count++;
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
         if (fFlags == DB_SET_RANGE)
@@ -942,6 +944,9 @@ bool CTxDB::LoadBlockIndexGuts()
             return error("%s() : deserialize error", __PRETTY_FUNCTION__);
         }
     }
+
+    printf("loaded %d in block index\n", count);
+
     if(pindexSaveNext != NULL && pindexSave != NULL && pindexSave->pnext == NULL)
     {
         printf("linked pnext at switch block\n");
