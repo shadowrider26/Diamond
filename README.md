@@ -12,13 +12,13 @@ Update ubuntu
 
 *install the other necessary components
 
-    sudo apt-get install build-essential libboost1.48-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev
+    sudo apt-get install build-essential libboost1.55-all-dev libcurl4-openssl-dev libdb5.1-dev libdb5.1++-dev
 
 *navigate to the home directory
 
     cd ~ *download the diamond source code
 
-    git clone https://github.com/DMDcoin/Diamond-Coin-2.0.1.git
+    git clone https://github.com/DMDcoin/Diamond.git
 
 *navigate to the downloaded files
 
