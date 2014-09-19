@@ -174,9 +174,14 @@ bool AppInit(int argc, char* argv[])
     return fRet;
 }
 
+extern CBigNum bnSign;
+
 extern void noui_connect();
 int main(int argc, char* argv[])
 {
+    // init pseudo constants first
+    bnSign.SetHex("0x80000000000000000000000000000000000000000000000000000000");
+
     bool fRet = false;
 
     // Connect bitcoind signal handlers

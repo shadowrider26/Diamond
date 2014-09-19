@@ -47,6 +47,9 @@ unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
 int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
 int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
 
+CBigNum bnSign = 0; // initialized in init.cpp, fix signed BigNum math
+static const int64 POW_RESTART = 576898; // When (block) to unstuck PoW
+
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
 int nCoinbaseMaturity = 30;
@@ -1131,7 +1134,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     // fix block spacing
-    // DK activating this will result in a fork
+    // danbi: activating this will result in a fork
     if (fProofOfStake && GetTotalCoin() > POS_RESTART)
     {
         if(nActualSpacing < 0)
@@ -1152,10 +1155,15 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     bnNew.SetCompact(pindexPrev->nBits);
     int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
     int64 nInterval = nTargetTimespan / nTargetSpacing;
+
+    // danbi: implement new pacing algorithm for PoW
+    if (nActualSpacing < 0 && nBestHeight > POW_RESTART+100 )
+        nActualSpacing=nTargetSpacing;
+
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if (bnNew > bnTargetLimit)
+    if (bnNew <= 0 || bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
@@ -1168,6 +1176,13 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 
     // danbi: substitute false for error as we call it with both algorithms for now
     // Check range
+    // Fix negative number
+    if (bnTarget <= 0 && nBestHeight > POW_RESTART)
+    {
+         printf("CheckProofOfWork(): bnTarget <= 0, fixing\n");
+         bnTarget = bnSign - bnTarget;
+    }
+
     if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
         return false;
 //        return error("CheckProofOfWork() : nBits below minimum work");
@@ -2122,7 +2137,8 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         return DoS(100, error("CheckBlock() : size limits failed"));
 
     // Check proof of work matches claimed amount
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
+//    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
+    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(), nBits))
         return DoS(50, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
@@ -2285,9 +2301,16 @@ CBigNum CBlockIndex::GetBlockTrust() const
 {
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
+    // Fix negative number
+    if (bnTarget <= 0 && nBestHeight > POW_RESTART)
+    {
+        printf("GetBlockTrust(): bnTarget <= 0, fixing\n");
+        bnTarget = bnSign - bnTarget;
+    }
+
     if (bnTarget <= 0)
         return 0;
-	return (IsProofOfStake()? (CBigNum(1)<<256) / (bnTarget+1) : 1);
+    return (IsProofOfStake()? (CBigNum(1)<<256) / (bnTarget+1) : 1);
 }
 
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
