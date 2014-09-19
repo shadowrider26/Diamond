@@ -48,7 +48,7 @@ int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
 int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
 
 CBigNum bnSign = 0; // initialized in init.cpp, fix signed BigNum math
-static const int64 POW_RESTART = 576898; // When (block) to unstuck PoW
+static const int64 POW_RESTART = 577850; // When (block) to unstuck PoW
 
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
