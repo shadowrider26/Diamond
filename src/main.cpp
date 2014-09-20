@@ -47,7 +47,6 @@ unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
 int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
 int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
 
-CBigNum bnSign = 0; // initialized in init.cpp, fix signed BigNum math
 static const int64 POW_RESTART = 577850; // When (block) to unstuck PoW
 
 int64 totalCoin = -1;
@@ -1131,12 +1130,30 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
 
+    // ppcoin: target change every block
+    // ppcoin: retarget with exponential moving toward target spacing
+    CBigNum bnNew;
+    bnNew.SetCompact(pindexPrev->nBits);
+    int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
+    int64 nInterval = nTargetTimespan / nTargetSpacing;
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     // fix block spacing
-    // danbi: activating this will result in a fork
-    if (fProofOfStake && GetTotalCoin() > POS_RESTART)
+    // danbi: implement new pacing algorithm for PoW & PoS
+    if (nActualSpacing < 0 && nBestHeight > POW_RESTART)
     {
+        if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetSpacing (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetSpacing);
+        nActualSpacing=nTargetSpacing;
+    }
+    else if (nActualSpacing > nTargetTimespan && nBestHeight > POW_RESTART)
+    {
+        if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
+        nActualSpacing=nTargetTimespan;
+    }
+
+    // danbi: old PoS pacing algorithm
+    if (fProofOfStake && GetTotalCoin() > POS_RESTART && nBestHeight <= POW_RESTART)
+    {       
         if(nActualSpacing < 0)
         {
             if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
@@ -1149,21 +1166,12 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         }
     }
 
-    // ppcoin: target change every block
-    // ppcoin: retarget with exponential moving toward target spacing
-    CBigNum bnNew;
-    bnNew.SetCompact(pindexPrev->nBits);
-    int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
-    int64 nInterval = nTargetTimespan / nTargetSpacing;
-
-    // danbi: implement new pacing algorithm for PoW
-    if (nActualSpacing < 0 && nBestHeight > POW_RESTART+100 )
-        nActualSpacing=nTargetSpacing;
 
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if (bnNew <= 0 || bnNew > bnTargetLimit)
+    // danbi: make sure we don't emit negative numbers even if we miscalculated
+    if ((bnNew <= 0 && nBestHeight > POW_RESTART) || bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
@@ -1176,13 +1184,6 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 
     // danbi: substitute false for error as we call it with both algorithms for now
     // Check range
-    // Fix negative number
-    if (bnTarget <= 0 && nBestHeight > POW_RESTART)
-    {
-         printf("CheckProofOfWork(): bnTarget <= 0, fixing\n");
-         bnTarget = bnSign - bnTarget;
-    }
-
     if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
         return false;
 //        return error("CheckProofOfWork() : nBits below minimum work");
@@ -2301,13 +2302,6 @@ CBigNum CBlockIndex::GetBlockTrust() const
 {
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
-    // Fix negative number
-    if (bnTarget <= 0 && nBestHeight > POW_RESTART)
-    {
-        printf("GetBlockTrust(): bnTarget <= 0, fixing\n");
-        bnTarget = bnSign - bnTarget;
-    }
-
     if (bnTarget <= 0)
         return 0;
     return (IsProofOfStake()? (CBigNum(1)<<256) / (bnTarget+1) : 1);
