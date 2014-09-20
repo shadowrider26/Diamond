@@ -1139,20 +1139,22 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
     // fix block spacing
-    // danbi: implement new pacing algorithm for PoW & PoS
-    if (nActualSpacing < 0 && nBestHeight > POW_RESTART)
+    // danbi: post 2.0.4 implement new pacing algorithm for PoW & PoS
+    if (nBestHeight > POW_RESTART)
     {
-        if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetSpacing (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetSpacing);
-        nActualSpacing=nTargetSpacing;
+        if (nActualSpacing < 0)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetSpacing (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetSpacing);
+            nActualSpacing=nTargetSpacing;
+        }
+        else if (nActualSpacing > nTargetTimespan)
+        {
+            if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
+            nActualSpacing=nTargetTimespan;
+        }
     }
-    else if (nActualSpacing > nTargetTimespan && nBestHeight > POW_RESTART)
-    {
-        if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to nTargetTimespan (%"PRI64d").\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing, nTargetTimespan);
-        nActualSpacing=nTargetTimespan;
-    }
-
-    // danbi: old PoS pacing algorithm
-    if (fProofOfStake && GetTotalCoin() > POS_RESTART && nBestHeight <= POW_RESTART)
+    // danbi: old pre 2.0.4 PoS pacing algorithm
+    else if (fProofOfStake && GetTotalCoin() > POS_RESTART)
     {       
         if(nActualSpacing < 0)
         {
