@@ -430,6 +430,14 @@ bool AppInit2()
 
     fUseFastIndex = GetBoolArg("-fastindex", true);
 
+    if (mapArgs.count("-changeaddress"))
+    {
+        CBitcoinAddress address(GetArg("-changeaddress", ""));
+        if (!address.IsValid())
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Diamond address");
+        changeAddress = address.Get();
+    }
+
     // Continue to put "/P2SH/" in the coinbase to monitor
     // BIP16 support.
     // This can be removed eventually...

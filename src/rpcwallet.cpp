@@ -15,6 +15,9 @@ using namespace std;
 int64 nWalletUnlockTime;
 static CCriticalSection cs_nWalletUnlockTime;
 
+// were to deposit change
+CTxDestination changeAddress = CNoDestination();
+
 extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, json_spirit::Object& entry);
 
 std::string HelpRequiringPassphrase()
@@ -1782,4 +1785,45 @@ Value makekeypair(const Array& params, bool fHelp)
     result.push_back(Pair("PrivateKey", HexStr<CPrivKey::iterator>(vchPrivKey.begin(), vchPrivKey.end())));
     result.push_back(Pair("PublicKey", HexStr(key.GetPubKey().Raw())));
     return result;
+}
+
+// danbi: set address for change
+Value setchangeaddress(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "setchangeaddress <Diamondaddress>\n"
+            "Sets the change deposit address.");
+
+    if (params[0].get_str() == "")
+    {
+        changeAddress = CNoDestination();
+    }
+    else
+    {
+        CBitcoinAddress address(params[0].get_str());
+        if (!address.IsValid())
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Diamond address");
+        changeAddress = address.Get();
+    }
+
+    return Value::null;
+}
+
+
+Value getchangeaddress(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "getchangeaddress\n"
+            "Returns the change deposit address.");
+
+    Value ret;
+
+    if (!CBitcoinAddress(changeAddress).IsValid())
+       ret = "";
+    else
+       ret = CBitcoinAddress(changeAddress).ToString();
+
+    return ret;
 }

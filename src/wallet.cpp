@@ -1306,6 +1306,13 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                     // change transaction isn't always pay-to-bitcoin-address
                     CScript scriptChange;
 
+                    // danbi: send change to defined address, if set
+                    // eventually overriden by coin control
+                    if (CBitcoinAddress(changeAddress).IsValid())
+                        scriptChange.SetDestination(changeAddress);
+
+                    else
+                    {
                      // coin control: send change to custom address
                      if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange))
                          scriptChange.SetDestination(coinControl->destChange);
@@ -1325,7 +1332,8 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
  
                          scriptChange.SetDestination(vchPubKey.GetID());
                      }
-                    
+                    }
+
                     // Insert change txn at random position:
                     vector<CTxOut>::iterator position = wtxNew.vout.begin()+GetRandInt(wtxNew.vout.size());
                     wtxNew.vout.insert(position, CTxOut(nChange, scriptChange));
