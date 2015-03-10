@@ -129,8 +129,8 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
 # Otherwise, assume sse2 exists
 !equals($$QMAKE_HOST.arch, armv7l) {
     message(FOUND host = $$QMAKE_HOST.arch)
-    QMAKE_CXXFLAGS += -mthumb -DNOSSE
-    QMAKE_CFLAGS += -mthumb -DNOSSE
+    QMAKE_CXXFLAGS += -DNOSSE
+    QMAKE_CFLAGS += -DNOSSE
 }
 else {
     QMAKE_CXXFLAGS += -msse2

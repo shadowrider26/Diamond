@@ -34,9 +34,7 @@
 // need to make sure we don't try to use SSE instructions
 extern "C" {
 #ifndef NOSSE
-#ifndef NO_ASM
 #include <xmmintrin.h>
-#endif
 #endif
 }
 
