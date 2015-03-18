@@ -1155,7 +1155,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     }
     // danbi: old pre 2.0.4 PoS pacing algorithm
     else if (fProofOfStake && GetTotalCoin() > POS_RESTART)
-    {       
+    {
         if(nActualSpacing < 0)
         {
             if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
@@ -2140,8 +2140,8 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         return DoS(100, error("CheckBlock() : size limits failed"));
 
     // Check proof of work matches claimed amount
-//    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(), nBits))
+    // XXX: danbi - need to check both algos or we make it hard for initial sync
+    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
         return DoS(50, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp

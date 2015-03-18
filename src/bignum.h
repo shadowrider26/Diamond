@@ -250,7 +250,6 @@ public:
         return n;
     }
 
-
     void setvch(const std::vector<unsigned char>& vch)
     {
         std::vector<unsigned char> vch2(vch.size() + 4);
