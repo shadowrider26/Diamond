@@ -1155,7 +1155,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     }
     // danbi: old pre 2.0.4 PoS pacing algorithm
     else if (fProofOfStake && GetTotalCoin() > POS_RESTART)
-    {       
+    {
         if(nActualSpacing < 0)
         {
             if (fDebug && GetBoolArg("-printjunk")) printf(">> %s nActualSpacing = %"PRI64d" corrected to 1.\n", fProofOfStake ? "PoS" : "PoW", nActualSpacing);
