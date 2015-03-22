@@ -123,16 +123,22 @@ contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     DEFINES += HAVE_BUILD_INFO
 }
 
-# If we have an arm device, we can't use sse2, so define as thumb
+# If we have an ARM device, we can't use SSE2 instructions, so don't try to use them
 # Because of scrypt_mine.cpp, we also have to add a compile
 #     flag that states we *really* don't have SSE
-# Otherwise, assume sse2 exists
-!equals($$QMAKE_HOST.arch, armv7l) {
-    message(FOUND host = $$QMAKE_HOST.arch)
-    QMAKE_CXXFLAGS += -DNOSSE
+QMAKE_XCPUARCH = $$QMAKE_HOST.arch
+equals(QMAKE_XCPUARCH, armv7l) {
+    message(Building without SSE2 support)
+	QMAKE_CXXFLAGS += -DNOSSE
+    QMAKE_CFLAGS += -DNOSSE
+}
+else:equals(QMAKE_XCPUARCH, armv6l) {
+    message(Building without SSE2 support)
+	QMAKE_CXXFLAGS += -DNOSSE
     QMAKE_CFLAGS += -DNOSSE
 }
 else {
+    message(Building with SSE2 support)
     QMAKE_CXXFLAGS += -msse2
     QMAKE_CFLAGS += -msse2
 }

@@ -4,25 +4,36 @@ Diamond-qt: Qt5 GUI for Diamond
 Build instructions
 ===================
 
-Debian
+Debian (i386, amd64)
 -------
 
-First, make sure that the required packages for Qt4 development of your
-distribution are installed.
-
-On recent Ubuntu releases, the `libdb4.8++-dev` package is not in the default
-repositories. However it's in the bitcoin repository, which we can add
-with:
-
-    apt-add-repository ppa:bitcoin/bitcoin
-
-Then we need to make sure our build environment is up to date. For Debian and Ubuntu:
+First, make sure that the required packages for Qt5 development of your
+distribution are installed, for Debian and Ubuntu (i386, amd64) these are:
 
 ::
 
-    apt-get install qt4-qmake libqt4-dev build-essential libboost-dev libboost-system-dev \
+    apt-get install qt5-qmake libqt5-dev build-essential libboost-dev libboost-system-dev \
         libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev \
         libssl-dev libdb4.8++-dev libminiupnpc-dev libminiupnpc8
+
+then execute the following:
+
+::
+
+    qmake
+    make
+
+Debian (armv6l, armv7l)
+-------
+
+First, make sure that the required packages for Qt5 development of your
+distribution are installed, for Debian and Ubuntu (i386, amd64) these are:
+
+::
+
+    apt-get install qt5-qmake libqt5-dev build-essential libboost-dev libboost-system-dev \
+        libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev \
+        libssl-dev libdb5.1++-dev libminiupnpc-dev libminiupnpc8
 
 then execute the following:
 
