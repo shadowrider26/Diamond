@@ -87,7 +87,7 @@ int64 blocbBeforeSecondDecrease = 0;
 bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
-
+int eaglespacing = 0;
 
 
 int isRewardDecreased() {
@@ -2171,9 +2171,17 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
+    if (isRewardDecreased()) {
+        nStakeTargetSpacing = 2 * 60; // pos block spacing set to 2 minutes after first reward reduction
+        nWorkTargetSpacing = 2 * 60;  // pow block spacing set to 2 minutes after first reward reduction
+        nCoinbaseMaturity = 180;      // coinbase maturity does not change
+        if (fDebug && !eaglespacing) {
+            printf("EAGLE (checkblock): spacing for both PoW/PoS to 120/120");
+            eaglespacing = 1;
+        }
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
-    if(totalCoin > VALUE_CHANGE && !fTestNet)
+    } else if(totalCoin > VALUE_CHANGE && !fTestNet)
     {
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
