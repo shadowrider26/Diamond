@@ -84,12 +84,13 @@ int64 nTransactionFee = MIN_TX_FEE;
 // Eagle test settings
 int64 blockBeforeFirstDecrease = 0;
 int64 blocbBeforeSecondDecrease = 0;
-
+bool eagleoldclients = false;
 
 
 
 
 unsigned int isRewardDecreased() {
+// should we calculate totalCoin here to be absolutely sure it is up to date?
     if (totalCoin > SECOND_REWARD_DECREASE_AT_COIN) {
         if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
             printf("EAGLE: isRewardDecreased RETURNING 2\n");
@@ -3033,6 +3034,19 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     // make sure we have current totalCoin
     totalCoin = GetTotalCoin();
 
+    if ((fDebug) && (!eagleoldclients))
+        if (isRewardDecreased()) {
+            printf("EAGLE INFO: SWITCH! Beginning to disconnect old clients\n");
+            eagleoldclients = true;
+        }
+
+    if (isRewardDecreased() && (pfrom->nVersion) &&
+        (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
+        printf("(EAGLE1) ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+        pfrom->fDisconnect = true;
+        return false;
+    }
+
     if (strCommand == "version")
     {
         // Each connection can only send one version message
@@ -3052,6 +3066,12 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
+        if (isRewardDecreased() && (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
+            printf("(EAGLE2) ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
         }

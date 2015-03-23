@@ -26,6 +26,7 @@ extern const std::string CLIENT_DATE;
 //
 
 static const int PROTOCOL_VERSION = 60009;
+static const int MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE = 60009;
 
 // earlier versions not supported as of Feb 2012, and are disconnected
 static const int MIN_PROTO_VERSION = 209;
