@@ -91,7 +91,7 @@ bool eagleoldclients = false;
 
 unsigned int isRewardDecreased() {
 // should we calculate totalCoin here to be absolutely sure it is up to date?
-    if (totalCoin > SECOND_REWARD_DECREASE_AT_COIN) {
+    if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
         if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
             printf("EAGLE: isRewardDecreased RETURNING 2\n");
             return 2;
@@ -100,7 +100,7 @@ unsigned int isRewardDecreased() {
             printf("EAGLE: isRewardDecreased setting blocbBeforeSecondDecrease=%d RETURNING 0\n", nBestHeight);
             return 0;
         }
-    } else if (totalCoin > FIRST_REWARD_DECREASE_AT_COIN) {
+    } else if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
         if ((blockBeforeFirstDecrease > 0) && (blockBeforeFirstDecrease != nBestHeight)) {
             printf("EAGLE: isRewardDecreased RETURNING 1\n");
             return 1;
@@ -1007,12 +1007,12 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
     else
     {
 	// Diamond v2 coin mechanics
-	// 0.10 reward after 1,000,000 created
-	// 0.02 reward after 2,500,000 created
-        if(totalCoin > 2500000)
-            nSubsidy = 2 * CENT;
-        else if(totalCoin > 1000000)
-            nSubsidy = 10 * CENT;
+	// 0.20 reward after 1,000,000 created
+	// 0.04 reward after 2,500,000 created
+        if(isRewardDecreased() == 2)
+            nSubsidy = 4 * CENT;
+        else if(isRewardDecreased() == 1)
+            nSubsidy = 20 * CENT;
     }
     return nSubsidy + nFees;
 }
