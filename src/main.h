@@ -41,6 +41,8 @@ static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const int64 VALUE_CHANGE = 369494; // When to switch to Groestl
 static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
+static const int64 FIRST_REWARD_DECREASE_AT_COIN  = 1000000; // when total supply == 1 000 000
+static const int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000; // when total supply == 2 500 000
 #define FOUNDATION_ADDRESS "dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz"
 #define FOUNDATION_ADDRESS_TEST "mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"
 
