@@ -85,11 +85,12 @@ int64 nTransactionFee = MIN_TX_FEE;
 int64 blockBeforeFirstDecrease = 0;
 int64 blocbBeforeSecondDecrease = 0;
 bool eagleoldclients = false;
+int64 eaglesubsidy = 0;
+int eagledecreased = 0;
 
 
 
-
-unsigned int isRewardDecreased() {
+int isRewardDecreased() {
 // should we calculate totalCoin here to be absolutely sure it is up to date?
     if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
         if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
@@ -1009,10 +1010,22 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 	// Diamond v2 coin mechanics
 	// 0.20 reward after 1,000,000 created
 	// 0.04 reward after 2,500,000 created
-        if(isRewardDecreased() == 2)
+        eagledecreased = isRewardDecreased();
+        if(eagledecreased > 1) {
             nSubsidy = 4 * CENT;
-        else if(isRewardDecreased() == 1)
+            printf("EAGLE: subsidy SET TO 4 isRewardDecreased=%d\n", eagledecreased);
+            if (fDebug && (eaglesubsidy == 1)) {
+                printf("EAGLE INFO: SECOND REWARD DROP! CHANGING subsidy to 4 CENT\n");
+                eaglesubsidy = 2;
+            }
+        } else if(eagledecreased > 0) {
             nSubsidy = 20 * CENT;
+            printf("EAGLE: subsidy SET TO 20 isRewardDecreased=%d\n", eagledecreased);
+            if (fDebug && !eaglesubsidy) {
+                printf("EAGLE INFO: FIRST REWARD DROP! CHANGING subsidy to 20 CENT\n");
+                eaglesubsidy = 1;
+            }
+        }
     }
     return nSubsidy + nFees;
 }
