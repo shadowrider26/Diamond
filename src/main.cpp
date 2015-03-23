@@ -2176,7 +2176,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nWorkTargetSpacing = 2 * 60;  // pow block spacing set to 2 minutes after first reward reduction
         nCoinbaseMaturity = 180;      // coinbase maturity does not change
         if (fDebug && !eaglespacing) {
-            printf("EAGLE (checkblock): spacing for both PoW/PoS to 120/120");
+            printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120");
             eaglespacing = 1;
         }
     // Update the coin mechanics variables post algorithm change
