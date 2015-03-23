@@ -81,6 +81,39 @@ int64 nHPSTimerStart;
 // Settings
 int64 nTransactionFee = MIN_TX_FEE;
 
+// Eagle test settings
+int64 blockBeforeFirstDecrease = 0;
+int64 blocbBeforeSecondDecrease = 0;
+
+
+
+
+
+unsigned int isRewardDecreased() {
+    if (totalCoin > SECOND_REWARD_DECREASE_AT_COIN) {
+        if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
+            printf("EAGLE: isRewardDecreased RETURNING 2\n");
+            return 2;
+        } else if (blocbBeforeSecondDecrease == 0) {
+            blocbBeforeSecondDecrease = nBestHeight;
+            printf("EAGLE: isRewardDecreased setting blocbBeforeSecondDecrease=%d RETURNING 0\n", nBestHeight);
+            return 0;
+        }
+    } else if (totalCoin > FIRST_REWARD_DECREASE_AT_COIN) {
+        if ((blockBeforeFirstDecrease > 0) && (blockBeforeFirstDecrease != nBestHeight)) {
+            printf("EAGLE: isRewardDecreased RETURNING 1\n");
+            return 1;
+        } else if (blockBeforeFirstDecrease == 0) {
+            blockBeforeFirstDecrease = nBestHeight;
+            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
+            return 0;
+        }
+    }
+
+    return 0;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 //
