@@ -2176,9 +2176,10 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
     if (isRewardDecreased()) {
-        nStakeTargetSpacing = 2 * 60; // pos block spacing set to 2 minutes after first reward reduction
-        nWorkTargetSpacing = 2 * 60;  // pow block spacing set to 2 minutes after first reward reduction
-        nCoinbaseMaturity = 180;      // coinbase maturity does not change
+        nStakeTargetSpacing = 2 * 60;   // pos block spacing set to 2 minutes after first reward reduction
+        nWorkTargetSpacing = 2 * 60;    // pow block spacing set to 2 minutes after first reward reduction
+        nCoinbaseMaturity = 180;        // coinbase maturity does not change
+        nStakeMinAge = 60 * 60 * 24 * 3 // min age is lowered from 7 to 3 after first reward reduction
         if (fDebug && !eaglespacing) {
             printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120");
             eaglespacing = 1;
