@@ -103,11 +103,11 @@ int isRewardDecreased() {
         }
     } else if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
         if ((blockBeforeFirstDecrease > 0) && (blockBeforeFirstDecrease != nBestHeight)) {
-            printf("EAGLE: isRewardDecreased RETURNING 1\n");
+//            printf("EAGLE: isRewardDecreased RETURNING 1\n");
             return 1;
         } else if (blockBeforeFirstDecrease == 0) {
             blockBeforeFirstDecrease = nBestHeight;
-            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
+//            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
             return 0;
         }
     }
@@ -1748,8 +1748,10 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     // danbi: update totalCoin as we are one behind here
     // XXX: this might backfire in case of error...
     totalCoin = pindex->nMoneySupply / COIN;
-    if(totalCoin <= VALUE_CHANGE)
+    if ((totalCoin <= VALUE_CHANGE) || (isRewardDecreased()))
     {
+        if (fDebug && isRewardDecreased())
+            printf("EAGLE5: isRewardDecreased==TRUE: testing old ValueOut\n");
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
             return error("ConnectBlock() : claiming to have created too much (old)");
     }
@@ -1757,8 +1759,10 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return error("ConnectBlock() : claiming to have created too much (new)");
 
-    if(totalCoin > VALUE_CHANGE && IsProofOfWork())
+    if ((totalCoin > VALUE_CHANGE && IsProofOfWork()) && (!isRewardDecreased()))
     {
+        if (fDebug)
+            printf("EAGLE6: payment to FOUNDATION ADDRESS\n");
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
@@ -4130,8 +4134,10 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if(totalCoin > VALUE_CHANGE)
+    if ((totalCoin > VALUE_CHANGE) && (!isRewardDecreased()))
     {
+        if (fDebug)
+            printf("EAGLE7: CreateNewBlock() - payment to foundation\n");
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         txNew.vout.resize(2);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
@@ -4139,6 +4145,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     }
     else
     {
+        if (fDebug)
+            printf("EAGLE8: CreateNewBlock - no payment to foundation\n");
         txNew.vout.resize(1);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
     }
@@ -4395,8 +4403,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if(totalCoin > VALUE_CHANGE)
+            if ((totalCoin > VALUE_CHANGE) && (!isRewardDecreased())) {
+                if (fDebug)
+                    printf("EAGLE9: Create new block - payment to foundation\n");
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
+            }
         }
 
         // Fill in header
@@ -4751,13 +4762,17 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 // Diamond coin mechanics
 // Foundation contribution
 // 0.05 until 1000000 coins generated
-// 0.01 afterwards
+// 0 afterwards
 // Changing this requires a fork
 int64 GetContributionAmount(int64 totalCoin) {
-    if(totalCoin < 1000000)
+    if(!isRewardDecreased())
         return 0.05 * COIN;
     else
-        return 0.01 * COIN;
+    {
+        if (fDebug)
+            printf("EAGLE10: GetContributionAmount - RETURNING 0 since we have passed trigger\n");
+        return 0;
+    }
 }
 
 uint256 CBlock::GetHash(bool existingBlock) const
