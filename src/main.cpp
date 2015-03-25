@@ -88,6 +88,8 @@ bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
 int eaglespacing = 0;
+int64 FIRST_REWARD_DECREASE_AT_COIN = 963008;
+int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
 
 
 int isRewardDecreased() {
@@ -1158,10 +1160,12 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
 
-    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease)
+    if (fDebug) 
+        printf("EAGLE13: GetNextTargetRequired nHeight==%d\n", pindexLast->nHeight);
+    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease + 1)
     {
         if (fDebug)
-            printf("EAGLE11: SWITCH! Lowering diff");
+            printf("*** EAGLE11: SWITCH! Lowering diff nHeight==%d\n", pindexLast->nHeight);
         return bnProofOfWorkLimit.GetCompact();
     }
 
