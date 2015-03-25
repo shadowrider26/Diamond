@@ -1015,14 +1015,12 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
         eagledecreased = isRewardDecreased();
         if(eagledecreased > 1) {
             nSubsidy = 4 * CENT;
-            printf("EAGLE: subsidy SET TO 4 isRewardDecreased=%d\n", eagledecreased);
             if (fDebug && (eaglesubsidy == 1)) {
                 printf("EAGLE INFO: SECOND REWARD DROP! CHANGING subsidy to 4 CENT\n");
                 eaglesubsidy = 2;
             }
         } else if(eagledecreased > 0) {
             nSubsidy = 20 * CENT;
-            printf("EAGLE: subsidy SET TO 20 isRewardDecreased=%d\n", eagledecreased);
             if (fDebug && !eaglesubsidy) {
                 printf("EAGLE INFO: FIRST REWARD DROP! CHANGING subsidy to 20 CENT\n");
                 eaglesubsidy = 1;
@@ -2451,10 +2449,11 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
             }
             // danbi: Only refuse this block if time distance between the last sync checkpoint 
             // and the block's time is less than the checkpoints max span
-            if (deltaTime < CHECKPOINT_MAX_SPAN)
-                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
-            else
-                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+// EAGLE - commenting out for duration of tests
+//            if (deltaTime < CHECKPOINT_MAX_SPAN)
+//                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+//            else
+//                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
         }
     }
 
