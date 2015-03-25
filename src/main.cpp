@@ -107,7 +107,7 @@ int isRewardDecreased() {
             return 1;
         } else if (blockBeforeFirstDecrease == 0) {
             blockBeforeFirstDecrease = nBestHeight;
-//            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
+            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
             return 0;
         }
     }
@@ -1157,6 +1157,13 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 {
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
+
+    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease)
+    {
+        if (fDebug)
+            printf("EAGLE11: SWITCH! Lowering diff");
+        return bnProofOfWorkLimit.GetCompact();
+    }
 
     // cruft from alorithm switch time
     if(pindexLast->nHeight >= 386221 && pindexLast->nHeight <= 386226)
