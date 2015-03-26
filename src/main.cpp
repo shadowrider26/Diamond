@@ -1158,13 +1158,24 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
 
-    if (fDebug) 
-        printf("EAGLE13: GetNextTargetRequired nHeight==%d\n", pindexLast->nHeight);
-    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease + 1)
-    {
-        if (fDebug)
-            printf("*** EAGLE11: SWITCH! Lowering diff nHeight==%d\n", pindexLast->nHeight);
-        return bnProofOfWorkLimit.GetCompact();
+//    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease + 1)
+//    {
+//        if (fDebug)
+//            printf("*** EAGLE11: SWITCH! Lowering diff nHeight==%d\n", pindexLast->nHeight);
+//        return bnProofOfWorkLimit.GetCompact();
+//    }
+    // Diff will be lowered for 100 blocks after first trigger.
+    if (blockBeforeFirstDecrease && pindexLast->nHeight <= blockBeforeFirstDecrease + 100) {
+        if (fProofOfStake) {
+            if (fDebug)
+                printf("EAGLE21: Lowering diff for PoS");
+            return bnProofOfStakeLimit.GetCompact();
+        } else {
+            if (fDebug)
+                printf("EAGLE22: Lowering diff for PoW");
+            return bnProofOfWorkLimit.GetCompact();
+        }
+
     }
 
     // cruft from alorithm switch time
@@ -1770,8 +1781,8 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
     if ((totalCoin > VALUE_CHANGE && IsProofOfWork()) && (!isRewardDecreased()))
     {
-        if (fDebug)
-            printf("EAGLE6: payment to FOUNDATION ADDRESS\n");
+//        if (fDebug)
+//            printf("EAGLE6: payment to FOUNDATION ADDRESS\n");
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
@@ -4157,8 +4168,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     }
     else
     {
-        if (fDebug)
-            printf("EAGLE8: CreateNewBlock - no payment to foundation\n");
+//        if (fDebug)
+//            printf("EAGLE8: CreateNewBlock - no payment to foundation\n");
         txNew.vout.resize(1);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
     }
