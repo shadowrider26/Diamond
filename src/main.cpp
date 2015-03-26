@@ -2233,7 +2233,8 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
     if(totalCoin > VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
-            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
+//            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
+            printf("EAGLE20 ERROR:: coinbase check is being hit!");
     }
     else
     {
