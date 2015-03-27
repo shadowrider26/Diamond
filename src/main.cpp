@@ -88,10 +88,11 @@ bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
 int eaglespacing = 0;
-int64 FIRST_REWARD_DECREASE_AT_COIN = 967060;
+int64 FIRST_REWARD_DECREASE_AT_COIN = 967310;
 int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
 
 
+// Returns 0 if before first trigger, then 1 before 2nd trigger and 2 afterwards
 int isRewardDecreased() {
 // should we calculate totalCoin here to be absolutely sure it is up to date?
     if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
