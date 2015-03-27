@@ -707,9 +707,9 @@ bool CTxDB::LoadBlockIndex()
         totalCoin = pindex->nMoneySupply / COIN;
         if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
             if (!blockBeforeFirstDecrease) {
-                blockBeforeFirstDecrease = pindex->nHeight;
+                blockBeforeFirstDecrease = pindex->nHeight - 1;
             } else if (blockBeforeFirstDecrease > pindex->nHeight) {
-                blockBeforeFirstDecrease = pindex->nHeight;
+                blockBeforeFirstDecrease = pindex->nHeight - 1;
                 if (fDebug)
                     printf("EAGLE12: Setting blockBeforeFirstDecrease=%d during initial block verification\n", blockBeforeFirstDecrease);
             }

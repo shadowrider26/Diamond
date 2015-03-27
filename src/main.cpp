@@ -1160,6 +1160,8 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
             return bnProofOfWorkLimit.GetCompact();
 
     // Diff will be lowered for 100 blocks after first trigger.
+// EAGLE - this has to be removed for prod release as this breaks things during reading from disk
+// in db.cpp
     if (blockBeforeFirstDecrease && pindexLast->nHeight <= blockBeforeFirstDecrease + 100) {
         if (fProofOfStake) {
 //            if (fDebug)
