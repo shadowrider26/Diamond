@@ -88,7 +88,7 @@ bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
 int eaglespacing = 0;
-int64 FIRST_REWARD_DECREASE_AT_COIN = 965400;
+int64 FIRST_REWARD_DECREASE_AT_COIN = 967060;
 int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
 
 
