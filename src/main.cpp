@@ -1158,21 +1158,15 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
 
-//    if (blockBeforeFirstDecrease && pindexLast->nHeight == blockBeforeFirstDecrease + 1)
-//    {
-//        if (fDebug)
-//            printf("*** EAGLE11: SWITCH! Lowering diff nHeight==%d\n", pindexLast->nHeight);
-//        return bnProofOfWorkLimit.GetCompact();
-//    }
     // Diff will be lowered for 100 blocks after first trigger.
     if (blockBeforeFirstDecrease && pindexLast->nHeight <= blockBeforeFirstDecrease + 100) {
         if (fProofOfStake) {
-            if (fDebug)
-                printf("EAGLE21: Lowering diff for PoS");
+//            if (fDebug)
+//                printf("EAGLE21: Lowering diff for PoS");
             return bnProofOfStakeLimit.GetCompact();
         } else {
-            if (fDebug)
-                printf("EAGLE22: Lowering diff for PoW");
+//            if (fDebug)
+//                printf("EAGLE22: Lowering diff for PoW");
             return bnProofOfWorkLimit.GetCompact();
         }
 
@@ -1768,10 +1762,8 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     // danbi: update totalCoin as we are one behind here
     // XXX: this might backfire in case of error...
     totalCoin = pindex->nMoneySupply / COIN;
-    if ((totalCoin <= VALUE_CHANGE) || (isRewardDecreased()))
+    if (totalCoin <= VALUE_CHANGE)
     {
-        if (fDebug && isRewardDecreased())
-            printf("EAGLE5: isRewardDecreased==TRUE: testing old ValueOut\n");
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
             return error("ConnectBlock() : claiming to have created too much (old)");
     }
@@ -1779,10 +1771,8 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return error("ConnectBlock() : claiming to have created too much (new)");
 
-    if ((totalCoin > VALUE_CHANGE && IsProofOfWork()) && (!isRewardDecreased()))
+    if (totalCoin > VALUE_CHANGE && IsProofOfWork())
     {
-//        if (fDebug)
-//            printf("EAGLE6: payment to FOUNDATION ADDRESS\n");
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
@@ -2462,7 +2452,8 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
             // danbi: Only refuse this block if time distance between the last sync checkpoint 
             // and the block's time is less than the checkpoints max span
 // EAGLE - commenting out for duration of tests
-//            if (deltaTime < CHECKPOINT_MAX_SPAN)
+            if (deltaTime < CHECKPOINT_MAX_SPAN)
+                printf("EAGLE30: CHECKPOINT_MAX_SPAN confition hit");
 //                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
 //            else
 //                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
@@ -4157,10 +4148,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if ((totalCoin > VALUE_CHANGE) && (!isRewardDecreased()))
+    if (totalCoin > VALUE_CHANGE)
     {
-        if (fDebug)
-            printf("EAGLE7: CreateNewBlock() - payment to foundation\n");
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         txNew.vout.resize(2);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
@@ -4168,8 +4157,6 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     }
     else
     {
-//        if (fDebug)
-//            printf("EAGLE8: CreateNewBlock - no payment to foundation\n");
         txNew.vout.resize(1);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
     }
@@ -4426,11 +4413,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if ((totalCoin > VALUE_CHANGE) && (!isRewardDecreased())) {
-                if (fDebug)
-                    printf("EAGLE9: Create new block - payment to foundation\n");
+            if (totalCoin > VALUE_CHANGE)
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
-            }
         }
 
         // Fill in header
@@ -4785,17 +4769,13 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 // Diamond coin mechanics
 // Foundation contribution
 // 0.05 until 1000000 coins generated
-// 0 afterwards
+// 0.01 afterwards
 // Changing this requires a fork
 int64 GetContributionAmount(int64 totalCoin) {
     if(!isRewardDecreased())
         return 0.05 * COIN;
     else
-    {
-        if (fDebug)
-            printf("EAGLE10: GetContributionAmount - RETURNING 0 since we have passed trigger\n");
-        return 0;
-    }
+        return 0.01 * COIN;
 }
 
 uint256 CBlock::GetHash(bool existingBlock) const
