@@ -705,10 +705,19 @@ bool CTxDB::LoadBlockIndex()
     {
         // calculate totalCoin for other routines that get called
         totalCoin = pindex->nMoneySupply / COIN;
-        if (!isRewardDecreased())
-            if (blockBeforeFirstDecrease)
+        if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
+            if (!blockBeforeFirstDecrease) {
+                blockBeforeFirstDecrease = pindex->nHeight;
+            } else if (blockBeforeFirstDecrease > pindex->nHeight) {
+                blockBeforeFirstDecrease = pindex->nHeight;
                 if (fDebug)
-                    printf("EAGLE12: Setting blockBeforeFirstDecrease during initial block verification\n");
+                    printf("EAGLE12: Setting blockBeforeFirstDecrease=%d during initial block verification\n", blockBeforeFirstDecrease);
+            }
+        }
+//        if (!isRewardDecreased())
+//            if (blockBeforeFirstDecrease)
+//                if (fDebug)
+//                    printf("EAGLE12: Setting blockBeforeFirstDecrease during initial block verification=%d\n", blockBeforeFirstDecrease);
 
         if (fRequestShutdown || pindex->nHeight < nBestHeight-nCheckDepth)
             break;

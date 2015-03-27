@@ -51,7 +51,7 @@ static const int64 POW_RESTART = 577850; // When (block) to unstuck PoW
 
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
-int nCoinbaseMaturity = 30;
+int nCoinbaseMaturity = 31;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 CBigNum bnBestChainTrust = 0;
@@ -1779,8 +1779,10 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         scriptPubKey.SetDestination(address.Get());
         if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
             return error("ConnectBlock() : coinbase does not pay to the foundation address)");
-        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin))
+        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin)) {
+            printf("EAGLE31: contribution=%d", GetContributionAmount(totalCoin));
             return error("ConnectBlock() : coinbase does not pay enough to foundation addresss");
+        }
     }
 
     // Update block index on disk without changing it in memory.
