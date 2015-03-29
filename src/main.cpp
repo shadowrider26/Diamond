@@ -97,20 +97,16 @@ int isRewardDecreased() {
 // should we calculate totalCoin here to be absolutely sure it is up to date?
     if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
         if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
-            printf("EAGLE: isRewardDecreased RETURNING 2\n");
             return 2;
         } else if (blocbBeforeSecondDecrease == 0) {
             blocbBeforeSecondDecrease = nBestHeight;
-            printf("EAGLE: isRewardDecreased setting blocbBeforeSecondDecrease=%d RETURNING 0\n", nBestHeight);
             return 0;
         }
     } else if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
         if ((blockBeforeFirstDecrease > 0) && (blockBeforeFirstDecrease != nBestHeight)) {
-//            printf("EAGLE: isRewardDecreased RETURNING 1\n");
             return 1;
         } else if (blockBeforeFirstDecrease == 0) {
             blockBeforeFirstDecrease = nBestHeight;
-            printf("EAGLE: isRewardDecreased setting blockBeforeFirstDecrease=%d RETURNING 0\n", nBestHeight);
             return 0;
         }
     }
@@ -1159,22 +1155,6 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
             return bnProofOfWorkLimit.GetCompact();
 
-    // Diff will be lowered for 100 blocks after first trigger.
-// EAGLE - this has to be removed for prod release as this breaks things during reading from disk
-// in db.cpp
-    if (blockBeforeFirstDecrease && pindexLast->nHeight <= blockBeforeFirstDecrease + 100) {
-        if (fProofOfStake) {
-//            if (fDebug)
-//                printf("EAGLE21: Lowering diff for PoS");
-            return bnProofOfStakeLimit.GetCompact();
-        } else {
-//            if (fDebug)
-//                printf("EAGLE22: Lowering diff for PoW");
-            return bnProofOfWorkLimit.GetCompact();
-        }
-
-    }
-
     // cruft from alorithm switch time
     if(pindexLast->nHeight >= 386221 && pindexLast->nHeight <= 386226)
         return bnProofOfWorkLimit.GetCompact();
@@ -1782,7 +1762,6 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
             return error("ConnectBlock() : coinbase does not pay to the foundation address)");
         if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin)) {
-            printf("EAGLE31: contribution=%d", GetContributionAmount(totalCoin));
             return error("ConnectBlock() : coinbase does not pay enough to foundation addresss");
         }
     }
@@ -2191,10 +2170,10 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
     if (isRewardDecreased()) {
-        nStakeTargetSpacing = 2 * 60;   // pos block spacing set to 2 minutes after first reward reduction
-        nWorkTargetSpacing = 2 * 60;    // pow block spacing set to 2 minutes after first reward reduction
+        nStakeTargetSpacing = 100;   // pos block spacing set to 100 seconds after first reward reduction
+        nWorkTargetSpacing = 100;    // pow block spacing set to 100 seconds after first reward reduction
         nCoinbaseMaturity = 180;        // coinbase maturity does not change
-//        nStakeMinAge = 60 * 60 * 24 * 3; // min age is lowered from 7 to 3 after first reward reduction
+        nStakeMinAge = 60 * 60 * 24 * 3; // min age is lowered from 7 to 3 after first reward reduction
         if (fDebug && !eaglespacing) {
             printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days");
             eaglespacing = 1;
@@ -2239,8 +2218,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
     if(totalCoin > VALUE_CHANGE)
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
-//            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
-            printf("EAGLE20 ERROR:: coinbase check is being hit!");
+            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
     }
     else
     {
@@ -2456,12 +2434,10 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
             }
             // danbi: Only refuse this block if time distance between the last sync checkpoint 
             // and the block's time is less than the checkpoints max span
-// EAGLE - commenting out for duration of tests
             if (deltaTime < CHECKPOINT_MAX_SPAN)
-                printf("EAGLE30: CHECKPOINT_MAX_SPAN confition hit");
-//                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
-//            else
-//                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+                return error("ProcessBlock() : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
+            else
+                return printf("ProcessBlock(CHECKPOINT_MAX_SPAN) : block with too little %s", pblock->IsProofOfStake()? "proof-of-stake" : "proof-of-work");
         }
     }
 
@@ -3078,15 +3054,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     // make sure we have current totalCoin
     totalCoin = GetTotalCoin();
 
-    if ((fDebug) && (!eagleoldclients))
-        if (isRewardDecreased()) {
-            printf("EAGLE INFO: SWITCH! Beginning to disconnect old clients\n");
-            eagleoldclients = true;
-        }
-
     if (isRewardDecreased() && (pfrom->nVersion) &&
         (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
-        printf("(EAGLE1) ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+        printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
         pfrom->fDisconnect = true;
         return false;
     }
@@ -3115,7 +3085,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
 
         if (isRewardDecreased() && (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
-            printf("(EAGLE2) ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
         }
