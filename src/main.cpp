@@ -88,7 +88,7 @@ bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
 int eaglespacing = 0;
-int64 FIRST_REWARD_DECREASE_AT_COIN = 974125;
+int64 FIRST_REWARD_DECREASE_AT_COIN = 976150;
 int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
 
 
@@ -2173,7 +2173,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nStakeTargetSpacing = 100;   // pos block spacing set to 100 seconds after first reward reduction
         nWorkTargetSpacing = 100;    // pow block spacing set to 100 seconds after first reward reduction
         nCoinbaseMaturity = 180;        // coinbase maturity does not change
-        nStakeMinAge = 60 * 60 * 24 * 3; // min age is lowered from 7 to 3 after first reward reduction
+        nStakeMinAge = 60 * 60 * 2; // min age is lowered from 7 to 3 after first reward reduction
         if (fDebug && !eaglespacing) {
             printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days");
             eaglespacing = 1;
