@@ -1153,7 +1153,10 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
+    {
+        if (fDebug && GetBoolArg("-printjunk")) printf(">> EAGLE1 PoW returning bnProofOfWorkLimit nHeight = %d\n", pindexLast->nHeight);
             return bnProofOfWorkLimit.GetCompact();
+    }
 
     // cruft from alorithm switch time
     if(pindexLast->nHeight >= 386221 && pindexLast->nHeight <= 386226)
@@ -1163,6 +1166,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         return bnProofOfWorkLimit_1.GetCompact();
 
     CBigNum bnTargetLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
+//    if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE2: bnTargetLimit = %llu", bnTargetLimit);
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1174,6 +1178,11 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
 
+    if (fDebug && GetBoolArg("-printjunk"))
+    {
+        printf("EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
+    }
+
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
@@ -1181,6 +1190,11 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
     int64 nInterval = nTargetTimespan / nTargetSpacing;
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+        if (fDebug && GetBoolArg("-printjunk"))
+    {
+        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d"", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing); 
+    }
+
 
     // fix block spacing
     // danbi: post 2.0.4 implement new pacing algorithm for PoW & PoS
@@ -1218,7 +1232,14 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     // danbi: make sure we don't emit negative numbers even if we miscalculated
     if ((bnNew <= 0 && nBestHeight > POW_RESTART) || bnNew > bnTargetLimit)
+    {
+        if (fDebug && GetBoolArg("-printjunk"))
+        {
+            if (bnNew <= 0) printf("EAGLE98: Correction by danby bnNew <= 0\n");
+            else printf("EAGLE99 Correction by danbi bnNew>bnTargetLimit\n");
+        }
         bnNew = bnTargetLimit;
+    }
 
     return bnNew.GetCompact();
 }
