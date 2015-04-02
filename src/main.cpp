@@ -2261,7 +2261,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nCoinbaseMaturity = 180;        // coinbase maturity does not change
         nStakeMinAge = 60 * 60 * 2; // min age is lowered from 7 to 3 after first reward reduction
         if (fDebug && !eaglespacing) {
-            printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days");
+            printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days totalCoin=%"PRI64d"\n", totalCoin);
             eaglespacing = 1;
         }
     // Update the coin mechanics variables post algorithm change
@@ -2270,7 +2270,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 
     if ((!isRewardDecreased()) && (totalCoin > VALUE_CHANGE && !fTestNet))
     {
-        if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE11: old code - nStakeTargetSpacing = 600");
+        if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE11: old code - nStakeTargetSpacing = 600, totalcoin=%"PRI64d"\n", totalCoin);
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
     }
