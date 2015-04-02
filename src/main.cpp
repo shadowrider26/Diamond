@@ -2268,7 +2268,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
     // Changing any of these requires a fork
     }
 
-    if ((!isRewardDecreased) && (totalCoin > VALUE_CHANGE && !fTestNet))
+    if ((!isRewardDecreased()) && (totalCoin > VALUE_CHANGE && !fTestNet))
     {
         if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE11: old code - nStakeTargetSpacing = 600");
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
