@@ -1192,7 +1192,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
         if (fDebug && GetBoolArg("-printjunk"))
     {
-        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d"\n", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing); 
+        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d", nStakeMinAge=%d\n", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing, nStakeMinAge); 
     }
 
 
@@ -2201,8 +2201,11 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         }
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
-    } else if(totalCoin > VALUE_CHANGE && !fTestNet)
+    }
+
+    if ((!isRewardDecreased) && (totalCoin > VALUE_CHANGE && !fTestNet))
     {
+        if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE11: old code - nStakeTargetSpacing = 600");
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
     }
