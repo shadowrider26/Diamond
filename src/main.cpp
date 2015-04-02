@@ -1180,7 +1180,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     if (fDebug && GetBoolArg("-printjunk"))
     {
-        printf("EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
+        printf("EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d\n", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
     }
 
     // ppcoin: target change every block
@@ -1192,7 +1192,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
         if (fDebug && GetBoolArg("-printjunk"))
     {
-        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d"", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing); 
+        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d"\n", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing); 
     }
 
 
