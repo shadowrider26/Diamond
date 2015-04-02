@@ -1180,7 +1180,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     if (fDebug && GetBoolArg("-printjunk"))
     {
-        printf("EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d\n", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
+        printf("%s block, EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d\n", fProofOfStake ? "PoS" : "PoW", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
     }
 
     // ppcoin: target change every block
