@@ -51,7 +51,7 @@ static const int64 POW_RESTART = 577850; // When (block) to unstuck PoW
 
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
-int nCoinbaseMaturity = 31;
+int nCoinbaseMaturity = 30;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 CBigNum bnBestChainTrust = 0;
@@ -84,15 +84,14 @@ int64 nTransactionFee = MIN_TX_FEE;
 // Eagle test settings
 int64 blockBeforeFirstDecrease = 0;
 int64 blocbBeforeSecondDecrease = 0;
-bool eagleoldclients = false;
 int64 eaglesubsidy = 0;
 int eagledecreased = 0;
 int eaglespacing = 0;
-int64 FIRST_REWARD_DECREASE_AT_COIN = 976150;
+int64 FIRST_REWARD_DECREASE_AT_COIN = 1000000;
 int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
 
 
-// Returns 0 if before first trigger, then 1 before 2nd trigger and 2 afterwards
+// Returns 0 before first trigger, then 1 before 2nd trigger and 2 afterwards
 int isRewardDecreased() {
 // should we calculate totalCoin here to be absolutely sure it is up to date?
     if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
@@ -1250,10 +1249,7 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
     CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
     if(fProofOfStake)
-    {
-        // Proof-of-Stake blocks has own target limit since nVersion=3 supermajority on mainNet and always on testNet
         bnTargetLimit = bnProofOfStakeLimit;
-    }
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1268,12 +1264,10 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
     if(nActualSpacing < 0)
     {
-        // printf(">> nActualSpacing = %"PRI64d" corrected to 1.\n", nActualSpacing);
         nActualSpacing = 1;
     }
     else if(nActualSpacing > nTargetTimespan)
     {
-        // printf(">> nActualSpacing = %"PRI64d" corrected to nTargetTimespan (900).\n", nActualSpacing);
         nActualSpacing = nTargetTimespan;
     }
 
@@ -1286,13 +1280,6 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
     int64 nInterval = nTargetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
-
-    /*
-    printf(">> Height = %d, fProofOfStake = %d, nInterval = %"PRI64d", nTargetSpacing = %"PRI64d", nActualSpacing = %"PRI64d"\n",
-        pindexPrev->nHeight, fProofOfStake, nInterval, nTargetSpacing, nActualSpacing);
-    printf(">> pindexPrev->GetBlockTime() = %"PRI64d", pindexPrev->nHeight = %d, pindexPrevPrev->GetBlockTime() = %"PRI64d", pindexPrevPrev->nHeight = %d\n",
-        pindexPrev->GetBlockTime(), pindexPrev->nHeight, pindexPrevPrev->GetBlockTime(), pindexPrevPrev->nHeight);
-    */
 
     if (bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
@@ -2259,7 +2246,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nStakeTargetSpacing = 100;   // pos block spacing set to 100 seconds after first reward reduction
         nWorkTargetSpacing = 100;    // pow block spacing set to 100 seconds after first reward reduction
         nCoinbaseMaturity = 180;        // coinbase maturity does not change
-        nStakeMinAge = 60 * 60 * 2; // min age is lowered from 7 to 3 after first reward reduction
+        nStakeMinAge = 60 * 60 * 24; // min age is lowered from 7 to 1 day after first reward reduction
         if (fDebug && !eaglespacing) {
             printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days totalCoin=%"PRI64d"\n", totalCoin);
             eaglespacing = 1;

@@ -715,10 +715,6 @@ bool CTxDB::LoadBlockIndex()
                     printf("EAGLE12: Setting blockBeforeFirstDecrease=%"PRI64d" during initial block verification\n", blockBeforeFirstDecrease);
             }
         }
-//        if (!isRewardDecreased())
-//            if (blockBeforeFirstDecrease)
-//                if (fDebug)
-//                    printf("EAGLE12: Setting blockBeforeFirstDecrease during initial block verification=%d\n", blockBeforeFirstDecrease);
 
         if (fRequestShutdown || pindex->nHeight < nBestHeight-nCheckDepth)
             break;
