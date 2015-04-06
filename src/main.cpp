@@ -1216,7 +1216,8 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
-    if (bnNew > bnTargetLimit)
+    // danbi: make sure we don't emit negative numbers even if we miscalculated
+    if (bnNew <= 0 || bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
