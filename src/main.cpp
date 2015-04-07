@@ -1765,7 +1765,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
     if(totalCoin > VALUE_CHANGE && IsProofOfWork())
     {
-        CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
+        CBitcoinAddress address = GetFoundationAddress(totalCoin);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
         if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
@@ -4123,7 +4123,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     txNew.vin[0].prevout.SetNull();
     if(totalCoin > VALUE_CHANGE)
     {
-        CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
+        CBitcoinAddress address = GetFoundationAddress(totalCoin);
         txNew.vout.resize(2);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
         txNew.vout[1].scriptPubKey.SetDestination(address.Get());
@@ -4749,6 +4749,25 @@ int64 GetContributionAmount(int64 totalCoin) {
         return 0.05 * COIN;
     else
         return 0.01 * COIN;
+}
+
+// Return Foundation to send contributions to
+// address changes every 500000 coin in order to keep it small
+//
+CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
+    if (fTestNet)
+        return address("mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"); // test Foundation address
+
+    if (totalCoin < 1000000)
+        return address("dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz");
+    else if (totalCoin < 1500000)
+	return address("dTZMqKTYGUwF3aLFx31anxsNKrtaWn6U3x");
+    else if (totalCoin < 2000000)
+	return address("dPbhK6rPtaBeGepU1nqghZRy4NWot5T7dG");
+    else if (totalCoin < 2500000)
+	return address("dbXsr1iVzF6KDRxDspAbvtCpdscF28bD8J");
+    else
+	return address ("dSDEptc8gJzbEe3Kfta8McvnBmapk6fcrR");
 }
 
 uint256 CBlock::GetHash(bool existingBlock) const
