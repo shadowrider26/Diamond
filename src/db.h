@@ -29,8 +29,6 @@ extern unsigned int nWalletDBUpdated;
 void ThreadFlushWalletDB(void* parg);
 bool BackupWallet(const CWallet& wallet, const std::string& strDest);
 
-extern int isRewardDecreased();
-
 
 class CDBEnv
 {
