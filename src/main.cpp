@@ -4752,8 +4752,8 @@ int64 GetContributionAmount(int64 totalCoin) {
         return 0.01 * COIN;
 }
 
-// Return Foundation to send contributions to
-// address changes every 500000 coin in order to keep it small
+// Return Foundation Address to send contributions to
+// address changes every 500000 coin in order to reduce wallet bloat
 //
 CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
     if (fTestNet)
