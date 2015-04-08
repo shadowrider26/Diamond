@@ -13,6 +13,7 @@
 #include "bitcoinrpc.h"
 #include <list>
 #include "hash.h"
+#include "base58.h"
 
 class CWallet;
 class CBlock;
@@ -99,6 +100,7 @@ class CTxDB;
 class CTxIndex;
 
 int64 GetContributionAmount(int64 totalCoin);
+CBitcoinAddress GetFoundationAddress(int64 totalCoin);
 void RegisterWallet(CWallet* pwalletIn);
 void UnregisterWallet(CWallet* pwalletIn);
 void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL, bool fUpdate = false, bool fConnect = true);
