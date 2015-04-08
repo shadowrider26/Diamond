@@ -42,12 +42,6 @@ static const int64 MAX_MINT_PROOF_OF_STAKE = 1 * CENT;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const int64 VALUE_CHANGE = 369494; // When to switch to Groestl
 static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
-extern int64 FIRST_REWARD_DECREASE_AT_COIN;
-extern int64 SECOND_REWARD_DECREASE_AT_COIN;
-//extern const int64 FIRST_REWARD_DECREASE_AT_COIN  = 961930; // when total supply == 1 000 000
-//extern const int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000; // when total supply == 2 500 000
-//extern const int64 FIRST_REWARD_DECREASE_AT_COIN; // when total supply == 1 000 000
-//extern const int64 SECOND_REWARD_DECREASE_AT_COIN; // when total supply == 2 500 000
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -67,8 +61,6 @@ static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
 extern CScript COINBASE_FLAGS;
 
 extern int64 totalCoin;
-extern int64 blockBeforeFirstDecrease;
-extern int64 blocbBeforeSecondDecrease;
 extern CCriticalSection cs_main;
 extern std::map<uint256, CBlockIndex*> mapBlockIndex;
 extern std::set<std::pair<COutPoint, unsigned int> > setStakeSeen;
