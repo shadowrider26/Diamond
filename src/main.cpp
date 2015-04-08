@@ -7,7 +7,7 @@
 #include "checkpoints.h"
 #include "db.h"
 #include "net.h"
-#include "init.h"
+#include "init.h" 
 #include "ui_interface.h"
 #include "kernel.h"
 #include "scrypt_mine.h"
@@ -80,39 +80,6 @@ int64 nHPSTimerStart;
 
 // Settings
 int64 nTransactionFee = MIN_TX_FEE;
-
-// Eagle test settings
-int64 blockBeforeFirstDecrease = 0;
-int64 blocbBeforeSecondDecrease = 0;
-int64 eaglesubsidy = 0;
-int eagledecreased = 0;
-int eaglespacing = 0;
-int64 FIRST_REWARD_DECREASE_AT_COIN = 1000000;
-int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000;
-
-
-// Returns 0 before first trigger, then 1 before 2nd trigger and 2 afterwards
-int isRewardDecreased() {
-// should we calculate totalCoin here to be absolutely sure it is up to date?
-    if (totalCoin >= SECOND_REWARD_DECREASE_AT_COIN) {
-        if ((blocbBeforeSecondDecrease > 0) && (blocbBeforeSecondDecrease != nBestHeight)) {
-            return 2;
-        } else if (blocbBeforeSecondDecrease == 0) {
-            blocbBeforeSecondDecrease = nBestHeight;
-            return 0;
-        }
-    } else if (totalCoin >= FIRST_REWARD_DECREASE_AT_COIN) {
-        if ((blockBeforeFirstDecrease > 0) && (blockBeforeFirstDecrease != nBestHeight)) {
-            return 1;
-        } else if (blockBeforeFirstDecrease == 0) {
-            blockBeforeFirstDecrease = nBestHeight;
-            return 0;
-        }
-    }
-
-    return 0;
-}
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1006,22 +973,12 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
     else
     {
 	// Diamond v2 coin mechanics
-	// 0.20 reward after 1,000,000 created
-	// 0.04 reward after 2,500,000 created
-        eagledecreased = isRewardDecreased();
-        if(eagledecreased > 1) {
-            nSubsidy = 4 * CENT;
-            if (fDebug && (eaglesubsidy == 1)) {
-                printf("EAGLE INFO: SECOND REWARD DROP! CHANGING subsidy to 4 CENT\n");
-                eaglesubsidy = 2;
-            }
-        } else if(eagledecreased > 0) {
-            nSubsidy = 20 * CENT;
-            if (fDebug && !eaglesubsidy) {
-                printf("EAGLE INFO: FIRST REWARD DROP! CHANGING subsidy to 20 CENT\n");
-                eaglesubsidy = 1;
-            }
-        }
+	// 0.10 reward after 1,000,000 created
+	// 0.02 reward after 2,500,000 created
+        if(totalCoin > 2500000)
+            nSubsidy = 2 * CENT;
+        else if(totalCoin > 1000000)
+            nSubsidy = 10 * CENT;
     }
     return nSubsidy + nFees;
 }
@@ -1149,13 +1106,10 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-unsigned int GetNextTargetRequired_v1(const CBlockIndex* pindexLast, bool fProofOfStake)
+unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
     if(fTestNet && !fProofOfStake && pindexLast->nHeight <= 100)
-    {
-        if (fDebug && GetBoolArg("-printjunk")) printf(">> EAGLE1 PoW returning bnProofOfWorkLimit nHeight = %d\n", pindexLast->nHeight);
             return bnProofOfWorkLimit.GetCompact();
-    }
 
     // cruft from alorithm switch time
     if(pindexLast->nHeight >= 386221 && pindexLast->nHeight <= 386226)
@@ -1165,7 +1119,6 @@ unsigned int GetNextTargetRequired_v1(const CBlockIndex* pindexLast, bool fProof
         return bnProofOfWorkLimit_1.GetCompact();
 
     CBigNum bnTargetLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
-//    if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE2: bnTargetLimit = %llu", bnTargetLimit);
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1177,11 +1130,6 @@ unsigned int GetNextTargetRequired_v1(const CBlockIndex* pindexLast, bool fProof
     if (pindexPrevPrev->pprev == NULL)
         return bnTargetLimit.GetCompact(); // second block
 
-    if (fDebug && GetBoolArg("-printjunk"))
-    {
-        printf("%s block, EAGLE3: pindexLast->nHeight=%d, pindexPrev->nHeight=%d, pindexPrevPrev->nHeight=%d\n", fProofOfStake ? "PoS" : "PoW", pindexLast->nHeight, pindexPrev->nHeight, pindexPrevPrev->nHeight);
-    }
-
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
@@ -1189,11 +1137,6 @@ unsigned int GetNextTargetRequired_v1(const CBlockIndex* pindexLast, bool fProof
     int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int64) nWorkTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
     int64 nInterval = nTargetTimespan / nTargetSpacing;
     int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-        if (fDebug && GetBoolArg("-printjunk"))
-    {
-        printf("EAGLE4: nTargetSpacing=%"PRI64d", nInterval=%"PRI64d", nActualSpacing=%"PRI64d", nTargetTimespan=%"PRI64d", nStakeTargetSpacing=%"PRI64d", nStakeMinAge=%d\n", nTargetSpacing, nInterval, nActualSpacing, nTargetTimespan, nStakeTargetSpacing, nStakeMinAge); 
-    }
-
 
     // fix block spacing
     // danbi: post 2.0.4 implement new pacing algorithm for PoW & PoS
@@ -1231,70 +1174,10 @@ unsigned int GetNextTargetRequired_v1(const CBlockIndex* pindexLast, bool fProof
 
     // danbi: make sure we don't emit negative numbers even if we miscalculated
     if ((bnNew <= 0 && nBestHeight > POW_RESTART) || bnNew > bnTargetLimit)
-    {
-        if (fDebug && GetBoolArg("-printjunk"))
-        {
-            if (bnNew <= 0) printf("EAGLE98: Correction by danby bnNew <= 0\n");
-            else printf("EAGLE99 Correction by danbi bnNew>bnTargetLimit\n");
-        }
-        bnNew = bnTargetLimit;
-    }
-
-    return bnNew.GetCompact();
-}
-
-
-unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProofOfStake)
-{
-    CBigNum bnTargetLimit = bnProofOfWorkLimit;
-
-    if(fProofOfStake)
-        bnTargetLimit = bnProofOfStakeLimit;
-
-    if (pindexLast == NULL)
-        return bnTargetLimit.GetCompact(); // genesis block
-
-    const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
-    if (pindexPrev->pprev == NULL)
-        return bnTargetLimit.GetCompact(); // first block
-    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
-    if (pindexPrevPrev->pprev == NULL)
-        return bnTargetLimit.GetCompact(); // second block
-
-    int64 nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-    if(nActualSpacing < 0)
-    {
-        nActualSpacing = 1;
-    }
-    else if(nActualSpacing > nTargetTimespan)
-    {
-        nActualSpacing = nTargetTimespan;
-    }
-
-    // ppcoin: target change every block
-    // ppcoin: retarget with exponential moving toward target spacing
-    CBigNum bnNew;
-    bnNew.SetCompact(pindexPrev->nBits);
-
-    int64 nTargetSpacing = fProofOfStake? nStakeTargetSpacing : nWorkTargetSpacing;
-    int64 nInterval = nTargetTimespan / nTargetSpacing;
-    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
-    bnNew /= ((nInterval + 1) * nTargetSpacing);
-
-    if (bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
 }
-
-
-unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
-{
-    if (!isRewardDecreased())
-        return GetNextTargetRequired_v1(pindexLast, fProofOfStake);
-        else return GetNextTargetRequired_v2(pindexLast, fProofOfStake);
-}
-
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
@@ -1818,7 +1701,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     // danbi: update totalCoin as we are one behind here
     // XXX: this might backfire in case of error...
     totalCoin = pindex->nMoneySupply / COIN;
-    if (totalCoin <= VALUE_CHANGE)
+    if(totalCoin <= VALUE_CHANGE)
     {
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
             return error("ConnectBlock() : claiming to have created too much (old)");
@@ -1827,16 +1710,15 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return error("ConnectBlock() : claiming to have created too much (new)");
 
-    if (totalCoin > VALUE_CHANGE && IsProofOfWork())
+    if(totalCoin > VALUE_CHANGE && IsProofOfWork())
     {
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
         if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
             return error("ConnectBlock() : coinbase does not pay to the foundation address)");
-        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin)) {
+        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin))
             return error("ConnectBlock() : coinbase does not pay enough to foundation addresss");
-        }
     }
 
     // Update block index on disk without changing it in memory.
@@ -2242,22 +2124,10 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
 
 bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
 {
-    if (isRewardDecreased()) {
-        nStakeTargetSpacing = 100;   // pos block spacing set to 100 seconds after first reward reduction
-        nWorkTargetSpacing = 100;    // pow block spacing set to 100 seconds after first reward reduction
-        nCoinbaseMaturity = 180;        // coinbase maturity does not change
-        nStakeMinAge = 60 * 60 * 24; // min age is lowered from 7 to 1 day after first reward reduction
-        if (fDebug && !eaglespacing) {
-            printf("EAGLE (checkblock): setting spacing for both PoW/PoS to 120/120 and lowering coin age to 3 days totalCoin=%"PRI64d"\n", totalCoin);
-            eaglespacing = 1;
-        }
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
-    }
-
-    if ((!isRewardDecreased()) && (totalCoin > VALUE_CHANGE && !fTestNet))
+    if(totalCoin > VALUE_CHANGE && !fTestNet)
     {
-        if (fDebug && GetBoolArg("-printjunk")) printf("EAGLE11: old code - nStakeTargetSpacing = 600, totalcoin=%"PRI64d"\n", totalCoin);
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
     }
@@ -3130,13 +3000,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     // make sure we have current totalCoin
     totalCoin = GetTotalCoin();
 
-    if (isRewardDecreased() && (pfrom->nVersion) &&
-        (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
-        printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-        pfrom->fDisconnect = true;
-        return false;
-    }
-
     if (strCommand == "version")
     {
         // Each connection can only send one version message
@@ -3156,12 +3019,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-            pfrom->fDisconnect = true;
-            return false;
-        }
-
-        if (isRewardDecreased() && (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
-            printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
         }
@@ -4199,7 +4056,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if (totalCoin > VALUE_CHANGE)
+    if(totalCoin > VALUE_CHANGE)
     {
         CBitcoinAddress address(!fTestNet ? FOUNDATION_ADDRESS : FOUNDATION_ADDRESS_TEST);
         txNew.vout.resize(2);
@@ -4464,7 +4321,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if (totalCoin > VALUE_CHANGE)
+            if(totalCoin > VALUE_CHANGE)
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
         }
 
@@ -4823,7 +4680,7 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 // 0.01 afterwards
 // Changing this requires a fork
 int64 GetContributionAmount(int64 totalCoin) {
-    if(!isRewardDecreased())
+    if(totalCoin < 1000000)
         return 0.05 * COIN;
     else
         return 0.01 * COIN;
