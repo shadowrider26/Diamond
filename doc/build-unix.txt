@@ -10,16 +10,26 @@ software written by Thomas Bernard.
 UNIX BUILD NOTES
 ================
 
-To Build
+To Build On i386, amd64
 --------
 
 cd src/
-make -f makefile.unix            # Headless bitcoin
+make -f makefile.unix                           # Headless diamond
+
+To Build On armv6l
+--------
+cd src/
+make -f makefile.unix xCPUARCH=armv6l           # Headless diamond
+
+To Build On armv7l
+--------
+cd src/
+make -f makefile.unix xCPUARCH=armv7l           # Headless diamond
 
 See readme-qt.rst for instructions on building Bitcoin QT,
 the graphical bitcoin.
 
-Dependencies
+Dependencies for i386, amd64
 ------------
 
  Library     Purpose           Description
@@ -29,6 +39,19 @@ Dependencies
  libboost    Boost             C++ Library
  miniupnpc   UPnP Support      Optional firewall-jumping support
  libqrencode QRCode generation Optional QRCode generation
+ libgmp3     GMP               Multiple precision arithmetic library
+
+Dependencies for armv6l, armv7l
+------------
+
+ Library     Purpose           Description
+ -------     -------           -----------
+ libssl      SSL Support       Secure communications
+ libdb5.1    Berkeley DB       Blockchain & wallet storage
+ libboost    Boost             C++ Library
+ miniupnpc   UPnP Support      Optional firewall-jumping support
+ libqrencode QRCode generation Optional QRCode generation
+ libgmp3     GMP               Multiple precision arithmetic library
 
 Note that libexecinfo should be installed, if you building under *BSD systems. 
 This library provides backtrace facility.
