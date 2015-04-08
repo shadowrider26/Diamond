@@ -13,6 +13,7 @@
 #include "bitcoinrpc.h"
 #include <list>
 #include "hash.h"
+#include "base58.h"
 
 class CWallet;
 class CBlock;
@@ -47,8 +48,6 @@ extern int64 SECOND_REWARD_DECREASE_AT_COIN;
 //extern const int64 SECOND_REWARD_DECREASE_AT_COIN = 2500000; // when total supply == 2 500 000
 //extern const int64 FIRST_REWARD_DECREASE_AT_COIN; // when total supply == 1 000 000
 //extern const int64 SECOND_REWARD_DECREASE_AT_COIN; // when total supply == 2 500 000
-#define FOUNDATION_ADDRESS "dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz"
-#define FOUNDATION_ADDRESS_TEST "mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -109,6 +108,7 @@ class CTxDB;
 class CTxIndex;
 
 int64 GetContributionAmount(int64 totalCoin);
+CBitcoinAddress GetFoundationAddress(int64 totalCoin);
 void RegisterWallet(CWallet* pwalletIn);
 void UnregisterWallet(CWallet* pwalletIn);
 void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL, bool fUpdate = false, bool fConnect = true);
