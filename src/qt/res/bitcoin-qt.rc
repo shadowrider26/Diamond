@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileDescription",    "Diamond-Qt (OSS GUI client for Diamond)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "Diamond-qt"
-            VALUE "LegalCopyright",     "2009-2014 The Bitcoin developers, 2012-2014 The Diamond & PPCoin developers"
+            VALUE "LegalCopyright",     "2009-2014 The Bitcoin developers, 2012-2013 PPCoin developers, 2013-2015 Diamond Foundation"
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "Diamond-qt.exe"
             VALUE "ProductName",        "Diamond-Qt"
