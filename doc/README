@@ -1,4 +1,4 @@
-Diamond 2.0.5.5
+Diamond 2.0.5.6
 
 Copyright (c) 2013-2015 Diamond Foundation
 Copyright (c) 2013 NovaCoin Developers
