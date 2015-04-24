@@ -566,20 +566,22 @@ void CNode::ClearBanned()
     setBanned.clear();
 }
 
-bool CNode::IsBanned(CNetAddr ip)
+// return how many seconds left, if banned
+int64 CNode::IsBanned(CNetAddr ip)
 {
-    bool fResult = false;
     {
         LOCK(cs_setBanned);
         std::map<CNetAddr, int64>::iterator i = setBanned.find(ip);
         if (i != setBanned.end())
         {
             int64 t = (*i).second;
-            if (GetTime() < t)
-                fResult = true;
+            int64 left = t - GetTime();
+            if (left < 0)
+                left=0;
+            return left;
         }
     }
-    return fResult;
+    return 0;
 }
 
 extern CMedianFilter<int> cPeerBlockCounts;
@@ -813,6 +815,7 @@ void ThreadSocketHandler2(void* parg)
             SOCKET hSocket = accept(hListenSocket, (struct sockaddr*)&sockaddr, &len);
             CAddress addr;
             int nInbound = 0;
+            int bsec = 0; // how many seconds left in a ban
 
             if (hSocket != INVALID_SOCKET)
                 if (!addr.SetSockAddr((const struct sockaddr*)&sockaddr))
@@ -839,9 +842,9 @@ void ThreadSocketHandler2(void* parg)
                         closesocket(hSocket);
                 }
             }
-            else if (CNode::IsBanned(addr))
+            else if ((bsec = CNode::IsBanned(addr)))
             {
-                printf("connection from %s dropped (banned)\n", addr.ToString().c_str());
+                printf("connection from %s dropped (banned %d sec)\n", addr.ToString().c_str(), bsec);
                 closesocket(hSocket);
             }
             else
