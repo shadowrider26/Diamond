@@ -584,6 +584,19 @@ int64 CNode::IsBanned(CNetAddr ip)
     return 0;
 }
 
+bool CNode::ConnectAllowed(CNetAddr ip)
+{
+    const string strAddress = ip.ToString();
+    const vector<string>& vAllow = mapMultiArgs["-connectallowip"];
+    // no ACL specified, everyone plays
+    if (vAllow.empty())
+        return true;
+    BOOST_FOREACH(string strAllow, vAllow)
+        if (WildcardMatch(strAddress, strAllow))
+            return true;
+    return false;
+}
+
 extern CMedianFilter<int> cPeerBlockCounts;
 
 bool CNode::Misbehaving(int howmuch)
@@ -841,6 +854,11 @@ void ThreadSocketHandler2(void* parg)
                     if (!setservAddNodeAddresses.count(addr))
                         closesocket(hSocket);
                 }
+            }
+            else if (!CNode::ConnectAllowed(addr))
+            {
+                printf("connection from %s dropped (forbidden)\n", addr.ToString().c_str());
+                closesocket(hSocket);
             }
             else if ((bsec = CNode::IsBanned(addr)))
             {
