@@ -3097,6 +3097,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
         if (totalCoin >= 1000000 && (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
             printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            // immediate ban
+            pfrom->Misbehaving(100);
             pfrom->fDisconnect = true;
             return false;
         }
@@ -3135,6 +3137,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
            )
         {
             printf("partner %s using obsolete client %s\n", pfrom->addr.ToString().c_str(), pfrom->strSubVer.c_str());
+            // immediate ban
+            pfrom->Misbehaving(100);
             pfrom->fDisconnect = true;
             return false;
         }
