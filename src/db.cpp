@@ -867,12 +867,12 @@ bool CTxDB::LoadBlockIndexGuts()
 
                 // clean up junk from the block index
                 if (totalCoin == 0) {
-                    printf("money supply = 0\n");
-                    diskindex.print();
+                    // printf("money supply = 0\n");
+                    // diskindex.print();
                     if (blockHash != (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
                     {
                         // not the genesis block, garbage anyway
-                        printf("deleted\n");
+                        // printf("deleted\n");
                         continue;
                     }
                 }

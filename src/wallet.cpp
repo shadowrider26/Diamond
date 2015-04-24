@@ -1397,7 +1397,7 @@ uint64 CWallet::GetStakeMintPower(const CKeyStore& keystore)
 
     if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
     {
-        error("CreateCoinStake : invalid reserve balance amount");
+        error("GetStakeMintPower : invalid reserve balance amount");
         return 0;
     }
 
@@ -1442,7 +1442,7 @@ uint64 CWallet::GetStakeMintPower(const CKeyStore& keystore)
  
      int64 nReserveBalance = 0;
      if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
-         return error("CreateCoinStake : invalid reserve balance amount");
+         return error("GetStakeWeight : invalid reserve balance amount");
      if (nBalance <= nReserveBalance)
          return false;
  
@@ -1531,30 +1531,29 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     {
         CTxDB txdb("r");
         CTxIndex txindex;
-		{
-		    LOCK2(cs_main, cs_wallet);
-			if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
-				continue;
-		}
+        {
+           LOCK2(cs_main, cs_wallet);
+           if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
+               continue;
+        }
 
         // Read block header
         CBlock block;
-		{
-		    LOCK2(cs_main, cs_wallet);
-			if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
-				continue;
-		}
+        {
+            LOCK2(cs_main, cs_wallet);
+            if (!block.ReadFromDisk(txindex.pos.nFile, txindex.pos.nBlockPos, false))
+            continue;
+        }
 
         static int nMaxStakeSearchInterval = 60;
 		
-		// printf(">> block.GetBlockTime() = %"PRI64d", nStakeMinAge = %d, txNew.nTime = %d\n", block.GetBlockTime(), nStakeMinAge,txNew.nTime); 
         if (block.GetBlockTime() + nStakeMinAge > txNew.nTime - nMaxStakeSearchInterval)
             continue; // only count coins meeting min age requirement
 
         bool fKernelFound = false;
         for (unsigned int n=0; n<min(nSearchInterval,(int64)nMaxStakeSearchInterval) && !fKernelFound && !fShutdown; n++)
         {
-			// printf(">> In.....\n");
+            // printf(">> In.....\n");
             // Search backward in time from the given txNew timestamp 
             // Search nSearchInterval seconds back up to nMaxStakeSearchInterval
             uint256 hashProofOfStake = 0;
