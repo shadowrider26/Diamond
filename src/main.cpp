@@ -913,7 +913,9 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions)
     }
     if (!ReadFromDisk(pindex->nFile, pindex->nBlockPos, fReadTransactions))
         return false;
-    if (GetHashScrypt() != pindex->GetBlockHash() && GetHashGroestl() != pindex->GetBlockHash())
+//    if (GetHashScrypt() != pindex->GetBlockHash() && GetHashGroestl() != pindex->GetBlockHash())
+    // send totalCoins to speed up GetHash()
+    if (GetHash(false, pindex->nMoneySupply / COIN ) != pindex->GetBlockHash())
         return error("CBlock::ReadFromDisk() : GetHash() doesn't match index");
     return true;
 }
@@ -2201,8 +2203,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 
     // Check proof of work matches claimed amount
     // XXX: danbi - need to check both algos or we make it hard for initial sync
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
-        return DoS(50, error("CheckBlock() : proof of work failed"));
+    // can't use GetHash() optimization, because we are also called when
+    // new block comes during initial sync and that might come from "future"
+    // compromise: use optimization, but decrease penalty (was 50)
+//    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
+    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(false, totalCoin), nBits))
+        return DoS(10, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
     if (GetBlockTime() > GetAdjustedTime() + nMaxClockDrift)
@@ -2496,9 +2502,10 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
              ++mi)
         {
             CBlock* pblockOrphan = (*mi).second;
+            uint256 ohash = pblockOrphan->GetHash();
             if (pblockOrphan->AcceptBlock())
-                vWorkQueue.push_back(pblockOrphan->GetHash());
-            mapOrphanBlocks.erase(pblockOrphan->GetHash());
+                vWorkQueue.push_back(ohash);
+            mapOrphanBlocks.erase(ohash);
             setStakeSeenOrphan.erase(pblockOrphan->GetProofOfStake());
             delete pblockOrphan;
         }
@@ -2840,6 +2847,7 @@ void PrintBlockTree()
         // print item
         CBlock block;
         block.ReadFromDisk(pindex);
+// danbi: optimization for GetHash() possible here
         printf("%d (%u,%u) %s  %08x  %s  mint %7s  tx %"PRIszu"",
             pindex->nHeight,
             pindex->nFile,
