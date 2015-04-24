@@ -4775,11 +4775,25 @@ CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
 	return CBitcoinAddress ("dSDEptc8gJzbEe3Kfta8McvnBmapk6fcrR");
 }
 
-uint256 CBlock::GetHash(bool existingBlock) const
+uint256 CBlock::GetHash(bool existingBlock, int64 coins) const
 {
+    // existingBlock is set by default to false
+    // coins is set by default to (global) totalCoin
+    //
     // There are two distinct cases when we are called
-    // First case is with with a block already in the blockchain index
-    // Second is for a new block
+    // existingBlock=true - a block already in the blockchain index
+    // both coins and totalCoin are ignored
+    // existingBlock=false - for a new block or when totalCoins is known
+    // in the context. The parameter coins is used in this case
+
+if (fDebug && GetBoolArg("-printjunk") && coins != totalCoin) {
+    printf("COMP: coins(%"PRI64d") != totalCoin(%"PRI64d")\n", coins, totalCoin);
+}
+// special case
+if (coins == 0 && !(totalCoin == 0)) {
+    printf("CBlock::GetHash: coins is 0, totalCoin is %"PRI64d"\n", totalCoin);
+    coins=totalCoin;
+}
 
     if (existingBlock)
     {
@@ -4810,8 +4824,7 @@ uint256 CBlock::GetHash(bool existingBlock) const
         printf("CBlock::GetHash(true): neither scrypt nor groestl hash found in the block index! Failing back..\n");
     }
 
-    // new block or not found in blockchain
-    if (totalCoin <= VALUE_CHANGE)
+    if (coins <= VALUE_CHANGE)
     {
     	uint256 hash_scrypt = GetHashScrypt();
         if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {
