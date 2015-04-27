@@ -3292,7 +3292,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 }
             }
             // Do not store addresses outside our network
-            if (fReachable)
+            // danbi: ignore reachable if we do OneShot
+            if (fReachable || pfrom->fOneShot)
                 vAddrOk.push_back(addr);
         }
         addrman.Add(vAddrOk, pfrom->addr, 2 * 60 * 60);

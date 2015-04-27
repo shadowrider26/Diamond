@@ -1218,6 +1218,7 @@ void ThreadDNSAddressSeed2(void* parg)
                         int nOneDay = 24*3600;
                         CAddress addr = CAddress(CService(ip, GetDefaultPort()));
                         addr.nTime = GetTime() - 3*nOneDay - GetRand(4*nOneDay); // use a random age between 3 and 7 days old
+                        SetReachable(addr.GetNetwork());
                         vAdd.push_back(addr);
                         found++;
                     }
@@ -1403,6 +1404,7 @@ void ThreadOpenConnections2(void* parg)
                 memcpy(&ip, &pnSeed[i], sizeof(ip));
                 CAddress addr(CService(ip, GetDefaultPort()));
                 addr.nTime = GetTime()-GetRand(nOneWeek)-nOneWeek;
+                SetReachable(addr.GetNetwork());
                 vAdd.push_back(addr);
             }
             addrman.Add(vAdd, CNetAddr("127.0.0.1"));
