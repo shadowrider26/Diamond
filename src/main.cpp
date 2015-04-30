@@ -913,7 +913,9 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions)
     }
     if (!ReadFromDisk(pindex->nFile, pindex->nBlockPos, fReadTransactions))
         return false;
-    if (GetHashScrypt() != pindex->GetBlockHash() && GetHashGroestl() != pindex->GetBlockHash())
+//    if (GetHashScrypt() != pindex->GetBlockHash() && GetHashGroestl() != pindex->GetBlockHash())
+    // send totalCoins to speed up GetHash()
+    if (GetHash(false, pindex->nMoneySupply / COIN ) != pindex->GetBlockHash())
         return error("CBlock::ReadFromDisk() : GetHash() doesn't match index");
     return true;
 }
@@ -2201,8 +2203,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 
     // Check proof of work matches claimed amount
     // XXX: danbi - need to check both algos or we make it hard for initial sync
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
-        return DoS(50, error("CheckBlock() : proof of work failed"));
+    // can't use GetHash() optimization, because we are also called when
+    // new block comes during initial sync and that might come from "future"
+    // compromise: use optimization, but decrease penalty (was 50)
+//    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
+    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(false, totalCoin), nBits))
+        return DoS(10, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
     if (GetBlockTime() > GetAdjustedTime() + nMaxClockDrift)
@@ -2496,9 +2502,10 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
              ++mi)
         {
             CBlock* pblockOrphan = (*mi).second;
+            uint256 ohash = pblockOrphan->GetHash();
             if (pblockOrphan->AcceptBlock())
-                vWorkQueue.push_back(pblockOrphan->GetHash());
-            mapOrphanBlocks.erase(pblockOrphan->GetHash());
+                vWorkQueue.push_back(ohash);
+            mapOrphanBlocks.erase(ohash);
             setStakeSeenOrphan.erase(pblockOrphan->GetProofOfStake());
             delete pblockOrphan;
         }
@@ -2840,6 +2847,7 @@ void PrintBlockTree()
         // print item
         CBlock block;
         block.ReadFromDisk(pindex);
+// danbi: optimization for GetHash() possible here
         printf("%d (%u,%u) %s  %08x  %s  mint %7s  tx %"PRIszu"",
             pindex->nHeight,
             pindex->nFile,
@@ -3057,6 +3065,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         printf("dropmessagestest DROPPING RECV MESSAGE\n");
         return true;
     }
+
+    // print what we got
+    if (fDebug) printf("%s from %s\n", strCommand.c_str(), pfrom->addr.ToString().c_str());
+
     // make sure we have current totalCoin
     totalCoin = GetTotalCoin();
 
@@ -3085,6 +3097,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
         if (totalCoin >= 1000000 && (pfrom->nVersion < MIN_PROTO_VERSION_AFTER_FIRST_REWARD_DECREASE)) {
             printf("ERROR: partner %s using version %i from before reward decrease; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            // immediate ban
+            pfrom->Misbehaving(100);
             pfrom->fDisconnect = true;
             return false;
         }
@@ -3123,6 +3137,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
            )
         {
             printf("partner %s using obsolete client %s\n", pfrom->addr.ToString().c_str(), pfrom->strSubVer.c_str());
+            // immediate ban
+            pfrom->Misbehaving(100);
             pfrom->fDisconnect = true;
             return false;
         }
@@ -3276,7 +3292,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 }
             }
             // Do not store addresses outside our network
-            if (fReachable)
+            // danbi: ignore reachable if we do OneShot
+            if (fReachable || pfrom->fOneShot)
                 vAddrOk.push_back(addr);
         }
         addrman.Add(vAddrOk, pfrom->addr, 2 * 60 * 60);
@@ -3423,12 +3440,12 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             pindex = pindex->pnext;
         int nLimit = 500 + locator.GetDistanceBack();
         unsigned int nBytes = 0;
-        printf("getblocks %d to %s limit %d\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().substr(0,20).c_str(), nLimit);
+        if (fDebug) printf("getblocks %d to %s limit %d\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().substr(0,20).c_str(), nLimit);
         for (; pindex; pindex = pindex->pnext)
         {
             if (pindex->GetBlockHash() == hashStop)
             {
-                printf("  getblocks (hashStop) stopping at %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
+                if (fDebug) printf("  getblocks (hashStop) stopping at %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
                 // ppcoin: tell downloading node about the latest block if it's
                 // without risk being rejected due to stake connection check
                 if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
@@ -3443,7 +3460,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             {
                 // When this block is requested, we'll send an inv that'll make them
                 // getblocks the next batch of inventory.
-                printf("  getblocks (nLimit) stopping at limit %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
+                if (fDebug) printf("  getblocks (nLimit) stopping at limit %d %s (%u bytes)\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str(), nBytes);
                 pfrom->hashContinue = pindex->GetBlockHash();
                 break;
             }
@@ -4771,11 +4788,25 @@ CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
 	return CBitcoinAddress ("dSDEptc8gJzbEe3Kfta8McvnBmapk6fcrR");
 }
 
-uint256 CBlock::GetHash(bool existingBlock) const
+uint256 CBlock::GetHash(bool existingBlock, int64 coins) const
 {
+    // existingBlock is set by default to false
+    // coins is set by default to (global) totalCoin
+    //
     // There are two distinct cases when we are called
-    // First case is with with a block already in the blockchain index
-    // Second is for a new block
+    // existingBlock=true - a block already in the blockchain index
+    // both coins and totalCoin are ignored
+    // existingBlock=false - for a new block or when totalCoins is known
+    // in the context. The parameter coins is used in this case
+
+if (fDebug && GetBoolArg("-printjunk") && coins != totalCoin) {
+    printf("COMP: coins(%"PRI64d") != totalCoin(%"PRI64d")\n", coins, totalCoin);
+}
+// special case
+if (coins == 0 && !(totalCoin == 0)) {
+    printf("CBlock::GetHash: coins is 0, totalCoin is %"PRI64d"\n", totalCoin);
+    coins=totalCoin;
+}
 
     if (existingBlock)
     {
@@ -4806,8 +4837,7 @@ uint256 CBlock::GetHash(bool existingBlock) const
         printf("CBlock::GetHash(true): neither scrypt nor groestl hash found in the block index! Failing back..\n");
     }
 
-    // new block or not found in blockchain
-    if (totalCoin <= VALUE_CHANGE)
+    if (coins <= VALUE_CHANGE)
     {
     	uint256 hash_scrypt = GetHashScrypt();
         if (hash_scrypt == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac")) {

@@ -13,12 +13,19 @@
 #include <vector>
 #include <string>
 
+// danbi: try to improve Groestl hashing
+#if defined(__GNUC__)
+      #define DATA_ALIGN16(x) x __attribute__ ((aligned(16)))
+#else
+      #define DATA_ALIGN16(x) __declspec(align(16)) x
+#endif
+
 template<typename T1>
 inline uint256 HashGroestl(const T1 pbegin, const T1 pend)
 {
     sph_groestl512_context  ctx_gr[2];
-    static unsigned char pblank[1];
-    uint512 hash[2];
+    DATA_ALIGN16(static unsigned char pblank[1]);
+    DATA_ALIGN16(uint512 hash[2]);
 	
     sph_groestl512_init(&ctx_gr[0]);
     sph_groestl512 (&ctx_gr[0], (pbegin == pend ? pblank : static_cast<const void*>(&pbegin[0])), (pend - pbegin) * sizeof(pbegin[0]));

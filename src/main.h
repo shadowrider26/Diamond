@@ -924,7 +924,7 @@ public:
         return (nBits == 0);
     }
 
-    uint256 GetHash(bool existingBlock=false) const;
+    uint256 GetHash(bool existingBlock=false, int64 coins=totalCoin) const;
 
     uint256 GetHashScrypt() const
     {

@@ -241,7 +241,7 @@ std::string HelpMessage()
         "  -externalip=<ip>       " + _("Specify your own public address") + "\n" +
         "  -onlynet=<net>         " + _("Only connect to nodes in network <net> (IPv4, IPv6 or Tor)") + "\n" +
         "  -discover              " + _("Discover own IP address (default: 1 when listening and no -externalip)") + "\n" +
-        "  -irc                   " + _("Find peers using internet relay chat (default: 1)") + "\n" +
+        "  -irc                   " + _("Find peers using internet relay chat (default: 0)") + "\n" +
         "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n" +
         "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n" +
         "  -dnsseed               " + _("Find peers using DNS lookup (default: 0)") + "\n" +
@@ -280,11 +280,13 @@ std::string HelpMessage()
         "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n" +
         "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n" +
         "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n" +
-		"  -walletnotify=<cmd>    " + _("Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)") + "\n" +
+        "  -walletnotify=<cmd>    " + _("Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)") + "\n" +
         "  -upgradewallet         " + _("Upgrade wallet to latest format") + "\n" +
         "  -keypool=<n>           " + _("Set key pool size to <n> (default: 100)") + "\n" +
         "  -rescan                " + _("Rescan the block chain for missing wallet transactions") + "\n" +
         "  -salvagewallet         " + _("Attempt to recover private keys from a corrupt wallet.dat") + "\n" +
+        "  -zapwallettxes=<mode>  " + _("Delete all wallet transactions and only recover those parts of the blockchain through -rescan on startup\n") +
+        " " + _("(1 = keep tx meta data e.g. account owner and payment request information, 2 = drop tx meta data)\n") +
         "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 2500, 0 = all)") + "\n" +
         "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n" +
         "  -loadblock=<file>      " + _("Imports blocks from external blk000?.dat file") + "\n" +
@@ -387,6 +389,11 @@ bool AppInit2()
 
     if (GetBoolArg("-salvagewallet")) {
         // Rewrite just private keys: rescan to find transactions
+        SoftSetBoolArg("-rescan", true);
+    }
+
+    if (GetBoolArg("-zapwallettxes", false)) {
+        // -zapwallettx implies a rescan
         SoftSetBoolArg("-rescan", true);
     }
 
@@ -506,6 +513,7 @@ bool AppInit2()
     // ********************************************************* Step 5: verify database integrity
 
     uiInterface.InitMessage(_("Verifying database integrity..."));
+    printf("Verifying database integrity...\n");
 
     if (!bitdb.Open(GetDataDir()))
     {
@@ -658,7 +666,6 @@ bool AppInit2()
 
     BOOST_FOREACH(string strDest, mapMultiArgs["-seednode"])
         AddOneShot(strDest);
-//        AddOneShot("54.229.220.59");
 
     // TODO: replace this by DNSseed
     // AddOneShot(string(""));
@@ -727,6 +734,25 @@ bool AppInit2()
     }
 
     // ********************************************************* Step 8: load wallet
+
+    // needed to restore wallet transaction meta data after -zapwallettxes
+    std::vector<CWalletTx> vWtx;
+
+    if (GetBoolArg("-zapwallettxes", false)) {
+        uiInterface.InitMessage(_("Zapping all transactions from wallet..."));
+        printf("Zapping all transactions from wallet...\n");
+
+        pwalletMain = new CWallet("wallet.dat");
+        DBErrors nZapWalletRet = pwalletMain->ZapWalletTx(vWtx);
+        if (nZapWalletRet != DB_LOAD_OK) {
+            uiInterface.InitMessage(_("Error loading wallet.dat: Wallet corrupted"));
+            printf("Error loading wallet.dat: Wallet corrupted\n");
+            return false;
+        }
+
+        delete pwalletMain;
+        pwalletMain = NULL;
+    }
 
     uiInterface.InitMessage(_("Loading wallet..."));
     printf("Loading wallet...\n");
@@ -807,6 +833,31 @@ bool AppInit2()
         nStart = GetTimeMillis();
         pwalletMain->ScanForWalletTransactions(pindexRescan, true);
         printf(" rescan      %15"PRI64d"ms\n", GetTimeMillis() - nStart);
+
+        nWalletDBUpdated++;
+
+        // Restore wallet transaction metadata after -zapwallettxes=1
+        if (GetBoolArg("-zapwallettxes", false) && GetArg("-zapwallettxes", "1") != "2")
+        {
+            BOOST_FOREACH(const CWalletTx& wtxOld, vWtx)
+            {
+                uint256 hash = wtxOld.GetHash();
+                std::map<uint256, CWalletTx>::iterator mi = pwalletMain->mapWallet.find(hash);
+                if (mi != pwalletMain->mapWallet.end())
+                {
+                    const CWalletTx* copyFrom = &wtxOld;
+                    CWalletTx* copyTo = &mi->second;
+                    copyTo->mapValue = copyFrom->mapValue;
+                    copyTo->vOrderForm = copyFrom->vOrderForm;
+                    copyTo->nTimeReceived = copyFrom->nTimeReceived;
+                    copyTo->nTimeSmart = copyFrom->nTimeSmart;
+                    copyTo->fFromMe = copyFrom->fFromMe;
+                    copyTo->strFromAccount = copyFrom->strFromAccount;
+                    copyTo->nOrderPos = copyFrom->nOrderPos;
+                    copyTo->WriteToDisk();
+                }
+            }
+        }
     }
 
     // ********************************************************* Step 9: import blocks
@@ -814,6 +865,7 @@ bool AppInit2()
     if (mapArgs.count("-loadblock"))
     {
         uiInterface.InitMessage(_("Importing blockchain data file."));
+        printf("Importing blockchain data file.\n");
 
         BOOST_FOREACH(string strFile, mapMultiArgs["-loadblock"])
         {
@@ -826,6 +878,7 @@ bool AppInit2()
     filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
     if (filesystem::exists(pathBootstrap)) {
         uiInterface.InitMessage(_("Importing bootstrap blockchain data file."));
+        printf("Importing bootstrap blockchain data file.\n");
 
         FILE *file = fopen(pathBootstrap.string().c_str(), "rb");
         if (file) {

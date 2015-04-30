@@ -25,7 +25,7 @@
 using namespace std;
 using namespace boost;
 
-static const int MAX_OUTBOUND_CONNECTIONS = 12;
+static const int MAX_OUTBOUND_CONNECTIONS = 16;
 
 void ThreadMessageHandler2(void* parg);
 void ThreadSocketHandler2(void* parg);
@@ -558,10 +558,6 @@ void CNode::PushVersion()
                 nLocalHostNonce, FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, std::vector<string>()), nBestHeight);
 }
 
-
-
-
-
 std::map<CNetAddr, int64> CNode::setBanned;
 CCriticalSection CNode::cs_setBanned;
 
@@ -570,20 +566,35 @@ void CNode::ClearBanned()
     setBanned.clear();
 }
 
-bool CNode::IsBanned(CNetAddr ip)
+// return how many seconds left, if banned
+int64 CNode::IsBanned(CNetAddr ip)
 {
-    bool fResult = false;
     {
         LOCK(cs_setBanned);
         std::map<CNetAddr, int64>::iterator i = setBanned.find(ip);
         if (i != setBanned.end())
         {
             int64 t = (*i).second;
-            if (GetTime() < t)
-                fResult = true;
+            int64 left = t - GetTime();
+            if (left < 0)
+                left=0;
+            return left;
         }
     }
-    return fResult;
+    return 0;
+}
+
+bool CNode::ConnectAllowed(CNetAddr ip)
+{
+    const string strAddress = ip.ToString();
+    const vector<string>& vAllow = mapMultiArgs["-connectallowip"];
+    // no ACL specified, everyone plays
+    if (vAllow.empty())
+        return true;
+    BOOST_FOREACH(string strAllow, vAllow)
+        if (WildcardMatch(strAddress, strAllow))
+            return true;
+    return false;
 }
 
 extern CMedianFilter<int> cPeerBlockCounts;
@@ -817,6 +828,7 @@ void ThreadSocketHandler2(void* parg)
             SOCKET hSocket = accept(hListenSocket, (struct sockaddr*)&sockaddr, &len);
             CAddress addr;
             int nInbound = 0;
+            int bsec = 0; // how many seconds left in a ban
 
             if (hSocket != INVALID_SOCKET)
                 if (!addr.SetSockAddr((const struct sockaddr*)&sockaddr))
@@ -843,9 +855,14 @@ void ThreadSocketHandler2(void* parg)
                         closesocket(hSocket);
                 }
             }
-            else if (CNode::IsBanned(addr))
+            else if (!CNode::ConnectAllowed(addr))
             {
-                printf("connection from %s dropped (banned)\n", addr.ToString().c_str());
+                printf("connection from %s dropped (forbidden)\n", addr.ToString().c_str());
+                closesocket(hSocket);
+            }
+            else if ((bsec = CNode::IsBanned(addr)))
+            {
+                printf("connection from %s dropped (banned %d sec)\n", addr.ToString().c_str(), bsec);
                 closesocket(hSocket);
             }
             else
@@ -1154,6 +1171,7 @@ void MapPort()
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strDNSSeed[][2] = {
+    {"seed.bit.diamond", "seed.bit.diamond"},
     {"dmdseed.danbo.bg", "dmdseed.danbo.bg"},
     {"", ""},
 };
@@ -1201,6 +1219,7 @@ void ThreadDNSAddressSeed2(void* parg)
                         int nOneDay = 24*3600;
                         CAddress addr = CAddress(CService(ip, GetDefaultPort()));
                         addr.nTime = GetTime() - 3*nOneDay - GetRand(4*nOneDay); // use a random age between 3 and 7 days old
+                        SetReachable(addr.GetNetwork());
                         vAdd.push_back(addr);
                         found++;
                     }
@@ -1226,6 +1245,7 @@ void ThreadDNSAddressSeed2(void* parg)
 
 unsigned int pnSeed[] =
 {
+    0x131544c1
 };
 
 void DumpAddresses()
@@ -1386,6 +1406,7 @@ void ThreadOpenConnections2(void* parg)
                 memcpy(&ip, &pnSeed[i], sizeof(ip));
                 CAddress addr(CService(ip, GetDefaultPort()));
                 addr.nTime = GetTime()-GetRand(nOneWeek)-nOneWeek;
+                SetReachable(addr.GetNetwork());
                 vAdd.push_back(addr);
             }
             addrman.Add(vAdd, CNetAddr("127.0.0.1"));
