@@ -74,6 +74,9 @@ int CommandLineRPC(int argc, char *argv[]);
 /** Convert parameter values for RPC call from strings to command-specific JSON objects. */
 json_spirit::Array RPCConvertValues(const std::string &strMethod, const std::vector<std::string> &strParams);
 
+/** Call the RPC service directly (placed here to allow for more in depth tests). */
+json_spirit::Object CallRPC(const std::string &strMethod, const json_spirit::Array &params);
+
 /*
   Type-check arguments; throws JSONRPCError if wrong type given. Does not check that
   the right number of arguments are passed, just that any passed are the correct type.
@@ -206,5 +209,10 @@ extern json_spirit::Value getblockbynumber(const json_spirit::Array& params, boo
 extern json_spirit::Value getcheckpoint(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value setchangeaddress(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getchangeaddress(const json_spirit::Array& params, bool fHelp);
+
+extern json_spirit::Value setscrapeaddress(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value getscrapeaddress(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value listscrapeaddresses(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value deletescrapeaddress(const json_spirit::Array& params, bool fHelp);
 
 #endif

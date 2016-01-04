@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2015-2016 Nathan Bass "IngCr3at1on"
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1246,7 +1247,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
         return false;
 
     wtxNew.BindWallet(this);
-		
+
     // transaction comment
     wtxNew.strTxComment = strTxComment;
     if (wtxNew.strTxComment.length() > MAX_TX_COMMENT_LEN)
@@ -1316,7 +1317,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                      // coin control: send change to custom address
                      if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange))
                          scriptChange.SetDestination(coinControl->destChange);
- 
+
                      // no coin control: send change to newly generated address
                      else
                      {
@@ -1326,10 +1327,10 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, CW
                          //  If we reused the old key, it would be possible to add code to look for and
                          //  rediscover unknown transactions that were written with keys of ours to recover
                          //  post-backup change.
- 
+
                          // Reserve a new key pair from key pool
                          CPubKey vchPubKey = reservekey.GetReservedKey();
- 
+
                          scriptChange.SetDestination(vchPubKey.GetID());
                      }
                     }
@@ -1439,23 +1440,23 @@ uint64 CWallet::GetStakeMintPower(const CKeyStore& keystore)
  {
      // Choose coins to use
      int64 nBalance = GetBalance();
- 
+
      int64 nReserveBalance = 0;
      if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
          return error("GetStakeWeight : invalid reserve balance amount");
      if (nBalance <= nReserveBalance)
          return false;
- 
+
      set<pair<const CWalletTx*,unsigned int> > setCoins;
      vector<const CWalletTx*> vwtxPrev;
      int64 nValueIn = 0;
- 
+
      if (!SelectCoins(nBalance - nReserveBalance, GetTime(), setCoins, nValueIn))
          return false;
- 
+
      if (setCoins.empty())
          return false;
- 
+
      CTxDB txdb("r");
      BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
      {
@@ -1465,29 +1466,29 @@ uint64 CWallet::GetStakeMintPower(const CKeyStore& keystore)
              if (!txdb.ReadTxIndex(pcoin.first->GetHash(), txindex))
                  continue;
          }
- 
+
          int64 nTimeWeight = GetWeight((int64)pcoin.first->nTime, (int64)GetTime());
          CBigNum bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
- 
+
          // Weight is greater than zero
          if (nTimeWeight > 0)
          {
              nWeight += bnCoinDayWeight.getuint64();
          }
- 
+
          // Weight is greater than zero, but the maximum value isn't reached yet
          if (nTimeWeight > 0 && nTimeWeight < nStakeMaxAge)
          {
              nMinWeight += bnCoinDayWeight.getuint64();
          }
- 
+
          // Maximum weight was reached
          if (nTimeWeight == nStakeMaxAge)
          {
              nMaxWeight += bnCoinDayWeight.getuint64();
          }
      }
- 
+
      return true;
  }
 
@@ -1546,7 +1547,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         }
 
         static int nMaxStakeSearchInterval = 60;
-		
+
         if (block.GetBlockTime() + nStakeMinAge > txNew.nTime - nMaxStakeSearchInterval)
             continue; // only count coins meeting min age requirement
 
@@ -1554,7 +1555,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         for (unsigned int n=0; n<min(nSearchInterval,(int64)nMaxStakeSearchInterval) && !fKernelFound && !fShutdown; n++)
         {
             // printf(">> In.....\n");
-            // Search backward in time from the given txNew timestamp 
+            // Search backward in time from the given txNew timestamp
             // Search nSearchInterval seconds back up to nMaxStakeSearchInterval
             uint256 hashProofOfStake = 0;
             COutPoint prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
@@ -1596,7 +1597,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
                 else
                     scriptPubKeyOut = scriptPubKeyKernel;
 
-                txNew.nTime -= n; 
+                txNew.nTime -= n;
                 txNew.vin.push_back(CTxIn(pcoin.first->GetHash(), pcoin.second));
                 nCredit += pcoin.first->vout[pcoin.second].nValue;
 
@@ -1649,6 +1650,8 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             vwtxPrev.push_back(pcoin.first);
         }
     }
+
+    bool scrapedstake = false;
     // Calculate coin age reward
     {
         uint64 nCoinAge;
@@ -1657,14 +1660,36 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
         if (!txNew.GetCoinAge(txdb, nCoinAge))
             return error("CreateCoinStake : failed to calculate coin age");
-        nCredit += GetProofOfStakeReward(nCoinAge, nBits, txNew.nTime, pIndex0->nHeight);
+        int64 nReward = GetProofOfStakeReward(nCoinAge, nBits, txNew.nTime, pIndex0->nHeight);
+
+        /* Check the staking address against the scrape addresses in the
+         * walletdb and see if it has a scrape address for it, if it does
+         * send the reward to the scrape address. */
+        CTxDestination address;
+        ExtractDestination(txNew.vout[1].scriptPubKey, address);
+        CBitcoinAddress addr(address);
+
+        string strScrapeAddress;
+        if (HasScrapeAddress(addr.ToString()) && ReadScrapeAddress(addr.ToString(), strScrapeAddress)) {
+            CScript stakescript;
+            CBitcoinAddress scrapeaddr(strScrapeAddress);
+            CTxDestination scrape = scrapeaddr.Get();
+            if (fDebug && GetBoolArg("-printcoinstake"))
+                strprintf("CreateCoinStake : a scrape address has been set for %s to %s, sending reward there.\n", addr.ToString().c_str(), scrapeaddr.ToString().c_str());
+
+            stakescript.SetDestination(scrape);
+            txNew.vout.push_back(CTxOut(nReward, stakescript));
+            scrapedstake = true;
+        } else {
+            nCredit += nReward;
+        }
     }
 
     int64 nMinFee = 0;
     while (true)
     {
         // Set output amount
-        if (txNew.vout.size() == 3)
+        if ((!scrapedstake && txNew.vout.size() == 3) || txNew.vout.size() == 4)
         {
             txNew.vout[1].nValue = ((nCredit - nMinFee) / 2 / CENT) * CENT;
             txNew.vout[2].nValue = nCredit - nMinFee - txNew.vout[1].nValue;
