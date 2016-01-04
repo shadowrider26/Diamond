@@ -69,7 +69,10 @@ public:
         RecvWithAddress,
         RecvFromOther,
         SendToSelf,
-        StakeMint
+        StakeMint,
+        ExternalScrape,
+        LocalScrape,
+        ScrapeToExternal
     };
 
     /** Number of confirmation needed for transaction */
