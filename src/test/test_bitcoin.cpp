@@ -11,6 +11,8 @@ CClientUIInterface uiInterface;
 extern bool fPrintToConsole;
 extern void noui_connect();
 
+bool fUseFastIndex = true;
+
 struct TestingSetup {
     TestingSetup() {
         fPrintToDebugger = true; // don't want to write to debug.log file
