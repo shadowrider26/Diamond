@@ -26,7 +26,6 @@
 #include "guiutil.h"
 #include "rpcconsole.h"
 #include "wallet.h"
-#include "bitcoinrpc.h"
 #include "version.h"
 
 #ifdef Q_OS_MAC
