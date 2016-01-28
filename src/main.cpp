@@ -39,9 +39,8 @@ static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimit_1(~uint256(0) >> 32);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 
-static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
-static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
-uint256 nPoWBase = uint256("0x00000000ffff0000000000000000000000000000000000000000000000000000"); // difficulty-1 target
+static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 24);
+static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 16);
 unsigned int nStakeMinAge = 60 * 60 * 24 * 7;	// minimum age for coin age: 7d
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: 30d
 int64 nStakeTargetSpacing = 60;			// 1-minute block spacing
@@ -785,7 +784,7 @@ int CMerkleTx::GetBlocksToMaturity() const
 {
     if (!(IsCoinBase() || IsCoinStake()))
         return 0;
-    return max(0, (nCoinbaseMaturity+20) - GetDepthInMainChain());
+    return max(0, (nCoinbaseMaturity + 1) - GetDepthInMainChain());
 }
 
 
@@ -1228,7 +1227,7 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    if (totalCoin < 1000000)
+    if(!fTestNet && (totalCoin < 1000000))
         return GetNextTargetRequired_v1(pindexLast, fProofOfStake);
         else return GetNextTargetRequired_v2(pindexLast, fProofOfStake);
 }
@@ -1756,7 +1755,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     // danbi: update totalCoin as we are one behind here
     // XXX: this might backfire in case of error...
     totalCoin = pindex->nMoneySupply / COIN;
-    if (totalCoin <= VALUE_CHANGE)
+    if(!fTestNet && (totalCoin <= VALUE_CHANGE))
     {
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
             return error("ConnectBlock() : claiming to have created too much (old)");
@@ -1765,7 +1764,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
             return error("ConnectBlock() : claiming to have created too much (new)");
 
-    if (totalCoin > VALUE_CHANGE && IsProofOfWork())
+    if((fTestNet || (totalCoin > VALUE_CHANGE)) && IsProofOfWork())
     {
         CBitcoinAddress address = GetFoundationAddress(totalCoin);
         CScript scriptPubKey;
@@ -2181,6 +2180,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 {
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
+  if(!fTestNet) {
     if (totalCoin >= 1000000) {
 	// after first reward reduction
         nStakeTargetSpacing = 100;   // PoS block spacing set to 100 seconds
@@ -2188,11 +2188,12 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         nCoinbaseMaturity = 180;     // coinbase maturity does not change
         nStakeMinAge = 60 * 60 * 24 * 3; // min age is lowered from 7 to 3 days
     }
-    else if (totalCoin > VALUE_CHANGE && !fTestNet)
+    else if (totalCoin > VALUE_CHANGE)
     {
         nStakeTargetSpacing = 10 * 60; //pos block spacing is 10 mins
         nCoinbaseMaturity = 180; //coinbase maturity change to 180 blocks
     }
+  }
 
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
@@ -2227,7 +2228,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
             return DoS(100, error("CheckBlock() : coinstake in wrong position"));
 
     // ppcoin: coinbase output should be empty if proof-of-stake block
-    if (totalCoin > VALUE_CHANGE)
+    if(fTestNet || (totalCoin > VALUE_CHANGE))
     {
         if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
             return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
@@ -2712,13 +2713,14 @@ bool LoadBlockIndex(bool fAllowNew)
         pchMessageStart[2] = 0xc0;
         pchMessageStart[3] = 0xef;
 
-        bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
-        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet
-        nStakeMinAge = 5 * 60; // test net min age is 5 min
-        nStakeMaxAge = 60 * 60; // test net max age is 60 min
-		nModifierInterval = 60; // test modifier interval is 2 minutes
-        nCoinbaseMaturity = 180; // test maturity is 10 blocks
-        nStakeTargetSpacing = 3 * 60; // test block spacing is 3 minutes
+        bnProofOfStakeLimit = bnProofOfStakeLimitTestNet;
+        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet;
+
+        nStakeMinAge = 60 * 60;
+        nStakeMaxAge = 2 * 24 * 60 * 60;
+        nModifierInterval = 5 * 60;
+        nCoinbaseMaturity = 10;
+        nStakeTargetSpacing = 100;
     }
 
     //
@@ -2737,34 +2739,88 @@ bool LoadBlockIndex(bool fAllowNew)
         if (!fAllowNew)
             return false;
 
-        // Genesis block
-        const char* pszTimestamp = "Friday, July 12, 11:19 AM: Cavendish wins eventful 13th stage of Tour de France as Froome loses chunk of overall lead";
         CTransaction txNew;
-        txNew.nTime = nChainStartTime;
-        txNew.vin.resize(1);
-        txNew.vout.resize(1);
-        txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(9999) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
-        txNew.vout[0].SetEmpty();
-        txNew.strTxComment = "text:Diamond genesis block";
-
         CBlock block;
-        block.vtx.push_back(txNew);
-        block.hashPrevBlock = 0;
-        block.hashMerkleRoot = block.BuildMerkleTree();
-        block.nVersion = 1;
-        block.nTime    = 1373654846;
-        block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 11111111;
+
+        if(!fTestNet) {
+
+            /* Livenet genesis */
+            const char* pszTimestamp = "Friday, July 12, 11:19 AM: Cavendish wins eventful 13th stage of Tour de France as Froome loses chunk of overall lead";
+            txNew.nTime = nChainStartTime;
+            txNew.vin.resize(1);
+            txNew.vout.resize(1);
+            txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(9999) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+            txNew.vout[0].SetEmpty();
+            txNew.strTxComment = "text:Diamond genesis block";
+
+            block.vtx.push_back(txNew);
+            block.hashPrevBlock = 0;
+            block.hashMerkleRoot = block.BuildMerkleTree();
+            block.nVersion = 1;
+            block.nTime    = 1373654846;
+            block.nBits    = bnProofOfWorkLimit.GetCompact();
+            block.nNonce   = 11111111;
+
+        } else {
+
+            /* Testnet genesis */
+            const char* pszTimestamp = "Let it ride!";
+            txNew.nTime = 1453766400;
+            txNew.vin.resize(1);
+            txNew.vout.resize(1);
+            txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(9999) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+            txNew.vout[0].SetEmpty();
+            txNew.strTxComment = "text:Diamond testnet genesis";
+
+            block.vtx.push_back(txNew);
+            block.hashPrevBlock = 0;
+            block.hashMerkleRoot = block.BuildMerkleTree();
+            block.nVersion = 1;
+            block.nTime    = 1453939200;
+            block.nBits    = bnProofOfWorkLimit.GetCompact();
+            block.nNonce   = 10211336;
+
+        }
 
         //// debug print
         block.print();
-        printf("block.GetHash() == %s\n", block.GetHashScrypt().ToString().c_str());
+        printf("block.GetHash() == %s\n", fTestNet ? block.GetHashGroestl().ToString().c_str() : block.GetHashScrypt().ToString().c_str());
         printf("block.hashMerkleRoot == %s\n", block.hashMerkleRoot.ToString().c_str());
         printf("block.nTime = %u \n", block.nTime);
         printf("block.nNonce = %u \n", block.nNonce);
 
-        assert(block.hashMerkleRoot == uint256("0xaaaa88b5c5c937bcd7709c86903197009e02495dba5b919488d996dec10d26c4"));
-        assert(block.GetHashScrypt() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
+        if(!fTestNet) assert(block.hashMerkleRoot == uint256("0xaaaa88b5c5c937bcd7709c86903197009e02495dba5b919488d996dec10d26c4"));
+        else assert(block.hashMerkleRoot == uint256("0x6db63a9f5ba6b72c48781a584e859909ada5430b216804d08fbbd9f1c3129273"));
+
+        /* Groestl testnet block mining */
+        if(false && (block.GetHashGroestl() != hashGenesisBlockTestNet)) {
+
+            printf("Genesis block mining...\n");
+
+            uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
+            uint256 hash;
+
+            while(true) {
+                hash = block.GetHashGroestl();
+                if(hash <= hashTarget) break;
+                if(!(block.nNonce & 0xFFF))
+                  printf("nonce %08X: hash = %s (target = %s)\n",
+                    block.nNonce, hash.ToString().c_str(),
+                    hashTarget.ToString().c_str());
+                ++block.nNonce;
+                if(!block.nNonce) {
+                    printf("nonce limit reached, incrementing time\n");
+                    ++block.nTime;
+                }
+            }
+            printf("block.nTime = %u \n", block.nTime);
+            printf("block.nNonce = %u \n", block.nNonce);
+            printf("block.GetHash = %s\n", block.GetHashGroestl().ToString().c_str());
+        }
+
+        block.print();
+        if(!fTestNet) assert(block.GetHashScrypt() == hashGenesisBlock);
+        else assert(block.GetHashGroestl() == hashGenesisBlockTestNet);
 
         // Start new block file
         unsigned int nFile;
@@ -4139,7 +4195,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if (totalCoin > VALUE_CHANGE)
+    if(fTestNet || (totalCoin > VALUE_CHANGE))
     {
         CBitcoinAddress address = GetFoundationAddress(totalCoin);
         txNew.vout.resize(2);
@@ -4196,7 +4252,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
                     pblock->vtx[0].vout[0].SetEmpty();
-                    if (totalCoin > VALUE_CHANGE)
+                    if(fTestNet || (totalCoin > VALUE_CHANGE))
                         pblock->vtx[0].vout[1].SetEmpty();
                     pblock->vtx[0].nTime = txCoinStake.nTime;
                     pblock->vtx.push_back(txCoinStake);
@@ -4404,7 +4460,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if (totalCoin > VALUE_CHANGE)
+            if(fTestNet || (totalCoin > VALUE_CHANGE))
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
         }
 
@@ -4501,7 +4557,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     pblock->print();
     if (pblock->IsProofOfWork())
     {
-        if (totalCoin > VALUE_CHANGE)
+        if(fTestNet || (totalCoin > VALUE_CHANGE))
             printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue + pblock->vtx[0].vout[1].nValue).c_str());
         else
             printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4774,7 +4830,7 @@ int64 GetContributionAmount(int64 totalCoin) {
 //
 CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
     if (fTestNet)
-        return CBitcoinAddress("mwmPTAA7cSDY8Dd5rRHuYitwS2hByXQpdA"); // test Foundation address
+        return CBitcoinAddress("mzN2GRXyBuw7uWxEEBcxUeyga4Ka7xAscJ"); // test Foundation address
 
     if (totalCoin < 1000000)
         return CBitcoinAddress("dZi9hpA5nBC6tSAbPSsiMjb6HeQTprcWHz");
@@ -4790,6 +4846,9 @@ CBitcoinAddress GetFoundationAddress(int64 totalCoin) {
 
 uint256 CBlock::GetHash(bool existingBlock, int64 coins) const
 {
+    if(fTestNet)
+      return(GetHashGroestl());
+
     // existingBlock is set by default to false
     // coins is set by default to (global) totalCoin
     //
