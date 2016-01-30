@@ -1755,24 +1755,32 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     // danbi: update totalCoin as we are one behind here
     // XXX: this might backfire in case of error...
     totalCoin = pindex->nMoneySupply / COIN;
-    if(!fTestNet && (totalCoin <= VALUE_CHANGE))
-    {
-        if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
-            return error("ConnectBlock() : claiming to have created too much (old)");
-    }
-    else
-        if (vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
-            return error("ConnectBlock() : claiming to have created too much (new)");
 
-    if((fTestNet || (totalCoin > VALUE_CHANGE)) && IsProofOfWork())
-    {
-        CBitcoinAddress address = GetFoundationAddress(totalCoin);
-        CScript scriptPubKey;
-        scriptPubKey.SetDestination(address.Get());
-        if (vtx[0].vout[1].scriptPubKey != scriptPubKey)
-            return error("ConnectBlock() : coinbase does not pay to the foundation address)");
-        if (vtx[0].vout[1].nValue < GetContributionAmount(totalCoin))
-            return error("ConnectBlock() : coinbase does not pay enough to foundation addresss");
+    int nPrevHeight = 0;
+    if(pindex->pprev)
+      nPrevHeight = pindex->pprev->nHeight;
+
+    bool fContribution = false;
+    if((fTestNet && (nPrevHeight + 1 < nTestStage1)) ||
+      (!fTestNet && (totalCoin > VALUE_CHANGE)))
+      fContribution = true;
+
+    if(IsProofOfWork()) {
+        if(fContribution) {
+            if(vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash) + GetContributionAmount(totalCoin))
+              return(error("ConnectBlock() : claiming to have created too much (contribution included)"));
+
+            CBitcoinAddress address = GetFoundationAddress(totalCoin);
+            CScript scriptPubKey;
+            scriptPubKey.SetDestination(address.Get());
+            if(vtx[0].vout[1].scriptPubKey != scriptPubKey)
+              return(error("ConnectBlock() : coinbase does not pay to the foundation address)"));
+            if(vtx[0].vout[1].nValue < GetContributionAmount(totalCoin))
+              return(error("ConnectBlock() : coinbase does not pay enough to foundation addresss"));
+        } else {
+            if(vtx[0].GetValueOut() > GetProofOfWorkReward(pindex->nHeight, nFees, prevHash))
+              return(error("ConnectBlock() : claiming to have created too much"));
+        }
     }
 
     // Update block index on disk without changing it in memory.
@@ -4191,12 +4199,18 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     if (!pblock.get())
         return NULL;
 
+    int nPrevHeight = pindexBest->nHeight;
+
+    bool fContribution = false;
+    if((fTestNet && (nPrevHeight + 1 < nTestStage1)) ||
+      (!fTestNet && (totalCoin > VALUE_CHANGE)))
+      fContribution = true;
+
     // Create coinbase tx
     CTransaction txNew;
     txNew.vin.resize(1);
     txNew.vin[0].prevout.SetNull();
-    if(fTestNet || (totalCoin > VALUE_CHANGE))
-    {
+    if(fContribution) {
         CBitcoinAddress address = GetFoundationAddress(totalCoin);
         txNew.vout.resize(2);
         txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
@@ -4252,7 +4266,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
                     pblock->vtx[0].vout[0].SetEmpty();
-                    if(fTestNet || (totalCoin > VALUE_CHANGE))
+                    if(fContribution)
                         pblock->vtx[0].vout[1].SetEmpty();
                     pblock->vtx[0].nTime = txCoinStake.nTime;
                     pblock->vtx.push_back(txCoinStake);
@@ -4460,7 +4474,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfWork())
         {
             pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight+1, nFees, pindexPrev->GetBlockHash());
-            if(fTestNet || (totalCoin > VALUE_CHANGE))
+            if(fContribution)
                 pblock->vtx[0].vout[1].nValue = GetContributionAmount(totalCoin);
         }
 
@@ -4555,13 +4569,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     printf("BitcoinMiner:\n");
     printf("new block found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
-    if (pblock->IsProofOfWork())
-    {
-        if(fTestNet || (totalCoin > VALUE_CHANGE))
-            printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue + pblock->vtx[0].vout[1].nValue).c_str());
-        else
-            printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
-    }
+    printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
 
     // Found a solution
     {
