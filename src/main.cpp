@@ -2235,18 +2235,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
         if (vtx[i].IsCoinStake())
             return DoS(100, error("CheckBlock() : coinstake in wrong position"));
 
-    // ppcoin: coinbase output should be empty if proof-of-stake block
-    if(fTestNet || (totalCoin > VALUE_CHANGE))
-    {
-        if (IsProofOfStake() && (vtx[0].vout.size() != 2 || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty() ))
-            return error("CheckBlock() : (NEW) coinbase output not empty for proof-of-stake block");
-    }
-    else
-    {
-        if (IsProofOfStake() && (vtx[0].vout.size() != 1 || !vtx[0].vout[0].IsEmpty()))
-            return error("CheckBlock() : (OLD) coinbase output not empty for proof-of-stake block");
-    }
-
     // Check coinbase timestamp
     if (GetBlockTime() > (int64)vtx[0].nTime + nMaxClockDrift)
         return DoS(50, error("CheckBlock() : coinbase timestamp is too early"));
@@ -2308,6 +2296,19 @@ bool CBlock::AcceptBlock()
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
+
+    if(IsProofOfStake()) {
+        if((fTestNet && (nHeight < nTestStage1)) ||
+          (!fTestNet && (totalCoin > VALUE_CHANGE))) {
+            /* vtx[0] must have 2 empty outputs */
+            if((vtx[0].vout.size() != 2) || !vtx[0].vout[0].IsEmpty() || !vtx[0].vout[1].IsEmpty())
+              return(error("AcceptBlock() : coin base outputs invalid for proof-of-stake block"));
+        } else {
+            /* vtx[0] must have 1 empty output */
+            if((vtx[0].vout.size() != 1) || !vtx[0].vout[0].IsEmpty())
+              return(error("AcceptBlock() : coin base output invalid for proof-of-stake block"));
+        }
+    }
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))
@@ -4213,13 +4214,15 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
     if(fContribution) {
         CBitcoinAddress address = GetFoundationAddress(totalCoin);
         txNew.vout.resize(2);
-        txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
-        txNew.vout[1].scriptPubKey.SetDestination(address.Get());
-    }
-    else
-    {
+        if(!fProofOfStake) {
+            txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
+            txNew.vout[1].scriptPubKey.SetDestination(address.Get());
+        }
+    } else {
         txNew.vout.resize(1);
-        txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
+        if(!fProofOfStake) {
+            txNew.vout[0].scriptPubKey << reservekey.GetReservedKey() << OP_CHECKSIG;
+        }
     }
 
     // Add our coinbase tx as first transaction
