@@ -876,7 +876,7 @@ bool CTxDB::LoadBlockIndexGuts()
                         continue;
                     }
                 }
-                if (totalCoin == VALUE_CHANGE) {
+                if(!fTestNet && (totalCoin == VALUE_CHANGE)) {
 //                    printf("height = %d, hash = %s\n", diskindex.nHeight, diskindex.GetBlockHash().ToString().c_str());
 //                    diskindex.print();
                     if (diskindex.hashNext == uint256("0x92134c4608025b6bd945731158391079590d0e7e0c60bd7d09a50c0b0251c6ac"))
@@ -891,11 +891,6 @@ bool CTxDB::LoadBlockIndexGuts()
 //                        printf("deleted\n");
                         continue;
                     }
-                }
-                if (totalCoin == VALUE_CHANGE+1) {
-                    // for information
-//                    printf("height = %d, hash = %s\n", diskindex.nHeight, diskindex.GetBlockHash().ToString().c_str());
-//                    diskindex.print();
                 }
                 // end cleanup
 
@@ -919,9 +914,9 @@ bool CTxDB::LoadBlockIndexGuts()
                 pindexNew->nBits          = diskindex.nBits;
                 pindexNew->nNonce         = diskindex.nNonce;
 
-                if(totalCoin == VALUE_CHANGE)
+                if(!fTestNet && (totalCoin == VALUE_CHANGE))
                     pindexSave = pindexNew;
-                if(totalCoin == VALUE_CHANGE + 1)
+                if(!fTestNet && (totalCoin == VALUE_CHANGE + 1))
                     pindexSaveNext = pindexNew;
 
                 // Watch for genesis block

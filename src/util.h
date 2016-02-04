@@ -488,6 +488,19 @@ inline uint256 Hash(const T1 p1begin, const T1 p1end,
     return hash2;
 }
 
+template<typename T1, typename T2>
+inline uint256 HashSingle(const T1 p1begin, const T1 p1end,
+  const T2 p2begin, const T2 p2end) {
+    static unsigned char pblank[1];
+    uint256 hash1;
+    SHA256_CTX ctx;
+    SHA256_Init(&ctx);
+    SHA256_Update(&ctx, (p1begin == p1end ? pblank : (unsigned char*)&p1begin[0]), (p1end - p1begin) * sizeof(p1begin[0]));
+    SHA256_Update(&ctx, (p2begin == p2end ? pblank : (unsigned char*)&p2begin[0]), (p2end - p2begin) * sizeof(p2begin[0]));
+    SHA256_Final((unsigned char*)&hash1, &ctx);
+    return(hash1);
+}
+
 template<typename T1, typename T2, typename T3>
 inline uint256 Hash(const T1 p1begin, const T1 p1end,
                     const T2 p2begin, const T2 p2end,

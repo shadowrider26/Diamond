@@ -48,6 +48,8 @@ int64 nWorkTargetSpacing = 60;			// 1-minute block spacing
 
 static const int64 POW_RESTART = 577850; // When (block) to unstuck PoW
 
+bool fSignWorkBlock = true;
+
 int64 totalCoin = -1;
 int64 nChainStartTime = 1373654826;
 int nCoinbaseMaturity = 30;
@@ -470,8 +472,8 @@ bool CTransaction::CheckTransaction() const
         if (txout.IsEmpty() && !IsCoinBase() && !IsCoinStake())
             return DoS(100, error("CTransaction::CheckTransaction() : txout empty for user transaction"));
 
-        if (totalCoin <= VALUE_CHANGE || totalCoin > POS_RESTART)
-        {
+        if(fTestNet ||
+          (!fTestNet && ((totalCoin <= VALUE_CHANGE) || (totalCoin > POS_RESTART)))) {
             // ppcoin: enforce minimum output amount
             if ((!txout.IsEmpty()) && txout.nValue < MIN_TXOUT_AMOUNT)
                 return DoS(100, error("CTransaction::CheckTransaction() : txout.nValue below minimum"));
@@ -770,7 +772,7 @@ int CMerkleTx::GetDepthInMainChain(CBlockIndex* &pindexRet) const
     // Make sure the merkle branch connects to this block
     if (!fMerkleVerified)
     {
-        if (CBlock::CheckMerkleBranch(GetHash(), vMerkleBranch, nIndex) != pindex->hashMerkleRoot)
+        if(CBlock::CheckMerkleBranch(GetHash(), vMerkleBranch, nIndex, pindex->nHeight) != pindex->hashMerkleRoot)
             return 0;
         fMerkleVerified = true;
     }
@@ -950,8 +952,7 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
     int64 nSubsidy = COIN;
 
-    if (totalCoin <= VALUE_CHANGE)
-    {
+    if(fTestNet || (totalCoin <= VALUE_CHANGE)) {
         std::string cseed_str = prevHash.ToString().substr(6,7);
         const char* cseed = cseed_str.c_str();
         long seed = hex2long(cseed);
@@ -1220,6 +1221,12 @@ unsigned int GetNextTargetRequired_v2(const CBlockIndex* pindexLast, bool fProof
     // danbi: make sure we don't emit negative numbers even if we miscalculated
     if (bnNew <= 0 || bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
+
+    /* Disable legacy PoW block signature */
+    if(fSignWorkBlock) {
+        if(fTestNet && (pindexPrev->nHeight + 1 >= nTestStage2))
+          fSignWorkBlock = false;
+    }
 
     return bnNew.GetCompact();
 }
@@ -2217,7 +2224,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
     // compromise: use optimization, but decrease penalty (was 50)
 //    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
     if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(false, totalCoin), nBits))
-        return DoS(10, error("CheckBlock() : proof of work failed"));
+      return(error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
     if (GetBlockTime() > GetAdjustedTime() + nMaxClockDrift)
@@ -2274,11 +2281,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
 
     // Check merkle root
     if (fCheckMerkleRoot && hashMerkleRoot != BuildMerkleTree())
-        return DoS(100, error("CheckBlock() : hashMerkleRoot mismatch"));
-
-    // ppcoin: check block signature
-    if (!CheckBlockSignature())
-        return DoS(100, error("CheckBlock() : bad block signature"));
+      return(error("CheckBlock() : block %d merkle root hash mismatch", GetBlockHeight()));
 
     return true;
 }
@@ -2297,6 +2300,21 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
 
+    int64 nMaxDrift = nMaxClockDrift;
+    if(fTestNet && (nHeight >= nTestStage3)) {
+        nMaxDrift = nNewMaxClockDrift;
+    }
+
+    if(GetBlockTime() > GetAdjustedTime() + nMaxDrift)
+      return(error("AcceptBlock() : block time stamp too far in the future"));
+
+    if(GetBlockTime() > (int64)vtx[0].nTime + nMaxDrift)
+      return(error("AcceptBlock() : coin base time stamp is too early"));
+
+    if((GetBlockTime() <= pindexPrev->GetMedianTimePast()) ||
+      (GetBlockTime() + nMaxDrift < pindexPrev->GetBlockTime()))
+        return(error("AcceptBlock() : block time stamp is too early"));
+
     if(IsProofOfStake()) {
         if((fTestNet && (nHeight < nTestStage1)) ||
           (!fTestNet && (totalCoin > VALUE_CHANGE))) {
@@ -2310,13 +2328,12 @@ bool CBlock::AcceptBlock()
         }
     }
 
+    if(!CheckBlockSignature(nHeight))
+      return(error("AcceptBlock() : bad block signature"));
+
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))
         return DoS(100, error("AcceptBlock() : incorrect %s", IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
-
-    // Check timestamp against prev
-    if (GetBlockTime() <= pindexPrev->GetMedianTimePast() || GetBlockTime() + nMaxClockDrift < pindexPrev->GetBlockTime())
-        return error("AcceptBlock() : block's timestamp is too early");
 
     // Check that all transactions are finalized
     BOOST_FOREACH(const CTransaction& tx, vtx)
@@ -2539,6 +2556,8 @@ bool CBlock::SignBlock(const CKeyStore& keystore)
 
     if(!IsProofOfStake())
     {
+        if(!fSignWorkBlock) return(true);
+
         for(unsigned int i = 0; i < vtx[0].vout.size(); i++)
         {
             const CTxOut& txout = vtx[0].vout[i];
@@ -2590,7 +2609,7 @@ bool CBlock::SignBlock(const CKeyStore& keystore)
 }
 
 // ppcoin: check block signature
-bool CBlock::CheckBlockSignature() const
+bool CBlock::CheckBlockSignature(int nHeight) const
 {
     if (GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet))
         return vchBlockSig.empty();
@@ -2617,6 +2636,11 @@ bool CBlock::CheckBlockSignature() const
     }
     else
     {
+        if(fTestNet && (nHeight >= nTestStage2)) {
+            /* Insist on empty PoW block signatures */
+            return(vchBlockSig.empty());
+        }
+
         for(unsigned int i = 0; i < vtx[0].vout.size(); i++)
         {
             const CTxOut& txout = vtx[0].vout[i];
@@ -4265,7 +4289,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         {
             if (pwallet->CreateCoinStake(*pwallet, pblock->nBits, nSearchTime-nLastCoinStakeSearchTime, txCoinStake))
             {
-                if (txCoinStake.nTime >= max(pindexPrev->GetMedianTimePast()+1, pindexPrev->GetBlockTime() - nMaxClockDrift))
+                if(txCoinStake.nTime >= max(pindexPrev->GetMedianTimePast() + 1,
+                  pindexPrev->GetBlockTime() - nNewMaxClockDrift))
                 {   // make sure coinstake would meet timestamp protocol
                     // as it would be the same as the block timestamp
                     pblock->vtx[0].vout[0].SetEmpty();
@@ -4486,7 +4511,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake)
         if (pblock->IsProofOfStake())
             pblock->nTime      = pblock->vtx[1].nTime; //same as coinstake timestamp
         pblock->nTime          = max(pindexPrev->GetMedianTimePast()+1, pblock->GetMaxTransactionTime());
-        pblock->nTime          = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nMaxClockDrift);
+        pblock->nTime          = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nNewMaxClockDrift);
         if (pblock->IsProofOfWork())
             pblock->UpdateTime(pindexPrev);
         pblock->nNonce         = 0;
@@ -4765,10 +4790,10 @@ void BitcoinMiner(CWallet *pwallet, bool fProofOfStake)
 
             // Update nTime every few seconds
             pblock->nTime = max(pindexPrev->GetMedianTimePast()+1, pblock->GetMaxTransactionTime());
-            pblock->nTime = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nMaxClockDrift);
+            pblock->nTime = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - nNewMaxClockDrift);
             pblock->UpdateTime(pindexPrev);
             nBlockTime = ByteReverse(pblock->nTime);
-            if (pblock->GetBlockTime() >= (int64)pblock->vtx[0].nTime + nMaxClockDrift)
+            if (pblock->GetBlockTime() >= (int64)pblock->vtx[0].nTime + nNewMaxClockDrift)
                 break;  // need to update coinbase timestamp
         }
     }

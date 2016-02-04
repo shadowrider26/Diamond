@@ -44,6 +44,8 @@ static const int64 VALUE_CHANGE = 369494; // When to switch to Groestl
 static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
 
 static const int nTestStage1 = 315; /* Testnet: disable foundation PoW share */
+static const int nTestStage2 = 330; /* Testnet: disable PoW block signature */
+static const int nTestStage3 = 340; /* Testnet: switch to SHA-256 for merkle root and reduce time drifts */
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -59,6 +61,9 @@ static const uint256 hashGenesisBlockOfficial("0x2d8b2c67b7f56e70b9b16b377b988bb
 static const uint256 hashGenesisBlockTestNet ("0x0000004b5393b6564f68472ce799a25c56fc63f45d55b7b1f450ac5836598a20");
 
 static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
+static const int64 nNewMaxClockDrift = 15 * 60; 
+
+extern bool fOldMerkleHash;
 
 extern CScript COINBASE_FLAGS;
 
@@ -926,6 +931,30 @@ public:
         return (nBits == 0);
     }
 
+    /* Extracts block height from v2+ coin base;
+     * ignores nVersion because it's unreliable */
+    int GetBlockHeight() const {
+        /* Prevents a crash if called on a block header alone */
+        if(vtx.size()) {
+            /* Serialised CScript */
+            std::vector<unsigned char>::const_iterator scriptsig = vtx[0].vin[0].scriptSig.begin();
+            unsigned char i, scount = scriptsig[0];
+            /* Optimise: nTime is 4 bytes always,
+             * nHeight must be less for a long time;
+             * check against a threshold when the time comes */
+            if(scount < 4) {
+                int height = 0;
+                unsigned char *pheight = (unsigned char *) &height;
+                for(i = 0; i < scount; i++)
+                  pheight[i] = scriptsig[i + 1];
+                /* v2+ block with nHeight in coin base */
+                return(height);
+            }
+        }
+        /* Not found */
+        return(-1);
+    }
+
     uint256 GetHash(bool existingBlock=false, int64 coins=totalCoin) const;
 
     uint256 GetHashScrypt() const
@@ -987,8 +1016,8 @@ public:
         return maxTransactionTime;
     }
 
-    uint256 BuildMerkleTree() const
-    {
+    uint256 BuildMerkleTree() const {
+        int nHeight = GetBlockHeight();
         vMerkleTree.clear();
         BOOST_FOREACH(const CTransaction& tx, vtx)
             vMerkleTree.push_back(tx.GetHash());
@@ -998,8 +1027,14 @@ public:
             for (int i = 0; i < nSize; i += 2)
             {
                 int i2 = std::min(i+1, nSize-1);
-                vMerkleTree.push_back(Hash(BEGIN(vMerkleTree[j+i]),  END(vMerkleTree[j+i]),
-                                           BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
+                if((fTestNet && (nHeight < nTestStage3)) ||
+                  (!fTestNet)) {
+                    vMerkleTree.push_back(Hash(BEGIN(vMerkleTree[j+i]), END(vMerkleTree[j+i]),
+                      BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
+                } else {
+                    vMerkleTree.push_back(HashSingle(BEGIN(vMerkleTree[j+i]), END(vMerkleTree[j+i]),
+                      BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
+                }
             }
             j += nSize;
         }
@@ -1022,16 +1057,24 @@ public:
         return vMerkleBranch;
     }
 
-    static uint256 CheckMerkleBranch(uint256 hash, const std::vector<uint256>& vMerkleBranch, int nIndex)
-    {
+    static uint256 CheckMerkleBranch(uint256 hash, const std::vector<uint256>& vMerkleBranch,
+      int nIndex, int nHeight) {
         if (nIndex == -1)
             return 0;
         BOOST_FOREACH(const uint256& otherside, vMerkleBranch)
         {
-            if (nIndex & 1)
-                hash = Hash(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
-            else
-                hash = Hash(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
+            if((fTestNet && (nHeight < nTestStage3)) ||
+              (!fTestNet)) {
+                if(nIndex & 1)
+                  hash = Hash(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
+                else
+                  hash = Hash(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
+            } else {
+                if(nIndex & 1)
+                  hash = HashSingle(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
+                else
+                  hash = HashSingle(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
+            }
             nIndex >>= 1;
         }
         return hash;
@@ -1122,7 +1165,7 @@ public:
     bool AcceptBlock();
     bool GetCoinAge(uint64& nCoinAge) const; // ppcoin: calculate total coin age spent in block
     bool SignBlock(const CKeyStore& keystore);
-    bool CheckBlockSignature() const;
+    bool CheckBlockSignature(int nHeight) const;
 
 private:
     bool SetBestChainInner(CTxDB& txdb, CBlockIndex *pindexNew);
