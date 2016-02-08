@@ -118,7 +118,7 @@ public:
 
     uint256 GetHash() const
     {
-        return SerializeHash(*this);
+        return(SerializeHash2(*this));
     }
 
     bool RelayTo(CNode* pnode) const

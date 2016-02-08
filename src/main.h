@@ -45,7 +45,10 @@ static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
 
 static const int nTestStage1 = 315; /* Testnet: disable foundation PoW share */
 static const int nTestStage2 = 330; /* Testnet: disable PoW block signature */
-static const int nTestStage3 = 340; /* Testnet: switch to SHA-256 for merkle root and reduce time drifts */
+static const int nTestStage3 = 340; /* Testnet: reduce time drifts */
+
+/* Testnet: SHA-256 transaction hashing after 8-Feb-2016 15:00 UTC */
+static const unsigned int nTestTxSwitch = 1454943600;
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -392,7 +395,7 @@ public:
 
     uint256 GetHash() const
     {
-        return SerializeHash(*this);
+        return(SerializeHash2(*this));
     }
 
     friend bool operator==(const CTxOut& a, const CTxOut& b)
@@ -443,8 +446,7 @@ typedef std::map<uint256, std::pair<CTxIndex, CTransaction> > MapPrevTx;
 class CTransaction
 {
 public:
-    static const int LEGACY_VERSION_1=1;
-    static const int CURRENT_VERSION = 2;
+    static const int CURRENT_VERSION = 3;
 
     int nVersion;
     unsigned int nTime;
@@ -470,14 +472,19 @@ public:
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
-        if(this->nVersion > LEGACY_VERSION_1) {
+        if(this->nVersion > 1) {
         READWRITE(strTxComment); }
     )
 
     void SetNull()
     {
-        nVersion = CTransaction::CURRENT_VERSION;
         nTime = GetAdjustedTime();
+        if((fTestNet && (nTime < nTestTxSwitch)) ||
+          (!fTestNet)) {
+            nVersion = 2;
+        } else {
+            nVersion = CTransaction::CURRENT_VERSION;
+        }
         vin.clear();
         vout.clear();
         nLockTime = 0;
@@ -490,9 +497,13 @@ public:
         return (vin.empty() && vout.empty());
     }
 
-    uint256 GetHash() const
-    {
-        return SerializeHash(*this);
+    uint256 GetHash() const {
+        if((fTestNet && (nTime < nTestTxSwitch)) ||
+          (!fTestNet)) {
+            return(SerializeHash2(*this));
+        } else {
+            return(SerializeHash1(*this));
+        }
     }
 
     bool IsFinal(int nBlockHeight=0, int64 nBlockTime=0) const
@@ -1017,7 +1028,6 @@ public:
     }
 
     uint256 BuildMerkleTree() const {
-        int nHeight = GetBlockHeight();
         vMerkleTree.clear();
         BOOST_FOREACH(const CTransaction& tx, vtx)
             vMerkleTree.push_back(tx.GetHash());
@@ -1027,14 +1037,8 @@ public:
             for (int i = 0; i < nSize; i += 2)
             {
                 int i2 = std::min(i+1, nSize-1);
-                if((fTestNet && (nHeight < nTestStage3)) ||
-                  (!fTestNet)) {
-                    vMerkleTree.push_back(Hash(BEGIN(vMerkleTree[j+i]), END(vMerkleTree[j+i]),
-                      BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
-                } else {
-                    vMerkleTree.push_back(HashSingle(BEGIN(vMerkleTree[j+i]), END(vMerkleTree[j+i]),
-                      BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
-                }
+                vMerkleTree.push_back(Hash(BEGIN(vMerkleTree[j+i]), END(vMerkleTree[j+i]),
+                  BEGIN(vMerkleTree[j+i2]), END(vMerkleTree[j+i2])));
             }
             j += nSize;
         }
@@ -1063,18 +1067,10 @@ public:
             return 0;
         BOOST_FOREACH(const uint256& otherside, vMerkleBranch)
         {
-            if((fTestNet && (nHeight < nTestStage3)) ||
-              (!fTestNet)) {
-                if(nIndex & 1)
-                  hash = Hash(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
-                else
-                  hash = Hash(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
-            } else {
-                if(nIndex & 1)
-                  hash = HashSingle(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
-                else
-                  hash = HashSingle(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
-            }
+            if(nIndex & 1)
+              hash = Hash(BEGIN(otherside), END(otherside), BEGIN(hash), END(hash));
+            else
+              hash = Hash(BEGIN(hash), END(hash), BEGIN(otherside), END(otherside));
             nIndex >>= 1;
         }
         return hash;

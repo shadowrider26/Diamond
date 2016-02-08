@@ -454,13 +454,20 @@ public:
         return (*this);
     }
 
-    // invalidates the object
-    uint256 GetHash() {
+    /* SHA-256 */
+    uint256 GetHash1() {
         uint256 hash1;
-        SHA256_Final((unsigned char*)&hash1, &ctx);
+        SHA256_Final((unsigned char *) &hash1, &ctx);
+        return(hash1);
+    }
+
+    /* SHA-256d */
+    uint256 GetHash2() {
+        uint256 hash1;
+        SHA256_Final((unsigned char *) &hash1, &ctx);
         uint256 hash2;
-        SHA256((unsigned char*)&hash1, sizeof(hash1), (unsigned char*)&hash2);
-        return hash2;
+        SHA256((unsigned char *) &hash1, sizeof(hash1), (unsigned char *) &hash2);
+        return(hash2);
     }
 
     template<typename T>
@@ -488,19 +495,6 @@ inline uint256 Hash(const T1 p1begin, const T1 p1end,
     return hash2;
 }
 
-template<typename T1, typename T2>
-inline uint256 HashSingle(const T1 p1begin, const T1 p1end,
-  const T2 p2begin, const T2 p2end) {
-    static unsigned char pblank[1];
-    uint256 hash1;
-    SHA256_CTX ctx;
-    SHA256_Init(&ctx);
-    SHA256_Update(&ctx, (p1begin == p1end ? pblank : (unsigned char*)&p1begin[0]), (p1end - p1begin) * sizeof(p1begin[0]));
-    SHA256_Update(&ctx, (p2begin == p2end ? pblank : (unsigned char*)&p2begin[0]), (p2end - p2begin) * sizeof(p2begin[0]));
-    SHA256_Final((unsigned char*)&hash1, &ctx);
-    return(hash1);
-}
-
 template<typename T1, typename T2, typename T3>
 inline uint256 Hash(const T1 p1begin, const T1 p1end,
                     const T2 p2begin, const T2 p2end,
@@ -520,11 +514,17 @@ inline uint256 Hash(const T1 p1begin, const T1 p1end,
 }
 
 template<typename T>
-uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL_VERSION)
-{
+uint256 SerializeHash1(const T& obj, int nType = SER_GETHASH, int nVersion = PROTOCOL_VERSION) {
     CHashWriter ss(nType, nVersion);
     ss << obj;
-    return ss.GetHash();
+    return(ss.GetHash1());
+}
+
+template<typename T>
+uint256 SerializeHash2(const T& obj, int nType = SER_GETHASH, int nVersion = PROTOCOL_VERSION) {
+    CHashWriter ss(nType, nVersion);
+    ss << obj;
+    return(ss.GetHash2());
 }
 
 inline uint160 Hash160(const std::vector<unsigned char>& vch)
