@@ -261,14 +261,18 @@ static const CRPCCommand vRPCCommands[] =
     { "signrawtransaction",     &signrawtransaction,     false,  false },
     { "sendrawtransaction",     &sendrawtransaction,     false,  false },
     { "getcheckpoint",          &getcheckpoint,          true,   false },
-    { "reservebalance",         &reservebalance,         false,  true},
-    { "checkwallet",            &checkwallet,            false,  true},
-    { "repairwallet",           &repairwallet,           false,  true},
-    { "resendtx",               &resendtx,               false,  true},
-    { "makekeypair",            &makekeypair,            false,  true},
-    { "sendalert",              &sendalert,              false,  false},
-    { "setchangeaddress",       &setchangeaddress,  true,   false },
-    { "getchangeaddress",       &getchangeaddress,  true,   false },
+    { "reservebalance",         &reservebalance,         false,  true },
+    { "checkwallet",            &checkwallet,            false,  true },
+    { "repairwallet",           &repairwallet,           false,  true },
+    { "resendtx",               &resendtx,               false,  true },
+    { "makekeypair",            &makekeypair,            false,  true },
+    { "sendalert",              &sendalert,              false,  false },
+    { "setchangeaddress",       &setchangeaddress,       true,   false },
+    { "getchangeaddress",       &getchangeaddress,       true,   false },
+    { "getscrapeaddress",       &getscrapeaddress,       true,   false },
+    { "listscrapeaddresses",    &listscrapeaddresses,    true,   false },
+    { "setscrapeaddress",       &setscrapeaddress,       true,   true },
+    { "deletescrapeaddress",    &deletescrapeaddress,    true,   true }
 };
 
 CRPCTable::CRPCTable()
