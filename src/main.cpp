@@ -2779,6 +2779,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
             /* Livenet genesis */
             const char* pszTimestamp = "Friday, July 12, 11:19 AM: Cavendish wins eventful 13th stage of Tour de France as Froome loses chunk of overall lead";
+            txNew.nVersion = 2;
             txNew.nTime = nChainStartTime;
             txNew.vin.resize(1);
             txNew.vout.resize(1);
@@ -2798,6 +2799,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
             /* Testnet genesis */
             const char* pszTimestamp = "Let it ride!";
+            txNew.nVersion = 2;
             txNew.nTime = 1453766400;
             txNew.vin.resize(1);
             txNew.vout.resize(1);
