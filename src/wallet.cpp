@@ -33,6 +33,11 @@ struct CompareValueOnly
     }
 };
 
+bool CompareAgeOnly(const COutput t1, const COutput t2)
+{
+        return (t1.tx->nTime < t2.tx->nTime);
+}
+
 CPubKey CWallet::GenerateNewKey()
 {
     bool fCompressed = CanSupportFeature(FEATURE_COMPRPUBKEY); // default to compressed public keys if we want 0.6.0 wallets
@@ -1039,7 +1044,9 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                 if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) && pcoin->vout[i].nValue > 0 &&
                  (!coinControl || !coinControl->HasSelected() || coinControl->IsSelected((*it).first, i)))
                     vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
-        }
+
+        sort(vCoins.begin(), vCoins.end(), CompareAgeOnly); // found available coins so sort in age order (TK)
+        reverse(vCoins.begin(), vCoins.end()); // and return vector with coins sorted from newest to oldest (TK)        }
     }
 }
 
@@ -1120,7 +1127,8 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, in
     vector<pair<int64, pair<const CWalletTx*,unsigned int> > > vValue;
     int64 nTotalLower = 0;
 
-    random_shuffle(vCoins.begin(), vCoins.end(), GetRandInt);
+// Don't shuffle - we want to use newest coin pile/s possible to stop hurting coin age for minting!! (TK)
+//    random_shuffle(vCoins.begin(), vCoins.end(), GetRandInt);
 
     BOOST_FOREACH(COutput output, vCoins)
     {
@@ -1138,13 +1146,15 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, in
 
         pair<int64,pair<const CWalletTx*,unsigned int> > coin = make_pair(n,make_pair(pcoin, i));
 
-        if (n == nTargetValue)
+/*        if (n == nTargetValue)  // first one of any size >= target amount wins, we don't want this! (TK)
         {
             setCoinsRet.insert(coin.second);
             nValueRet += coin.first;
             return true;
         }
-        else if (n < nTargetValue + CENT)
+        else 
+*/        
+        if (n < nTargetValue + CENT)
         {
             vValue.push_back(coin);
             nTotalLower += n;
@@ -1155,7 +1165,7 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, in
         }
     }
 
-    if (nTotalLower == nTargetValue)
+/*    if (nTotalLower == nTargetValue) // nor this (TK)
     {
         for (unsigned int i = 0; i < vValue.size(); ++i)
         {
@@ -1164,6 +1174,7 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, in
         }
         return true;
     }
+*/
 
     if (nTotalLower < nTargetValue)
     {
@@ -1175,7 +1186,8 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, unsigned int nSpendTime, in
     }
 
     // Solve subset sum by stochastic approximation
-    sort(vValue.rbegin(), vValue.rend(), CompareValueOnly());
+    // Don't sort by value - we want to prefer newest to oldest (TK)    
+    // sort(vValue.rbegin(), vValue.rend(), CompareValueOnly());
     vector<char> vfBest;
     int64 nBest;
 
@@ -1634,13 +1646,15 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             if (txNew.vin.size() >= 100)
                 break;
             // Stop adding more inputs if value is already pretty significant
-            if (nCredit > nCombineThreshold)
+            if (nCredit >= nCombineThreshold)
                 break;
             // Stop adding inputs if reached reserve limit
             if (nCredit + pcoin.first->vout[pcoin.second].nValue > nBalance - nReserveBalance)
                 break;
+            if (nCredit + pcoin.first->vout[pcoin.second].nValue == nBalance) // always leave 2 blocks min - don't combine entire wallet into one block! (TK)           
+                break;
             // Do not add additional significant input
-            if (pcoin.first->vout[pcoin.second].nValue > nCombineThreshold)
+            if (pcoin.first->vout[pcoin.second].nValue >= nCombineThreshold)
                 continue;
             // Do not add input that is still too young
             if (pcoin.first->nTime + nStakeMaxAge > txNew.nTime)
