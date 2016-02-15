@@ -1046,7 +1046,8 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                     vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
 
         sort(vCoins.begin(), vCoins.end(), CompareAgeOnly); // found available coins so sort in age order (TK)
-        reverse(vCoins.begin(), vCoins.end()); // and return vector with coins sorted from newest to oldest (TK)        }
+        reverse(vCoins.begin(), vCoins.end()); // and return vector with coins sorted from newest to oldest (TK)        
+       }
     }
 }
 
