@@ -228,7 +228,8 @@ HEADERS += src/qt/bitcoingui.h \
     src/hash.h \
     src/scrypt.h \
     src/sph_groestl.h \
-    src/sph_types.h
+    src/sph_types.h \
+    src/auxpow.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -299,7 +300,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/pbkdf2.cpp \
     src/hash.cpp \
     src/scrypt.cpp \
-    src/groestl.c
+    src/groestl.c \
+    src/auxpow.cpp
 
 RESOURCES += \
     src/qt/bitcoin.qrc

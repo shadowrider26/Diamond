@@ -26,6 +26,7 @@ class CAddress;
 class CInv;
 class CRequestTracker;
 class CNode;
+class CAuxPow;
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -46,6 +47,7 @@ static const int64 POS_RESTART = 450000; // When to apply fixes to enable PoS
 static const int nTestStage1 = 315; /* Testnet: disable foundation PoW share */
 static const int nTestStage2 = 330; /* Testnet: disable PoW block signature */
 static const int nTestStage3 = 340; /* Testnet: reduce time drifts */
+static const int nTestStage4 = 440; /* Testnet: enable merged mining */
 
 /* Testnet: SHA-256 transaction hashing after 8-Feb-2016 15:00 UTC */
 static const unsigned int nTestTxSwitch = 1454943600;
@@ -129,7 +131,6 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake=false);
 void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1);
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey);
-bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash);
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight);
 unsigned int ComputeMinWork(unsigned int nBase, int64 nTime);
@@ -857,7 +858,29 @@ public:
 };
 
 
+template <typename Stream>
+int ReadWriteAuxPow(Stream& s, const boost::shared_ptr<CAuxPow>& auxpow, int nType,
+  int nVersion, CSerActionSerialize ser_action);
+ 
+template <typename Stream>
+int ReadWriteAuxPow(Stream& s, boost::shared_ptr<CAuxPow>& auxpow, int nType,
+  int nVersion, CSerActionUnserialize ser_action);
+ 
+template <typename Stream>
+int ReadWriteAuxPow(Stream& s, const boost::shared_ptr<CAuxPow>& auxpow, int nType,
+  int nVersion, CSerActionGetSerializeSize ser_action);
+  
+enum {
+    // primary version
+    BLOCK_VERSION_DEFAULT        = (1 << 0), 
 
+    // modifiers
+    BLOCK_VERSION_AUXPOW         = (1 << 8),
+ 
+    // bits allocated for chain ID
+    BLOCK_VERSION_CHAIN_START    = (1 << 16),
+    BLOCK_VERSION_CHAIN_END      = (1 << 30),
+};
 
 
 /** Nodes collect new transactions into a block, hash them into a hash tree,
@@ -885,6 +908,9 @@ public:
     // network and disk
     std::vector<CTransaction> vtx;
 
+    // header
+    boost::shared_ptr<CAuxPow> auxpow;
+
     // ppcoin: block signature - signed by one of the coin base txout[N]'s owner
     std::vector<unsigned char> vchBlockSig;
 
@@ -910,8 +936,10 @@ public:
         READWRITE(nBits);
         READWRITE(nNonce);
 
+        nSerSize += ReadWriteAuxPow(s, auxpow, nType, nVersion, ser_action);
+
         // ConnectBlock depends on vtx following header to generate CDiskTxPos
-        if (!(nType & (SER_GETHASH|SER_BLOCKHEADERONLY)))
+        if(!(nType & (SER_BLOCKHEADERONLY)))
         {
             READWRITE(vtx);
             READWRITE(vchBlockSig);
@@ -935,12 +963,19 @@ public:
         vchBlockSig.clear();
         vMerkleTree.clear();
         nDoS = 0;
+        auxpow.reset();
     }
 
     bool IsNull() const
     {
         return (nBits == 0);
     }
+
+    int GetChainID() const {
+        return(nVersion / BLOCK_VERSION_CHAIN_START);
+    }
+
+    void SetAuxPow(CAuxPow* pow);
 
     /* Extracts block height from v2+ coin base;
      * ignores nVersion because it's unreliable */
@@ -1062,7 +1097,7 @@ public:
     }
 
     static uint256 CheckMerkleBranch(uint256 hash, const std::vector<uint256>& vMerkleBranch,
-      int nIndex, int nHeight) {
+      int nIndex) {
         if (nIndex == -1)
             return 0;
         BOOST_FOREACH(const uint256& otherside, vMerkleBranch)
@@ -1123,8 +1158,8 @@ public:
         }
 
         // Check the header
-        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
-            return error("CBlock::ReadFromDisk() : errors in block header");
+//        if (fReadTransactions && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
+//            return error("CBlock::ReadFromDisk() : errors in block header");
 
         return true;
     }
@@ -1162,6 +1197,7 @@ public:
     bool GetCoinAge(uint64& nCoinAge) const; // ppcoin: calculate total coin age spent in block
     bool SignBlock(const CKeyStore& keystore);
     bool CheckBlockSignature(int nHeight) const;
+    bool CheckProofOfWork(int64 totalCoin) const;
 
 private:
     bool SetBestChainInner(CTxDB& txdb, CBlockIndex *pindexNew);
@@ -1216,6 +1252,9 @@ public:
     unsigned int nBits;
     unsigned int nNonce;
 
+    // if this is an aux work block
+    boost::shared_ptr<CAuxPow> auxpow;
+
     CBlockIndex()
     {
         phashBlock = NULL;
@@ -1239,6 +1278,7 @@ public:
         nTime          = 0;
         nBits          = 0;
         nNonce         = 0;
+        auxpow.reset();
     }
 
     CBlockIndex(unsigned int nFileIn, unsigned int nBlockPosIn, CBlock& block)
@@ -1273,6 +1313,7 @@ public:
         nTime          = block.nTime;
         nBits          = block.nBits;
         nNonce         = block.nNonce;
+        auxpow         = block.auxpow;
     }
 
     CBlock GetBlockHeader() const
@@ -1285,6 +1326,7 @@ public:
         block.nTime          = nTime;
         block.nBits          = nBits;
         block.nNonce         = nNonce;
+        block.auxpow         = auxpow;
         return block;
     }
 
@@ -1464,6 +1506,7 @@ public:
         READWRITE(nBits);
         READWRITE(nNonce);
         READWRITE(blockHash);
+        ReadWriteAuxPow(s, auxpow, nType, this->nVersion, ser_action);
     )
 
     uint256 GetBlockHash() const
