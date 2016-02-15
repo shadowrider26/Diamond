@@ -6,6 +6,7 @@
 
 #include "kernel.h"
 #include "db.h"
+#include "auxpow.h"
 
 using namespace std;
 

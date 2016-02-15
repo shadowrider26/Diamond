@@ -11,6 +11,7 @@
 #include "ui_interface.h"
 #include "base58.h"
 #include "kernel.h"
+#include "auxpow.h"
 #include "coincontrol.h"
 
 #include <boost/algorithm/string.hpp>

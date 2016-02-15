@@ -7,7 +7,8 @@
 #include "checkpoints.h"
 #include "db.h"
 #include "net.h"
-#include "init.h" 
+#include "init.h"
+#include "auxpow.h"
 #include "ui_interface.h"
 #include "kernel.h"
 #include "scrypt_mine.h"
@@ -772,7 +773,7 @@ int CMerkleTx::GetDepthInMainChain(CBlockIndex* &pindexRet) const
     // Make sure the merkle branch connects to this block
     if (!fMerkleVerified)
     {
-        if(CBlock::CheckMerkleBranch(GetHash(), vMerkleBranch, nIndex, pindex->nHeight) != pindex->hashMerkleRoot)
+        if(CBlock::CheckMerkleBranch(GetHash(), vMerkleBranch, nIndex) != pindex->hashMerkleRoot)
             return 0;
         fMerkleVerified = true;
     }
@@ -919,6 +920,14 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions)
     if (GetHash(false, pindex->nMoneySupply / COIN ) != pindex->GetBlockHash())
         return error("CBlock::ReadFromDisk() : GetHash() doesn't match index");
     return true;
+}
+
+void CBlock::SetAuxPow(CAuxPow* pow) {
+    if(pow != NULL)
+      nVersion |= BLOCK_VERSION_AUXPOW;
+    else
+      nVersion &= ~BLOCK_VERSION_AUXPOW;
+    auxpow.reset(pow);
 }
 
 uint256 static GetOrphanRoot(const CBlock* pblock)
@@ -1239,25 +1248,6 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         else return GetNextTargetRequired_v2(pindexLast, fProofOfStake);
 }
 
-
-bool CheckProofOfWork(uint256 hash, unsigned int nBits)
-{
-    CBigNum bnTarget;
-    bnTarget.SetCompact(nBits);
-
-    // danbi: substitute false for error as we call it with both algorithms for now
-    // Check range
-    if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
-        return false;
-//        return error("CheckProofOfWork() : nBits below minimum work");
-
-    // Check proof of work matches claimed amount
-    if (hash > bnTarget.getuint256())
-        return false;
-//        return error("CheckProofOfWork() : hash doesn't match nBits");
-
-    return true;
-}
 
 // Return maximum amount of blocks that other nodes claim to have
 int GetNumBlocksOfPeers()
@@ -1645,7 +1635,7 @@ bool CBlock::DisconnectBlock(CTxDB& txdb, CBlockIndex* pindex)
 bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 {
     // Check it again in case a previous version let a bad block in
-    if (!CheckBlock(!fJustCheck, !fJustCheck, GetTotalCoin()))
+    if(!CheckBlock(!fJustCheck, !fJustCheck, GetTotalCoin()))
         return false;
 
     // Do not allow blocks that contain transactions which 'overwrite' older transactions,
@@ -1670,7 +1660,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         // Since we're just checking the block and not actually connecting it, it might not (and probably shouldn't) be on the disk to get the transaction from
         nTxPos = 1;
     else
-        nTxPos = pindex->nBlockPos + ::GetSerializeSize(CBlock(), SER_DISK, CLIENT_VERSION) - (2 * GetSizeOfCompactSize(0)) + GetSizeOfCompactSize(vtx.size());
+        nTxPos = pindex->nBlockPos + ::GetSerializeSize(*this, SER_DISK | SER_BLOCKHEADERONLY, CLIENT_VERSION) + GetSizeOfCompactSize(vtx.size());
 
     map<uint256, CTxIndex> mapQueuedChanges;
     int64 nFees = 0;
@@ -2191,8 +2181,68 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos)
     return true;
 }
 
-bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const
-{
+// Start accepting AUX POW at this block
+// 
+// Even if we do not accept AUX POW ourselves, we can always be the parent chain.
+ 
+int GetAuxPowStartBlock() {
+    if(fTestNet)
+      return(nTestStage4);
+    else
+      return(INT_MAX);
+}
+
+int GetOurChainID() {
+    return(0x0000);
+}
+
+bool CBlock::CheckProofOfWork(int64 totalCoin) const {
+    int nHeight = GetBlockHeight();
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
+
+    if(nHeight >= GetAuxPowStartBlock()) {
+
+        // Prevent same work from being submitted twice:
+        // - this block must have our chain ID
+        // - parent block must not have the same chain ID (see CAuxPow::Check)
+        // - index of this chain in chain merkle tree must be pre-determined (see CAuxPow::Check)
+        if (!fTestNet && nHeight != INT_MAX && GetChainID() != GetOurChainID())
+            return error("CheckProofOfWork() : block does not have our chain ID");
+
+        if(auxpow.get() != NULL) {
+
+            if(!(nVersion & BLOCK_VERSION_AUXPOW))
+              return(error("CheckProofOfWork() : AuxPoW block version is not valid"));
+
+            if(!auxpow->Check(GetHashGroestl(), GetChainID()))
+              return(error("CheckProofOfWork() : AuxPoW is not valid"));
+
+            if(bnTarget <= 0 || (bnTarget > bnProofOfWorkLimit) || (auxpow->GetParentBlockHash() > bnTarget.getuint256()))
+              return(error("CheckProofOfWork() : AuxPoW failed"));
+        }
+        else
+        {
+
+            if(bnTarget <= 0 || (bnTarget > bnProofOfWorkLimit) || (GetHashGroestl() > bnTarget.getuint256()))
+              return(error("CheckProofOfWork() : PoW failed"));
+
+        }
+    }
+    else
+    {
+        if(auxpow.get() != NULL)
+          return(error("CheckProofOfWork() : AuxPoW is not allowed at this block height"));
+
+        if(bnTarget <= 0 || (bnTarget > bnProofOfWorkLimit) || (GetHash(false, totalCoin) > bnTarget.getuint256()))
+          return(error("CheckProofOfWork() : proof of work failed"));
+    }
+
+    return(true);
+}
+
+bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) const {
+
     // Update the coin mechanics variables post algorithm change
     // Changing any of these requires a fork
   if(!fTestNet) {
@@ -2223,7 +2273,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, int64 totalCoin) 
     // new block comes during initial sync and that might come from "future"
     // compromise: use optimization, but decrease penalty (was 50)
 //    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHashScrypt(), nBits) && !CheckProofOfWork(GetHashGroestl(), nBits))
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(false, totalCoin), nBits))
+    if(fCheckPOW && IsProofOfWork() && !CheckProofOfWork(totalCoin))
       return(error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
@@ -2431,7 +2481,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         return error("ProcessBlock() : duplicate proof-of-stake (%s, %d) for block %s", pblock->GetProofOfStake().first.ToString().c_str(), pblock->GetProofOfStake().second, hash.ToString().c_str());
 
     // Preliminary checks
-    if (!pblock->CheckBlock(true,true,GetTotalCoin()))
+    if(!pblock->CheckBlock(true, true, GetTotalCoin()))
         return error("ProcessBlock() : CheckBlock FAILED");
 
     // ppcoin: verify hash target and signature of coinstake tx
@@ -3683,7 +3733,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         vRecv >> block;
         uint256 hashBlock = block.GetHash();
 
-        printf("received block %s\n", hashBlock.ToString().substr(0,20).c_str());
+        printf("received block %s height %d\n",
+          hashBlock.ToString().substr(0,20).c_str(), block.GetBlockHeight());
         // block.print();
 
         CInv inv(MSG_BLOCK, hashBlock);
@@ -4592,12 +4643,35 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hash = pblock->GetHash();
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-    if (hash > hashTarget && pblock->IsProofOfWork())
-        return error("BitcoinMiner : proof-of-work not meeting target");
+    if(pblock->IsProofOfWork()) {
+        CAuxPow *auxpow = pblock->auxpow.get();     
 
-    //// debug print
-    printf("BitcoinMiner:\n");
-    printf("new block found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
+        if(auxpow != NULL) {
+            if(!auxpow->Check(hash, pblock->GetChainID()))
+              return(error("AuxPoW is not valid"));
+
+            if(auxpow->GetParentBlockHash() > hashTarget)
+              return(error("AuxPoW parent hash %s is not under target %s",
+                auxpow->GetParentBlockHash().GetHex().c_str(), hashTarget.GetHex().c_str()));
+
+            printf("DiamondMiner:\n");
+            printf("AUX proof-of-work found  \n     our hash: %s   \n  parent hash: %s  \n       target: %s\n",
+              hash.GetHex().c_str(), auxpow->GetParentBlockHash().GetHex().c_str(), hashTarget.GetHex().c_str());
+        } else {
+            if(hash > hashTarget)
+              return(error("DiamondMiner : proof-of-work not meeting target"));
+
+            printf("DiamondMiner:\n");
+            printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n",
+              hash.GetHex().c_str(), hashTarget.GetHex().c_str());
+        }
+    } else {
+
+        printf("DiamondMiner:\n");
+        printf("proof-of-stake found  \n  hash: %s  \ntarget: %s\n",
+          hash.GetHex().c_str(), hashTarget.GetHex().c_str());
+    }
+
     pblock->print();
     printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
 
